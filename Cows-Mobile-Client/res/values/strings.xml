@@ -4,5 +4,9 @@
     <string name="app_name">Cows-Mobile-Client</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_cas_auth">CasAuth</string>
+    <string name="title_activity_event_creation">EventCreation</string>
+    <string name="title_activity_room_select">RoomSelect</string>
+    <string name="title_activity_room_event_view">RoomEventView</string>
 
 </resources>
