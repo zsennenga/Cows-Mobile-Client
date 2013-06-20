@@ -3,7 +3,7 @@
     package="com.zennenga.cows_mobile_client"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="15" />

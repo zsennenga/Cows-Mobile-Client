@@ -15,5 +15,6 @@
     <string name="create_event">Create Event</string>
     <string name="building_select">Building Select</string>
     <string name="room_select">Room Select</string>
+    <string name="submit">Submit</string>
 
 </resources>
