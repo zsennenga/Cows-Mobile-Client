@@ -3,6 +3,10 @@ package com.zennenga.cows_mobile_client;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Spinner;
 
 public class RoomEventView extends Activity {
 
