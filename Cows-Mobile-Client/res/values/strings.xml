@@ -8,8 +8,12 @@
     <string name="title_activity_event_creation">EventCreation</string>
     <string name="title_activity_room_select">RoomSelect</string>
     <string name="title_activity_room_event_view">RoomEventView</string>
-    <string name="title_activity_cas_auth_web_view">CasAuthWebView</string>
     <string name="building_prompt">Please select a building</string>
     <string name="room_prompt">Please select a room</string>
+    <string name="back">Back</string>
+    <string name="view_events">View Events</string>
+    <string name="create_event">Create Event</string>
+    <string name="building_select">Building Select</string>
+    <string name="room_select">Room Select</string>
 
 </resources>
