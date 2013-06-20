@@ -23,12 +23,11 @@ public class MainActivity extends Activity {
 	
 	public void viewEvents(View v)	{
 		Intent i = new Intent(v.getContext(), RoomEventView.class);
-		startActivityForResult(i,0);
+		startActivity(i);
 	}
 	
 	public void doEvent(View v)	{
-		Intent i = new Intent(v.getContext(), EventCreation.class);
-		startActivityForResult(i,0);
+		Intent i = new Intent(v.getContext(), CasAuth.class);
+		startActivity(i);
 	}
-
 }

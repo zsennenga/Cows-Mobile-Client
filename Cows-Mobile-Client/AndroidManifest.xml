@@ -38,6 +38,10 @@
             android:name="com.zennenga.cows_mobile_client.RoomEventView"
             android:label="@string/title_activity_room_event_view" >
         </activity>
+        <activity
+            android:name="com.zennenga.cows_mobile_client.CasAuthWebView"
+            android:label="@string/title_activity_cas_auth_web_view" >
+        </activity>
     </application>
 
 </manifest>
