@@ -5,7 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-
+/**
+ * 
+ * MainActivity
+ * 
+ * Program Entry Point, leads to CasAuth and RoomSelect.
+ * 
+ * @author its-zach
+ *
+ */
 public class MainActivity extends Activity {
 
 	@Override
@@ -22,7 +30,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void viewEvents(View v)	{
-		Intent i = new Intent(v.getContext(), RoomEventView.class);
+		Intent i = new Intent(v.getContext(), RoomSelect.class);
 		startActivity(i);
 	}
 	

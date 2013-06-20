@@ -9,5 +9,7 @@
     <string name="title_activity_room_select">RoomSelect</string>
     <string name="title_activity_room_event_view">RoomEventView</string>
     <string name="title_activity_cas_auth_web_view">CasAuthWebView</string>
+    <string name="building_prompt">Please select a building</string>
+    <string name="room_prompt">Please select a room</string>
 
 </resources>
