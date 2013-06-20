@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="View Events" 
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="viewEvents"/>
 
         <Button
             android:id="@+id/button2"
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="Create Event" 
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="doEvents"/>
 
     </LinearLayout>
 
