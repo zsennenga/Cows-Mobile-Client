@@ -24,6 +24,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/back"
-        android:onClick="backHandler" />
+        android:onClick="backHandle" />
 
 </RelativeLayout>

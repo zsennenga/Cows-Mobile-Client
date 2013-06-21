@@ -5,7 +5,6 @@ import android.os.StrictMode;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -64,12 +63,13 @@ public class CasAuth extends Activity {
 					startActivity(i);
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();
+					finish();
 				}
 			}
 		}
 	}
 	
-	public void backHandler()	{
+	public void backHandle(View v)	{
 		cookieManager.removeAllCookie();
 		cookieManager.removeSessionCookie();
 		finish();
