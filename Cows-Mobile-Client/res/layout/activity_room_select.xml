@@ -10,34 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RoomSelect" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.05"
-        android:text="@string/building_select"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Spinner
         android:id="@+id/buildingSelectSpinner"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_height="150dp"
         android:prompt="@string/building_prompt" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.05"
-        android:text="@string/room_select"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <Spinner
         android:id="@+id/roomSelectSpinner"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15" 
+        android:layout_height="150dp"
         android:prompt="@string/room_prompt"/>
 
     <LinearLayout
@@ -45,16 +27,16 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/nextButtonToScheduledEvents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/next" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/backButtonToHomeScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/back" />
 
     </LinearLayout>
 

@@ -1,33 +1,30 @@
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+ 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-    	android:paddingBottom="@dimen/activity_vertical_margin"
-    	android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-   		tools:context=".MainActivity"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".MainActivity" >
 
         <Button
-            android:id="@+id/button1"
-            android:layout_weight=".5"
+            android:id="@+id/createEventButton"
+            style="@style/mainActivityButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="@string/view_events" 
-            android:textSize="50sp"
-            android:onClick="viewEvents"/>
+            android:layout_height="200dp"
+            android:onClick="doEvent"
+            android:text="@string/create_event" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_weight=".5"
+            android:id="@+id/viewEventsButton"
+            style="@style/mainActivityButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="@string/create_event" 
-            android:textSize="50sp"
-            android:onClick="doEvent"/>
+            android:layout_height="200dp"
+            android:onClick="viewEvents"
+            android:text="@string/view_events" />
 
     </LinearLayout>

@@ -16,12 +16,59 @@
     <string name="building_select">Building Select</string>
     <string name="room_select">Room Select</string>
     <string name="submit">Submit</string>
-    
+
+    <string name="next">Next</string>
+    <string name="ucdLogo">UCD Logo</string>
     <string-array name="buildingOptions">
+        <item>Select Building</item>
         <item>1590 Tilia</item>
+        <item>1605 Tilia</item>
+        <item>1715 Tilia</item>
+        <item>215 Sage</item>
     </string-array>
-    <string-array name="roomOptions">
-        <item>1111</item>
+    
+    <string-array name="roomOptionsAll">
+        <item>Select Room</item>	<!-- 1590 Tilia -->
+        <item>1142</item>	<!-- 1590 Tilia -->
+        <item>1142</item>	<!-- 1590 Tilia -->
+        <item>1103</item>	<!-- 1605 Tilia -->
+        <item>1111</item>	<!-- 1605 Tilia -->
+        <item>1162</item>	<!-- 1605 Tilia -->
+        <item>1106</item>	<!-- 1715 Tilia -->
+        <item>1119</item>	<!-- 1715 Tilia -->
+        <item>1121</item>	<!-- 1715 Tilia -->
+        <item>1123</item>	<!-- 1715 Tilia -->
+        <item>1161</item>	<!-- 1715 Tilia -->
+        <item>1104</item>	<!-- 215 Tilia -->
+        <item>1113</item>	<!-- 215 Tilia -->
     </string-array>
+    
+    <string-array name="roomOptions1509">
+        <item>1142</item>	<!-- 1590 Tilia -->
+    </string-array>
+    
+    <string-array name="roomOptions1605">
+        <item>1103</item>	<!-- 1605 Tilia -->
+        <item>1111</item>	<!-- 1605 Tilia -->
+        <item>1162</item>	<!-- 1605 Tilia -->
+    </string-array>
+    
+    <string-array name="roomOptions1715">
+        <item>1106</item>	<!-- 1715 Tilia -->
+        <item>1119</item>	<!-- 1715 Tilia -->
+        <item>1121</item>	<!-- 1715 Tilia -->
+        <item>1123</item>	<!-- 1715 Tilia -->
+        <item>1161</item>	<!-- 1715 Tilia -->
+    </string-array>
+    
+    <string-array name="roomOptions215">
+        <item>1104</item>	<!-- 215 Sage -->
+        <item>1113</item>	<!-- 215 Sage -->
+    </string-array>
+    
+    <string name="title_activity_done_or_more">DoneOrMore</string>
+    <string name="done_creating_events">Done Creating Events</string>
+    <string name="create_more_events">Create More Events</string>
+
 
 </resources>
