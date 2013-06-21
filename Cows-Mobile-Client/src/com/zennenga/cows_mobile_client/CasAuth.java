@@ -48,21 +48,19 @@ public class CasAuth extends Activity {
 	/**
 	 * Takes a cookie and pulls out the CASTGC if it exists, then clears all cookies.
 	 * 
-	 * @param v
+	 * @param View used to create the next activity
 	 */
 	public void checkCookie(View v)	{
 		CookieManager cookieManager = CookieManager.getInstance();
 		final String cookie = cookieManager.getCookie("https://cas.ucdavis.edu/cas");
-		if (cookie != null) Log.e("Cookie", cookie);
 		if (cookie != null && cookie.contains("CASTGC"))	{
 			String[] parts = cookie.split("; ");
 			for (String part : parts)	{
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
-					Log.e("Cookie",pieces[1]);
-					Intent i = new Intent(v.getContext(), MainActivity.class);
+					Intent i = new Intent(v.getContext(), EventCreation.class);
+					i.putExtra("TGC", pieces[1]);
 					startActivity(i);
-					Utility.deauth();
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();
 				}
