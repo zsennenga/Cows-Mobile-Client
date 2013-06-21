@@ -59,7 +59,7 @@ public class RoomSelect extends Activity implements OnItemSelectedListener {
 	public void addListenerOnRoomSelectSpinner() {
 		roomSelectSpinner = (Spinner) findViewById(R.id.roomSelectSpinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		R.array.roomOptionsAll, android.R.layout.simple_spinner_item);
+		R.array.roomOptions, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		roomSelectSpinner.setAdapter(adapter);
 		roomSelectSpinner.setOnItemSelectedListener(new RoomSelectOnItemSelectedListener());
