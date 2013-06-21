@@ -8,29 +8,29 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class RoomSelect extends Activity {
+public class RoomSelect extends Activity implements OnItemSelectedListener {
 	
-	Spinner spin;
+	public Spinner buildingSelectSpinner;
+	public Spinner roomSelectSpinner;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_select);
-		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-		    @Override
-		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	Spinner spinner = (Spinner) findViewById(R.id.spinner2);
-		    	//Set values to all room values n stuff for the given building
-		    }
 
-		    @Override
-		    public void onNothingSelected(AdapterView<?> parentView) {
-		        Spinner spinner = (Spinner) findViewById(R.id.spinner2);
-		        //Clear spinner
-		    }
-		});
+		addListenerOnBuildingSelectSpinner();
+		
 	}
+	
+	public void addListenerOnBuildingSelectSpinner() {
+		  buildingSelectSpinner = (Spinner) findViewById(R.id.buildingSelectSpinner);
+		  buildingSelectSpinner.setOnItemSelectedListener(this);
+    }
+	
+	public void addListenerOnRoomSelectSpinner() {
+		  roomSelectSpinner = (Spinner) findViewById(R.id.roomSelectSpinner);
+		  roomSelectSpinner.setOnItemSelectedListener(this);
+  }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
