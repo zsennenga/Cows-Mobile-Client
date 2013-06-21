@@ -45,6 +45,11 @@ public class CasAuth extends Activity {
 		getMenuInflater().inflate(R.menu.cas_auth, menu);
 		return true;
 	}
+	/**
+	 * Takes a cookie and pulls out the CASTGC if it exists, then clears all cookies.
+	 * 
+	 * @param v
+	 */
 	public void checkCookie(View v)	{
 		CookieManager cookieManager = CookieManager.getInstance();
 		final String cookie = cookieManager.getCookie("https://cas.ucdavis.edu/cas");
@@ -57,6 +62,9 @@ public class CasAuth extends Activity {
 					Log.e("Cookie",pieces[1]);
 					Intent i = new Intent(v.getContext(), MainActivity.class);
 					startActivity(i);
+					Utility.deauth();
+					cookieManager.removeAllCookie();
+					cookieManager.removeSessionCookie();
 				}
 			}
 		}

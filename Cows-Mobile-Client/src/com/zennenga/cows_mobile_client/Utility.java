@@ -9,14 +9,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
-import android.webkit.CookieManager;
 
 public class Utility {
-	public static boolean deauth(CookieManager c, String ticket)	{
+	public static boolean deauth()	{
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		URI url = null;
-		c.removeAllCookie();
-		c.removeSessionCookie();
 		try {
 			url = new URI("https://cas.ucdavis.edu/cas/logout");
 		} catch (URISyntaxException e1) {
@@ -26,7 +23,6 @@ public class Utility {
 		}
 		HttpGet request = new HttpGet();
 		request.setURI(url);
-		c.setCookie("https://cas.ucdavis.edu/cas","CASTGC="+ticket);
 		try {
 			httpclient.execute(request);
 		} catch (ClientProtocolException e) {

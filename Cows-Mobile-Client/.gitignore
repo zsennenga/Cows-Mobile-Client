@@ -9,6 +9,10 @@
 *.so
 *.dex
 *.jar
+*.apk
+*.cache
+*.ap_
+*.dex
 
 # Packages #
 ############
