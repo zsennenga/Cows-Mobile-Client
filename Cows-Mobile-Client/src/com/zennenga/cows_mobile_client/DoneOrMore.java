@@ -2,7 +2,9 @@ package com.zennenga.cows_mobile_client;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class DoneOrMore extends Activity {
 
@@ -18,5 +20,16 @@ public class DoneOrMore extends Activity {
 		getMenuInflater().inflate(R.menu.done_or_more, menu);
 		return true;
 	}
-
+	
+	public void doneHander(View v)	{
+		Utility.deauth();
+		finish();
+	}
+	
+	public void moreHandler(View v)	{
+		Intent i = new Intent(v.getContext(), EventCreation.class);
+		i.putExtra("TGC", getIntent().getStringExtra("TGC"));
+		startActivity(i);
+		finish();
+	}
 }

@@ -26,4 +26,8 @@
 
     <string name="title_activity_done_or_more">DoneOrMore</string>
 
+    <string name="done_creating_events">Done Creating Events</string>
+
+    <string name="create_more_events">Create More Events</string>
+
 </resources>
