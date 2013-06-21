@@ -9,6 +9,8 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class RoomSelect extends Activity {
+	
+	Spinner spin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
