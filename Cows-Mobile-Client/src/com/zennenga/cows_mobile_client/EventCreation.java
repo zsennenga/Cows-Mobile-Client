@@ -14,11 +14,12 @@ import android.view.Menu;
 import android.view.View;
 
 public class EventCreation extends Activity {
-
+	String tgc = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_creation);
+		tgc = getIntent().getStringExtra("TGC");
 	}
 
 	@Override
@@ -39,11 +40,49 @@ public class EventCreation extends Activity {
 	}
 	
 	public void submitHandler(View v)	{
-		String tgc = getIntent().getStringExtra("TGC");
+		String response = doEvent(tgc);
+		
+		if (response == null)	{
+			//State http/script error
+			return;
+		}
+		
+		String[] pieces = response.split(":", 1);
+		
+		if (!pieces[0].equals("0"))	{
+			switch(Integer.parseInt(pieces[0]))	{
+			case -1:
+				break;
+			case -2:
+				Intent i = new Intent(v.getContext(), CasAuth.class);
+				i.putExtra("retryingAuth",true);
+				startActivity(i);
+				//Wait for activity to finish, set this.tgc to Utility.tgc
+				this.tgc = Utility.ticket;
+				submitHandler(v);
+				return;
+			case -3:
+				//try again, event wrong
+				return;
+			case -4:
+				//Try again
+				return;
+			default:
+				//Try again
+				return;
+			}
+		}
+		else	{
+			Intent i = new Intent(v.getContext(), DoneOrMore.class);
+			i.putExtra("TGC", tgc);	
+			startActivity(i);
+			finish();
+		}
+	}
+
+	private String doEvent(String tgc) {
 		String getString = "?ticket=" + tgc;
 		HttpResponse out = null;
-		//TODO: add event information to getString
-		
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet("http://128.120.151.3/development/CowsMobileProxy.php" + getString);
 		
@@ -55,26 +94,7 @@ public class EventCreation extends Activity {
 			e.printStackTrace();
 		}
 		
-		String[] pieces = out.toString().split(":", 1);
-		
-		if (!pieces[0].equals("0"))	{
-			switch(Integer.parseInt(pieces[0]))	{
-				case -1:
-					break;
-				case -2:
-					break;
-				case -3:
-					break;
-				case -4:
-					break;
-				default:
-					break;
-			}
-		}
-		
-		Intent i = new Intent(v.getContext(), DoneOrMore.class);
-		i.putExtra("TGC", tgc);
-		startActivity(i);
+		return out.toString();
 	}
 
 }
