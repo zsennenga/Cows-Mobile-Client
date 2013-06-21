@@ -13,10 +13,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class CasAuth extends Activity {
-
+	CookieManager cookieManager;
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		//Allow network in main thread
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
@@ -37,6 +38,7 @@ public class CasAuth extends Activity {
 			       checkCookie(view);
 			   }
 		});
+		this.cookieManager = CookieManager.getInstance();
 	}
 
 	@Override
@@ -51,7 +53,6 @@ public class CasAuth extends Activity {
 	 * @param View used to create the next activity
 	 */
 	public void checkCookie(View v)	{
-		CookieManager cookieManager = CookieManager.getInstance();
 		final String cookie = cookieManager.getCookie("https://cas.ucdavis.edu/cas");
 		if (cookie != null && cookie.contains("CASTGC"))	{
 			String[] parts = cookie.split("; ");
@@ -66,5 +67,11 @@ public class CasAuth extends Activity {
 				}
 			}
 		}
+	}
+	
+	public void backHandler()	{
+		cookieManager.removeAllCookie();
+		cookieManager.removeSessionCookie();
+		finish();
 	}
 }

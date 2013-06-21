@@ -11,17 +11,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="126dp"
-        android:layout_marginTop="110dp"
-        android:orientation="vertical" >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
 
@@ -29,13 +18,15 @@
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/submit" />
+            android:text="@string/submit"
+            android:onClick="submitHandler" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/back" />
+            android:text="@string/back"
+            android:onClick="backHandler" />
 
     </LinearLayout>
 
