@@ -18,7 +18,7 @@
     <string name="submit">Submit</string>
     <string name="next">Next</string>
     <string name="ucdLogo">UCD Logo</string>
-    
+
     <string-array name="buildingOptions">
         <item>Select Building</item>
         <item>1590 Tilia</item>
@@ -49,7 +49,7 @@
     
     <string-array name="roomOptions1605">
         <item>1103</item>	<!-- 1605 Tilia -->
-        <item>1111</item>	<!-- 1605 Tilia -->
+        <item>1111</item>
         <item>1162</item>	<!-- 1605 Tilia -->
     </string-array>
     
