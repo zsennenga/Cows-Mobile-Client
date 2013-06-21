@@ -18,7 +18,6 @@
     <string name="submit">Submit</string>
     <string name="next">Next</string>
     <string name="ucdLogo">UCD Logo</string>
-
     <string-array name="buildingOptions">
         <item>Select Building</item>
         <item>1590 Tilia</item>
