@@ -12,7 +12,6 @@ public class RoomSelect extends Activity {
 	
 	Spinner spin;
     
-	Spinner test;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,7 +31,6 @@ public class RoomSelect extends Activity {
 		    }
 		});
 	}
-	//suckaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
