@@ -16,5 +16,12 @@
     <string name="building_select">Building Select</string>
     <string name="room_select">Room Select</string>
     <string name="submit">Submit</string>
+    
+    <string-array name="buildingOptions">
+        <item>1590 Tilia</item>
+    </string-array>
+    <string-array name="roomOptions">
+        <item>1111</item>
+    </string-array>
 
 </resources>
