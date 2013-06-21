@@ -36,4 +36,8 @@ public class Utility {
 		}
 		return true;
 	}
+	
+	public static String getString(String field,String value)	{
+		return "&" + field + "=" + value;
+	}
 }

@@ -22,7 +22,12 @@ public class DoneOrMore extends Activity {
 	}
 	
 	public void doneHander(View v)	{
-		Utility.deauth();
+		int i = 0;
+		while (!Utility.deauth())	{
+			Utility.deauth();
+			if (i > 10) break;
+			i++;
+		}
 		finish();
 	}
 	

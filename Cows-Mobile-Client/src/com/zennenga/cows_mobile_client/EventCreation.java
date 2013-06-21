@@ -22,12 +22,18 @@ public class EventCreation extends Activity {
 	}
 	
 	public void backHandler(View v)	{
-		Utility.deauth();
+		int i = 0;
+		while (!Utility.deauth())	{
+			Utility.deauth();
+			if (i > 10) break;
+			i++;
+		}
 		finish();
 	}
 	
 	public void submitHandler(View v)	{
 		String tgc = getIntent().getStringExtra("TGC");
+		String getString = "ticket=" + tgc;
 		Intent i = new Intent(v.getContext(), DoneOrMore.class);
 		i.putExtra("TGC", tgc);
 		finish();
