@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 public class CasAuth extends Activity {
 	CookieManager cookieManager;
@@ -37,7 +38,15 @@ public class CasAuth extends Activity {
 			       checkCookie(view);
 			   }
 		});
+		if (getIntent().getBooleanExtra("retryingAuth", false))	{
+			setError("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.");
+		}
 		this.cookieManager = CookieManager.getInstance();
+	}
+
+	private void setError(String error)	{
+		((TextView)findViewById(R.id.error)).setText(error);
+		return;
 	}
 
 	@Override
@@ -59,14 +68,10 @@ public class CasAuth extends Activity {
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
 					//If we are NOT retrying auth due to an error, create an EventCreation activity and pass TGC to it
+					Intent i = new Intent(v.getContext(), EventCreation.class);
+					i.putExtra("TGC", pieces[1]);
 					if (!getIntent().getBooleanExtra("retryingAuth", false))	{
-						Intent i = new Intent(v.getContext(), EventCreation.class);
-						i.putExtra("TGC", pieces[1]);
 						startActivity(i);
-					}
-					//Otherwise put it in utility
-					else	{
-						Utility.ticket = pieces[1];
 					}
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();
