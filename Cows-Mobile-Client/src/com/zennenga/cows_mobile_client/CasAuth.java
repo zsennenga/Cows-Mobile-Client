@@ -10,17 +10,14 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 public class CasAuth extends Activity {
 	CookieManager cookieManager;
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		//Allow network in main thread
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-		
+
 		//Android Stuff
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cas_auth);
@@ -33,11 +30,19 @@ public class CasAuth extends Activity {
 		myWebView.getSettings().setSaveFormData(false);
 		myWebView.setWebViewClient(new WebViewClient() {
 			   public void onPageFinished(WebView view, String url) {
-				   //check if was 200 else reload or something
+				   //TODO: check for response code 200 else reload
 			       checkCookie(view);
 			   }
 		});
+		if (getIntent().getBooleanExtra("retryingAuth", false))	{
+			setError("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.");
+		}
 		this.cookieManager = CookieManager.getInstance();
+	}
+
+	private void setError(String error)	{
+		((TextView)findViewById(R.id.error)).setText(error);
+		return;
 	}
 
 	@Override
@@ -59,14 +64,10 @@ public class CasAuth extends Activity {
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
 					//If we are NOT retrying auth due to an error, create an EventCreation activity and pass TGC to it
+					Intent i = new Intent(v.getContext(), EventCreation.class);
+					i.putExtra("TGC", pieces[1]);
 					if (!getIntent().getBooleanExtra("retryingAuth", false))	{
-						Intent i = new Intent(v.getContext(), EventCreation.class);
-						i.putExtra("TGC", pieces[1]);
 						startActivity(i);
-					}
-					//Otherwise put it in utility
-					else	{
-						Utility.ticket = pieces[1];
 					}
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();

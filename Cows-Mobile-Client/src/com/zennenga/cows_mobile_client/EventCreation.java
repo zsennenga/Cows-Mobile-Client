@@ -12,21 +12,38 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 public class EventCreation extends Activity {
 	String tgc = "";
+	View temp = null;
+	int tries = 0;
+	String recurrence = "";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
+		recurrence = "";
 	}
 
-	@Override
+	@Override	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.event_creation, menu);
 		return true;
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent d)	{
+		if (requestCode == 1)	{
+			this.tgc = d.getStringExtra("tgc");
+			submitHandler(this.temp);
+		}
+		else if (requestCode == 2)	{
+			this.recurrence = d.getStringExtra("recurrence");
+		}
+		return;
 	}
 	
 	public void backHandler(View v)	{
@@ -43,7 +60,7 @@ public class EventCreation extends Activity {
 		String response = doEvent(tgc);
 		
 		if (response == null)	{
-			//State http/script error
+			setError("Invalid response from server.");
 			return;
 		}
 		
@@ -52,36 +69,60 @@ public class EventCreation extends Activity {
 		if (!pieces[0].equals("0"))	{
 			switch(Integer.parseInt(pieces[0]))	{
 			case -1:
-				break;
+				//Generic error
+				setError("Error: " + pieces[1] + " Please retry your submission.");
+				return;
 			case -2:
+				//Failed Auth
 				Intent i = new Intent(v.getContext(), CasAuth.class);
 				i.putExtra("retryingAuth",true);
-				startActivity(i);
-				//Wait for activity to finish, set this.tgc to Utility.tgc
-				this.tgc = Utility.ticket;
-				submitHandler(v);
+				i.putExtra("error", pieces[1]);
+				startActivityForResult(i, 1);
+				this.temp = v;
 				return;
 			case -3:
-				//try again, event wrong
+				//Event Error
+				setError("Event error: " + pieces[1] + " Please fix this error, and retry your submission.");
 				return;
 			case -4:
-				//Try again
+				//cURL error
+				this.tries++;
+				if (this.tries >= 5)	{
+					setError("Network Error: " + pieces[1]);
+					return;
+				}
+				else submitHandler(v);
 				return;
 			default:
-				//Try again
+				//Generic Error
+				setError("Error: " + pieces[1]);
 				return;
 			}
 		}
 		else	{
+			setError("");
+			this.tries = 0;
 			Intent i = new Intent(v.getContext(), DoneOrMore.class);
 			i.putExtra("TGC", tgc);	
 			startActivity(i);
 			finish();
 		}
 	}
+	
+	private void setError(String error)	{
+		((TextView)findViewById(R.id.error)).setText(error);
+		return;
+	}
+	
+	public void doRecurrence(View v)	{
+		Intent i = new Intent(v.getContext(), Recurrence.class);
+		i.putExtra("recurrence",this.recurrence);
+		startActivityForResult(i, 2);
+	}
 
 	private String doEvent(String tgc) {
 		String getString = "?ticket=" + tgc;
+		//TODO: fill out getString
 		HttpResponse out = null;
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet("http://128.120.151.3/development/CowsMobileProxy.php" + getString);

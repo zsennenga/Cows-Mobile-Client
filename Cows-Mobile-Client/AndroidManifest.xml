@@ -44,6 +44,10 @@
             android:name="com.zennenga.cows_mobile_client.DoneOrMore"
             android:label="@string/title_activity_done_or_more" >
         </activity>
+        <activity
+            android:name="com.zennenga.cows_mobile_client.Recurrence"
+            android:label="@string/title_activity_recurrence" >
+        </activity>
     </application>
 
 </manifest>
