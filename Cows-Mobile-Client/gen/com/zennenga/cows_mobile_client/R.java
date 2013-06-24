@@ -10,6 +10,9 @@ package com.zennenga.cows_mobile_client;
 public final class R {
     public static final class array {
         public static final int buildingOptions=0x7f060000;
+        /**  215 Tilia 
+         */
+        public static final int roomOptions=0x7f060001;
         /**  1590 Tilia 
          */
         public static final int roomOptions1509=0x7f060002;
@@ -22,9 +25,6 @@ public final class R {
         /**  215 Sage 
          */
         public static final int roomOptions215=0x7f060005;
-        /**  215 Tilia 
-         */
-        public static final int roomOptionsAll=0x7f060001;
     }
     public static final class attr {
     }
@@ -57,17 +57,19 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_cas_auth=0x7f030000;
-        public static final int activity_event_creation=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_room_event_view=0x7f030003;
-        public static final int activity_room_select=0x7f030004;
+        public static final int activity_done_or_more=0x7f030001;
+        public static final int activity_event_creation=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_room_event_view=0x7f030004;
+        public static final int activity_room_select=0x7f030005;
     }
     public static final class menu {
         public static final int cas_auth=0x7f080000;
-        public static final int event_creation=0x7f080001;
-        public static final int main=0x7f080002;
-        public static final int room_event_view=0x7f080003;
-        public static final int room_select=0x7f080004;
+        public static final int done_or_more=0x7f080001;
+        public static final int event_creation=0x7f080002;
+        public static final int main=0x7f080003;
+        public static final int room_event_view=0x7f080004;
+        public static final int room_select=0x7f080005;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;

@@ -11,6 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.util.Log;
 
 public class Utility {
+	static String ticket = "";
 	public static boolean deauth()	{
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		URI url = null;
@@ -35,5 +36,9 @@ public class Utility {
 			return false;
 		}
 		return true;
+	}
+	
+	public static String getString(String field,String value)	{
+		return "&" + field + "=" + value;
 	}
 }

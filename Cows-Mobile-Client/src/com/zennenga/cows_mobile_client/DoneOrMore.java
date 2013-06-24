@@ -6,37 +6,35 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 
-/**
- * 
- * MainActivity
- * 
- * Program Entry Point, leads to CasAuth and RoomSelect.
- * 
- * @author its-zach
- *
- */
-public class MainActivity extends Activity {
+public class DoneOrMore extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_done_or_more);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.done_or_more, menu);
 		return true;
 	}
 	
-	public void viewEvents(View v)	{
-		Intent i = new Intent(v.getContext(), RoomSelect.class);
-		startActivity(i);
+	public void doneHander(View v)	{
+		int i = 0;
+		while (!Utility.deauth())	{
+			Utility.deauth();
+			if (i > 10) break;
+			i++;
+		}
+		finish();
 	}
 	
-	public void doEvent(View v)	{
-		Intent i = new Intent(v.getContext(), CasAuth.class);
+	public void moreHandler(View v)	{
+		Intent i = new Intent(v.getContext(), EventCreation.class);
+		i.putExtra("TGC", getIntent().getStringExtra("TGC"));
 		startActivity(i);
+		finish();
 	}
 }

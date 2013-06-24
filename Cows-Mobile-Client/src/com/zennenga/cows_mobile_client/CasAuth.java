@@ -5,7 +5,6 @@ import android.os.StrictMode;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -13,10 +12,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class CasAuth extends Activity {
-
+	CookieManager cookieManager;
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		//Allow network in main thread
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
@@ -37,6 +37,7 @@ public class CasAuth extends Activity {
 			       checkCookie(view);
 			   }
 		});
+		this.cookieManager = CookieManager.getInstance();
 	}
 
 	@Override
@@ -51,20 +52,33 @@ public class CasAuth extends Activity {
 	 * @param View used to create the next activity
 	 */
 	public void checkCookie(View v)	{
-		CookieManager cookieManager = CookieManager.getInstance();
 		final String cookie = cookieManager.getCookie("https://cas.ucdavis.edu/cas");
 		if (cookie != null && cookie.contains("CASTGC"))	{
 			String[] parts = cookie.split("; ");
 			for (String part : parts)	{
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
-					Intent i = new Intent(v.getContext(), EventCreation.class);
-					i.putExtra("TGC", pieces[1]);
-					startActivity(i);
+					//If we are NOT retrying auth due to an error, create an EventCreation activity and pass TGC to it
+					if (!getIntent().getBooleanExtra("retryingAuth", false))	{
+						Intent i = new Intent(v.getContext(), EventCreation.class);
+						i.putExtra("TGC", pieces[1]);
+						startActivity(i);
+					}
+					//Otherwise put it in utility
+					else	{
+						Utility.ticket = pieces[1];
+					}
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();
+					finish();
 				}
 			}
 		}
+	}
+	
+	public void backHandle(View v)	{
+		cookieManager.removeAllCookie();
+		cookieManager.removeSessionCookie();
+		finish();
 	}
 }
