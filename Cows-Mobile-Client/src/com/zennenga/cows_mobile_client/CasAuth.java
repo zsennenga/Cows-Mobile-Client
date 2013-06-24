@@ -34,7 +34,7 @@ public class CasAuth extends Activity {
 		myWebView.getSettings().setSaveFormData(false);
 		myWebView.setWebViewClient(new WebViewClient() {
 			   public void onPageFinished(WebView view, String url) {
-				   //check if was 200 else reload or something
+				   //TODO: check for response code 200 else reload
 			       checkCookie(view);
 			   }
 		});
