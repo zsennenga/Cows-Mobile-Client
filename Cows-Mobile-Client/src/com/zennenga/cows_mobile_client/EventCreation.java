@@ -18,11 +18,14 @@ public class EventCreation extends Activity {
 	String tgc = "";
 	View temp = null;
 	int tries = 0;
+	String recurrence = "";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
+		recurrence = "";
 	}
 
 	@Override	
@@ -33,8 +36,14 @@ public class EventCreation extends Activity {
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent d)	{
-		this.tgc = d.getStringExtra("tgc");
-		submitHandler(this.temp);
+		if (requestCode == 1)	{
+			this.tgc = d.getStringExtra("tgc");
+			submitHandler(this.temp);
+		}
+		else if (requestCode == 2)	{
+			this.recurrence = d.getStringExtra("recurrence");
+		}
+		return;
 	}
 	
 	public void backHandler(View v)	{
@@ -103,6 +112,12 @@ public class EventCreation extends Activity {
 	private void setError(String error)	{
 		((TextView)findViewById(R.id.error)).setText(error);
 		return;
+	}
+	
+	public void doRecurrence(View v)	{
+		Intent i = new Intent(v.getContext(), Recurrence.class);
+		i.putExtra("recurrence",this.recurrence);
+		startActivityForResult(i, 2);
 	}
 
 	private String doEvent(String tgc) {
