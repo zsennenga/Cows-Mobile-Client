@@ -51,7 +51,7 @@ public class EventCreation extends Activity {
 		String response = doEvent(tgc);
 		
 		if (response == null)	{
-			//State http/script error
+			setError("Invalid response from server.");
 			return;
 		}
 		
