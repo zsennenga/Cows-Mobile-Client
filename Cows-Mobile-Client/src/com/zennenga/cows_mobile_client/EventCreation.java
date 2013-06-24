@@ -116,7 +116,7 @@ public class EventCreation extends Activity {
 	
 	public void doRecurrence(View v)	{
 		Intent i = new Intent(v.getContext(), Recurrence.class);
-		i.putExtra("recurrence",this.recurrence);
+		i.putExtra("recurrenceIn",this.recurrence);
 		startActivityForResult(i, 2);
 	}
 

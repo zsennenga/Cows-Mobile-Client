@@ -43,17 +43,50 @@ public final class R {
         public static final int ucd_logo=0x7f020001;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f090005;
-        public static final int action_settings=0x7f09000a;
-        public static final int backButtonToHomeScreen=0x7f090009;
-        public static final int buildingSelectSpinner=0x7f090006;
-        public static final int button1=0x7f090001;
-        public static final int button2=0x7f090002;
-        public static final int createEventButton=0x7f090003;
-        public static final int nextButtonToScheduledEvents=0x7f090008;
-        public static final int roomSelectSpinner=0x7f090007;
-        public static final int viewEventsButton=0x7f090004;
-        public static final int webView=0x7f090000;
+        public static final int Categories=0x7f09001a;
+        public static final int Description =0x7f090014;
+        public static final int EndDate=0x7f09000e;
+        public static final int EndTime=0x7f09000d;
+        public static final int EventType=0x7f090017;
+        public static final int LinearLayout1=0x7f090026;
+        public static final int Locations=0x7f090020;
+        public static final int Notes=0x7f09001d;
+        public static final int Phone=0x7f090011;
+        public static final int Recurrence=0x7f090021;
+        public static final int StartDate=0x7f09000b;
+        public static final int StartTime=0x7f09000a;
+        public static final int Title=0x7f090008;
+        public static final int a=0x7f090006;
+        public static final int aa=0x7f090000;
+        public static final int action_settings=0x7f09002b;
+        public static final int b=0x7f09000f;
+        public static final int backButtonToHomeScreen=0x7f09002a;
+        public static final int buildingSelectSpinner=0x7f090027;
+        public static final int button1=0x7f090003;
+        public static final int button2=0x7f090004;
+        public static final int c=0x7f090012;
+        public static final int createEventButton=0x7f090023;
+        public static final int d=0x7f090015;
+        public static final int error=0x7f090001;
+        public static final int f=0x7f090018;
+        public static final int g=0x7f09001b;
+        public static final int h=0x7f09001e;
+        public static final int linearLayout1=0x7f090022;
+        public static final int nextButtonToScheduledEvents=0x7f090029;
+        public static final int roomSelectSpinner=0x7f090028;
+        public static final int s=0x7f090005;
+        public static final int testString=0x7f090025;
+        public static final int textView1=0x7f090007;
+        public static final int textView2=0x7f090009;
+        public static final int textView3=0x7f09000c;
+        public static final int textView4=0x7f090010;
+        public static final int textView5=0x7f090013;
+        public static final int textView6=0x7f090016;
+        public static final int textView7=0x7f090019;
+        public static final int textView8=0x7f09001c;
+        public static final int textView9=0x7f09001f;
+        public static final int viewEventsButton=0x7f090024;
+        public static final int webView=0x7f090002;
     }
     public static final class layout {
         public static final int activity_cas_auth=0x7f030000;
@@ -68,8 +101,9 @@ public final class R {
         public static final int done_or_more=0x7f080001;
         public static final int event_creation=0x7f080002;
         public static final int main=0x7f080003;
-        public static final int room_event_view=0x7f080004;
-        public static final int room_select=0x7f080005;
+        public static final int recurrence=0x7f080004;
+        public static final int room_event_view=0x7f080005;
+        public static final int room_select=0x7f080006;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -88,6 +122,7 @@ public final class R {
         public static final int title_activity_cas_auth=0x7f050003;
         public static final int title_activity_done_or_more=0x7f050011;
         public static final int title_activity_event_creation=0x7f050004;
+        public static final int title_activity_recurrence=0x7f050014;
         public static final int title_activity_room_event_view=0x7f050006;
         public static final int title_activity_room_select=0x7f050005;
         public static final int ucdLogo=0x7f050010;

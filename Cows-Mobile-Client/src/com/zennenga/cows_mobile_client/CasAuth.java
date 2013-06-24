@@ -64,10 +64,16 @@ public class CasAuth extends Activity {
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
 					//If we are NOT retrying auth due to an error, create an EventCreation activity and pass TGC to it
-					Intent i = new Intent(v.getContext(), EventCreation.class);
-					i.putExtra("TGC", pieces[1]);
+					
 					if (!getIntent().getBooleanExtra("retryingAuth", false))	{
+						Intent i = new Intent(v.getContext(), EventCreation.class);
+						i.putExtra("TGC", pieces[1]);
 						startActivity(i);
+					}
+					else	{
+						Intent i = new Intent();
+						i.putExtra("TGC", pieces[1]);
+						this.setResult(RESULT_OK, i);
 					}
 					cookieManager.removeAllCookie();
 					cookieManager.removeSessionCookie();
