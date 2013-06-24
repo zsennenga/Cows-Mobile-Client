@@ -17,11 +17,7 @@ public class CasAuth extends Activity {
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		//Allow network in main thread
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-		
+
 		//Android Stuff
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cas_auth);
