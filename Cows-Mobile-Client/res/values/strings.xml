@@ -27,61 +27,42 @@
         <item>215 Sage</item>
     </string-array>
     <string-array name="roomOptions">
-        <item>Select Room</item>
- <!-- 1590 Tilia -->
+        <item>Select Any Room</item>
         <item>1142</item>
- <!-- 1590 Tilia -->
         <item>1142</item>
- <!-- 1590 Tilia -->
         <item>1103</item>
- <!-- 1605 Tilia -->
         <item>1111</item>
- <!-- 1605 Tilia -->
         <item>1162</item>
- <!-- 1605 Tilia -->
         <item>1106</item>
- <!-- 1715 Tilia -->
         <item>1119</item>
- <!-- 1715 Tilia -->
         <item>1121</item>
- <!-- 1715 Tilia -->
         <item>1123</item>
- <!-- 1715 Tilia -->
         <item>1161</item>
- <!-- 1715 Tilia -->
         <item>1104</item>
- <!-- 215 Tilia -->
         <item>1113</item>
- <!-- 215 Tilia -->
     </string-array>
-    <string-array name="roomOptions1509">
+    <string-array name="roomOptions1590">
+        <item>Select Room in 1590 Tilia</item>
         <item>1142</item>
- <!-- 1590 Tilia -->
     </string-array>
     <string-array name="roomOptions1605">
+        <item>Select Room in 1605 Tilia</item>
         <item>1103</item>
- <!-- 1605 Tilia -->
         <item>1111</item>
         <item>1162</item>
- <!-- 1605 Tilia -->
     </string-array>
     <string-array name="roomOptions1715">
+        <item>Select Room in 1715 Tilia</item>
         <item>1106</item>
- <!-- 1715 Tilia -->
         <item>1119</item>
- <!-- 1715 Tilia -->
         <item>1121</item>
- <!-- 1715 Tilia -->
         <item>1123</item>
- <!-- 1715 Tilia -->
         <item>1161</item>
- <!-- 1715 Tilia -->
     </string-array>
     <string-array name="roomOptions215">
+        <item>Select Room in 215 Sage</item>
         <item>1104</item>
- <!-- 215 Sage -->
         <item>1113</item>
- <!-- 215 Sage -->
     </string-array>
 
     <string name="title_activity_done_or_more">DoneOrMore</string>

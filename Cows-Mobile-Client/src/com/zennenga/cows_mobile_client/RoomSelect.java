@@ -5,16 +5,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 
-public class RoomSelect extends Activity implements OnItemSelectedListener {
+public class RoomSelect extends Activity {
 	
-	public Spinner buildingSelectSpinner;
-	public Spinner roomSelectSpinner;
+	private Spinner buildingSelectSpinner;
+	private Spinner roomSelectSpinner;
+	private DatePicker datePicker;
+	public int day, year, month;
+	BuildingSelectOnItemSelectedListener buildingSelectListener;
+	RoomSelectOnItemSelectedListener roomSelectListener;
+	
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +27,16 @@ public class RoomSelect extends Activity implements OnItemSelectedListener {
 
 		addListenerOnNextButton();
 		addListenerOnBackButton();
-		addListenerOnBuildingSelectSpinner();
 		addListenerOnRoomSelectSpinner();
-		
+		addListenerOnBuildingSelectSpinner();
+		getDateFromDatePicker();
+	}
+	
+	public void getDateFromDatePicker() {
+		datePicker = (DatePicker) findViewById(R.id.eventDatePicker);
+		day = datePicker.getDayOfMonth();
+		month = datePicker.getMonth();
+		year = datePicker.getYear();
 	}
 	
 	public void addListenerOnNextButton() {
@@ -33,6 +44,11 @@ public class RoomSelect extends Activity implements OnItemSelectedListener {
 		nextButton.setOnClickListener(new View.OnClickListener() {
 	        public void onClick(View v) {
 	        	Intent i = new Intent(v.getContext(), RoomEventView.class);
+	        	i.putExtra("day", day);
+	        	i.putExtra("month", month);
+	        	i.putExtra("year", year);
+	        	i.putExtra("building", buildingSelectListener.getBuildingSelected());
+	        	i.putExtra("room", roomSelectListener.getRoomSelected());
 	    		startActivity(i);
 	        }
 	    });
@@ -48,21 +64,26 @@ public class RoomSelect extends Activity implements OnItemSelectedListener {
 	}
 	
 	public void addListenerOnBuildingSelectSpinner() {
+		buildingSelectListener = new BuildingSelectOnItemSelectedListener();
+		buildingSelectListener.setRoomSelectListener(roomSelectListener);
+		buildingSelectListener.setRoomSpinner(roomSelectSpinner);
+		buildingSelectListener.setRoomContext(this);
+		
 		buildingSelectSpinner = (Spinner) findViewById(R.id.buildingSelectSpinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		R.array.buildingOptions, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		buildingSelectSpinner.setAdapter(adapter);
-		buildingSelectSpinner.setOnItemSelectedListener(new BuildingSelectOnItemSelectedListener());
+		buildingSelectSpinner.setOnItemSelectedListener(buildingSelectListener);
     }
 	
 	public void addListenerOnRoomSelectSpinner() {
+		//Sets a listener on room selct spinner, but buildingSelectListener also has control
+		roomSelectListener = new RoomSelectOnItemSelectedListener();
 		roomSelectSpinner = (Spinner) findViewById(R.id.roomSelectSpinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		R.array.roomOptions, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		roomSelectSpinner.setAdapter(adapter);
-		roomSelectSpinner.setOnItemSelectedListener(new RoomSelectOnItemSelectedListener());
+		//The adapter would be here but it gets set in building based on
+		//what builing was selected
+		roomSelectSpinner.setOnItemSelectedListener(roomSelectListener);
     }
 	
 	@Override
@@ -70,19 +91,6 @@ public class RoomSelect extends Activity implements OnItemSelectedListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.room_select, menu);
 		return true;
-	}
-
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

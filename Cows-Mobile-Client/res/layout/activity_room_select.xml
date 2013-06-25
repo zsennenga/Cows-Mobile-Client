@@ -13,14 +13,20 @@
     <Spinner
         android:id="@+id/buildingSelectSpinner"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:prompt="@string/building_prompt" />
-    
+
     <Spinner
         android:id="@+id/roomSelectSpinner"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:prompt="@string/room_prompt"/>
+        android:layout_height="100dp"
+        android:prompt="@string/room_prompt" />
+
+    <DatePicker
+        android:id="@+id/eventDatePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"  />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,16 +34,17 @@
 
         <Button
             android:id="@+id/nextButtonToScheduledEvents"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next" />
 
         <Button
             android:id="@+id/backButtonToHomeScreen"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back" />
-
     </LinearLayout>
 
 </LinearLayout>
