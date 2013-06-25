@@ -27,6 +27,11 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		recurrence = "";
+		//TODO: setup MultiSelectSpinners
+		MultiSelectSpinner spinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
+		spinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
+		spinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
+		spinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
 	}
 
 	@Override	

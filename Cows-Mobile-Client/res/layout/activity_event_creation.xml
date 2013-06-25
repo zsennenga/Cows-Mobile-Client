@@ -1,8 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/s"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,17 +14,17 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".EventCreation" >
 
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:id="@+id/a"
@@ -144,10 +144,11 @@
                     android:text="@string/event_types_"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <com.zennenga.cows_mobile_client.MultiSelectSpinner
-                    android:id="@+id/EventType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <Spinner
+                    android:id="@+id/eventType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -203,7 +204,7 @@
                 <com.zennenga.cows_mobile_client.MultiSelectSpinner
                     android:id="@+id/Locations"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <Button
@@ -226,7 +227,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="submitHandler"
-                android:text="@string/submit" />
+                android:text="@string/submit"/>
 
             <Button
                 android:id="@+id/button2"
