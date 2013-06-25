@@ -64,6 +64,24 @@
         <item>1104</item>
         <item>1113</item>
     </string-array>
+    <string-array name="EventTypes">
+        <item>Board Meeting</item>
+        <item>China Center</item>
+        <item>CWEE Meetings</item>
+        <item>EEC Meetings</item>
+        <item>EI Seminars</item>
+        <item>Energy Institute Meetings</item>
+        <item>ITS Friday Seminars</item>
+        <item>Maintenance/Other</item>
+        <item>ITS Meetings</item>
+        <item>NextSTEPS Seminars</item>
+        <item>Office Hours</item>
+        <item>Other ITS Seminars</item>
+        <item>PHEV</item>
+        <item>Policy Institute</item>
+        <item>NextSTEPS</item>
+        <item>WCEC Meetings</item>
+    </string-array>
 
     <string name="title_activity_done_or_more">DoneOrMore</string>
     <string name="done_creating_events">Done Creating Events</string>

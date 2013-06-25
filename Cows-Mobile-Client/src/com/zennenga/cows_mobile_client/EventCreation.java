@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class EventCreation extends Activity {
@@ -27,13 +29,16 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		recurrence = "";
-		//TODO: setup MultiSelectSpinners
-		MultiSelectSpinner spinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
-		spinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
-		spinner.setSelection(0);
-		spinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
-		spinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
-		spinner.setSelection(0);
+		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
+		multiSpinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
+		multiSpinner.setSelection(0);
+		multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
+		multiSpinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
+		multiSpinner.setSelection(0);
+		Spinner spinner = (Spinner) findViewById(R.id.eventType);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.EventTypes, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
 	}
 
 	@Override	
