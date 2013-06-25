@@ -19,9 +19,10 @@ import android.widget.TextView;
 
 public class EventCreation extends Activity {
 	String tgc = "";
+	String parameters = "";
+	String recurrence = "";
 	View temp = null;
 	int tries = 0;
-	String recurrence = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +137,7 @@ public class EventCreation extends Activity {
 		return;
 	}
 	/**
-	 * Parse recurrence data
+	 * Setup recurrence
 	 * 
 	 * @param v
 	 */
@@ -152,11 +153,11 @@ public class EventCreation extends Activity {
 	 * @return Response from Cows-Mobile-Server
 	 */
 	private String doEvent(String tgc) {
-		String getString = "?ticket=" + tgc;
-		//TODO: fill out getString
+		String ticketString = "?ticket=" + tgc;
+		if (!this.parseParameters()) return "-3:" + this.parameters;
 		HttpResponse out = null;
 		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet("http://128.120.151.3/development/CowsMobileProxy.php" + getString);
+		HttpGet request = new HttpGet("http://128.120.151.3/development/CowsMobileProxy.php" + ticketString + setupRecurrence() + this.parameters);
 		
 		try {
 			out = client.execute(request);
@@ -167,6 +168,58 @@ public class EventCreation extends Activity {
 		}
 		
 		return Utility.httpResponseToString(out);
+	}
+
+	private String setupRecurrence() {
+		if (this.recurrence.equals("")) {
+			String retString = "";
+			//TODO: setup default retString
+			return retString;
+		}
+		else return this.recurrence;
+	}
+
+	private boolean parseParameters() {
+		if (!parseAndValidateText(R.id.Title)) return false;
+		if (!parseAndValidateText(R.id.Description)) return false;
+		if (!parseAndValidateSpinner(R.id.eventType)) return false;
+		if (!parseAndValidateSpinner(R.id.Categories)) return false;
+		if (!parseAndValidatePhone(R.id.Phone)) return false;
+		if (!parseAndValidateTimes(R.id.StartTime,R.id.EndTime)) return false;
+		if (!parseAndValidateDates(R.id.StartDate,R.id.EndDate)) return false;
+		return true;
+	}
+
+	private boolean parseAndValidateDates(int startdate, int enddate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean parseAndValidateTimes(int starttime, int endtime) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean parseAndValidatePhone(int field) {
+		// TODO write this function
+		return false;
+	}
+
+	private boolean parseAndValidateSpinner(int field) {
+		//TODO: write this function
+		return true;
+	}
+
+	private boolean parseAndValidateText(int field) {
+		String value = ((TextView)findViewById(field)).getText().toString();
+		if (value.equals(""))	{
+				this.parameters = " cannot be blank";
+				return false;
+		}
+		else	{
+			this.parameters += Utility.getString(findViewById(field).getTag().toString(), value);
+			return true;
+		}
 	}
 
 }
