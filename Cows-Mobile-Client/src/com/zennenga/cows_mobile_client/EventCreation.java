@@ -10,6 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -34,7 +35,9 @@ public class EventCreation extends Activity {
 		getMenuInflater().inflate(R.menu.event_creation, menu);
 		return true;
 	}
-	
+	/**
+	 * Handle cas reauthentication and recurrence configuration
+	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent d)	{
 		if (requestCode == 1)	{
 			this.tgc = d.getStringExtra("tgc");
@@ -45,7 +48,10 @@ public class EventCreation extends Activity {
 		}
 		return;
 	}
-	
+	/**
+	 * Handle the back button
+	 * @param v
+	 */
 	public void backHandler(View v)	{
 		int i = 0;
 		while (!Utility.deauth())	{
@@ -55,7 +61,10 @@ public class EventCreation extends Activity {
 		}
 		finish();
 	}
-	
+	/**
+	 * Handle the submit button
+	 * @param v
+	 */
 	public void submitHandler(View v)	{
 		String response = doEvent(tgc);
 		
@@ -67,6 +76,7 @@ public class EventCreation extends Activity {
 		String[] pieces = response.split(":", 1);
 		
 		if (!pieces[0].equals("0"))	{
+			Log.e("EventError", pieces[0]);
 			switch(Integer.parseInt(pieces[0]))	{
 			case -1:
 				//Generic error
@@ -113,13 +123,22 @@ public class EventCreation extends Activity {
 		((TextView)findViewById(R.id.error)).setText(error);
 		return;
 	}
-	
+	/**
+	 * Parse recurrence data
+	 * 
+	 * @param v
+	 */
 	public void doRecurrence(View v)	{
 		Intent i = new Intent(v.getContext(), Recurrence.class);
 		i.putExtra("recurrenceIn",this.recurrence);
 		startActivityForResult(i, 2);
 	}
-
+	/**
+	 * Sends the event request to the cows server (via Cows-Mobile-Server)
+	 * 
+	 * @param TicketGrantingCookie
+	 * @return Response from Cows-Mobile-Server
+	 */
 	private String doEvent(String tgc) {
 		String getString = "?ticket=" + tgc;
 		//TODO: fill out getString
@@ -135,7 +154,7 @@ public class EventCreation extends Activity {
 			e.printStackTrace();
 		}
 		
-		return out.toString();
+		return Utility.httpResponseToString(out);
 	}
 
 }

@@ -21,7 +21,7 @@ public class DoneOrMore extends Activity {
 		return true;
 	}
 	
-	public void doneHander(View v)	{
+	public void doneHandler(View v)	{
 		int i = 0;
 		while (!Utility.deauth())	{
 			Utility.deauth();

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Recurrence enabled" />
+            android:text="@string/recurrence_enabled" />
 
         <DatePicker
             android:id="@+id/datePicker1"
@@ -36,7 +36,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recurrence Days"
+            android:text="@string/recurrence_days"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <CheckBox
@@ -44,31 +44,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="43dp"
-            android:text="Monday" />
+            android:text="@string/monday" />
 
         <CheckBox
             android:id="@+id/checkBox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tuesday" />
+            android:text="@string/tuesday" />
 
         <CheckBox
             android:id="@+id/checkBox4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wednesday" />
+            android:text="@string/wednesday" />
 
         <CheckBox
             android:id="@+id/checkBox5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thursday" />
+            android:text="@string/thursday" />
 
         <CheckBox
             android:id="@+id/checkBox6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Friday" />
+            android:text="@string/friday" />
 
         <LinearLayout
             android:id="@+id/y"
@@ -80,14 +80,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:text="Save" />
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="38dp"
-                android:text="Back" />
+                android:text="@string/back" />
         </LinearLayout>
     </LinearLayout>
 

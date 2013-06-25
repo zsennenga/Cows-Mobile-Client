@@ -1,7 +1,6 @@
 package com.zennenga.cows_mobile_client;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
