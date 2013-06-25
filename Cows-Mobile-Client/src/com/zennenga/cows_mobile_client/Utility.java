@@ -1,9 +1,12 @@
 package com.zennenga.cows_mobile_client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -40,5 +43,25 @@ public class Utility {
 	
 	public static String getString(String field,String value)	{
 		return "&" + field + "=" + value;
+	}
+
+	public static String httpResponseToString(HttpResponse out) {
+		StringBuilder sb = new StringBuilder();
+		try {
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(out.getEntity().getContent()), 65728);
+		    String line = null;
+
+		    while ((line = reader.readLine()) != null) {
+		        sb.append(line);
+		    }
+		}
+		catch (IOException e) { 
+			e.printStackTrace(); 
+		}
+		catch (Exception e) { 
+			e.printStackTrace(); 
+		}
+		
+		return sb.toString();
 	}
 }
