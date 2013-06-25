@@ -30,8 +30,10 @@ public class EventCreation extends Activity {
 		//TODO: setup MultiSelectSpinners
 		MultiSelectSpinner spinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
 		spinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
+		spinner.setSelection(0);
 		spinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
 		spinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
+		spinner.setSelection(0);
 	}
 
 	@Override	
