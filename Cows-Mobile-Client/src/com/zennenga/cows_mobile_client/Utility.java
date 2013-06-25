@@ -12,9 +12,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
+import android.webkit.CookieManager;
 
 public class Utility {
-	
+	/**
+	 * Deauthenticates the client from CAS
+	 * @return
+	 */
 	public static boolean deauth()	{
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		URI url = null;
@@ -38,13 +42,28 @@ public class Utility {
 			e.printStackTrace();
 			return false;
 		}
+		CookieManager cookieManager = CookieManager.getInstance();
+		cookieManager.removeAllCookie();
+		cookieManager.removeSessionCookie();
 		return true;
 	}
-	
+	/**
+	 * Converts a field and a value to a GET parameter
+	 * 
+	 * @param field
+	 * @param value
+	 * @return &field=value
+	 */
 	public static String getString(String field,String value)	{
 		return "&" + field + "=" + value;
 	}
-
+	/**
+	 * 
+	 * Converts an httpresonse to an httpentity to an inputstream to a buffered reader to a string.
+	 * 
+	 * @param HttpResponse
+	 * @return Body of the response
+	 */
 	public static String httpResponseToString(HttpResponse out) {
 		StringBuilder sb = new StringBuilder();
 		try {
