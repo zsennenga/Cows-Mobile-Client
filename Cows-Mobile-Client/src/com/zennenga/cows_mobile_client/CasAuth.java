@@ -30,7 +30,6 @@ public class CasAuth extends Activity {
 		myWebView.getSettings().setSaveFormData(false);
 		myWebView.setWebViewClient(new WebViewClient() {
 			   public void onPageFinished(WebView view, String url) {
-				   //TODO: check for response code 200 else reload
 			       checkCookie(view);
 			   }
 		});
@@ -64,7 +63,6 @@ public class CasAuth extends Activity {
 				String[] pieces = part.split("=");
 				if (pieces[0].equals("CASTGC"))	{
 					//If we are NOT retrying auth due to an error, create an EventCreation activity and pass TGC to it
-					
 					if (!getIntent().getBooleanExtra("retryingAuth", false))	{
 						Intent i = new Intent(v.getContext(), EventCreation.class);
 						i.putExtra("TGC", pieces[1]);
@@ -75,14 +73,15 @@ public class CasAuth extends Activity {
 						i.putExtra("TGC", pieces[1]);
 						this.setResult(RESULT_OK, i);
 					}
-					cookieManager.removeAllCookie();
-					cookieManager.removeSessionCookie();
 					finish();
 				}
 			}
 		}
 	}
-	
+	/**
+	 * Handler for the back button.
+	 * @param v
+	 */
 	public void backHandle(View v)	{
 		cookieManager.removeAllCookie();
 		cookieManager.removeSessionCookie();
