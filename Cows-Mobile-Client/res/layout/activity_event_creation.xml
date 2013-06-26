@@ -55,7 +55,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start Time;"
+                    android:text="@string/start_time_"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TimePicker
@@ -73,7 +73,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="End Time:"
+                    android:text="@string/end_time_"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TimePicker
@@ -114,7 +114,7 @@
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Set Date for Event"
+                    android:text="@string/set_date_for_event"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <DatePicker

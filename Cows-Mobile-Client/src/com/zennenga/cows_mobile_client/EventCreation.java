@@ -11,6 +11,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -95,7 +97,6 @@ public class EventCreation extends Activity {
 		String[] pieces = response.split(":", 2);
 		
 		if (!pieces[0].equals("0"))	{
-			Log.e("EventError", pieces[0]);
 			switch(Integer.parseInt(pieces[0]))	{
 			case -1:
 				//Generic error
@@ -129,11 +130,20 @@ public class EventCreation extends Activity {
 			}
 		}
 		else	{
-			setError("");
-			this.tries = 0;
-			Intent i = new Intent(v.getContext(), DoneOrMore.class);
-			i.putExtra("TGC", tgc);	
-			startActivity(i);
+			//Generate Alert dialog to tell the user they can create another activity
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final Intent i = new Intent(v.getContext(), EventCreation.class);
+			builder.setMessage("Event Creation complete! Would you like to create another?").setTitle("Success!");
+			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   	i.putExtra("TGC", tgc);	
+		   				startActivity(i);
+		           }
+		       });
+			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		           }
+		       });
 			finish();
 		}
 	}
