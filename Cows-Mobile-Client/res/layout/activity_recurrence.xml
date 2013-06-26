@@ -14,66 +14,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <CheckBox
-            android:id="@+id/checkBox1"
+        <LinearLayout
+            android:id="@+id/ab"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/recurrence_enabled" />
+            android:layout_height="wrap_content" >
 
-        <DatePicker
-            android:id="@+id/Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recurrence Start Date: "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <DatePicker
-            android:id="@+id/datePicker2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <DatePicker
+                android:id="@+id/Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recurrence_days"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/checkBox2"
+        <LinearLayout
+            android:id="@+id/ad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="43dp"
-            android:text="@string/monday" />
+            android:layout_height="wrap_content" >
 
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tuesday" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recurrence End Date: "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <CheckBox
-            android:id="@+id/checkBox4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wednesday" />
-
-        <CheckBox
-            android:id="@+id/checkBox5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/thursday" />
-
-        <CheckBox
-            android:id="@+id/checkBox6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/friday" />
+            <DatePicker
+                android:id="@+id/datePicker2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/y"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
 
             <Button
                 android:id="@+id/button1"

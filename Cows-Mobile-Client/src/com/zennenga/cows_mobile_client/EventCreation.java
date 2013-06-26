@@ -18,12 +18,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
+//TODO: handle differences in values and displaynames of ALL spinner fields
 public class EventCreation extends Activity {
 	String tgc = "";
 	String parameters = "";
@@ -37,17 +39,26 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		recurrence = "";
+		
+		//Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
 		multiSpinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
-		multiSpinner.setSelection(0);
 		multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
 		multiSpinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
-		multiSpinner.setSelection(0);
-		Spinner spinner = (Spinner) findViewById(R.id.eventType);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.EventTypes, android.R.layout.simple_spinner_item);
+
+		//Populate Single Spinners
+		populateSpinner(R.id.eventType,R.array.EventTypes);
+		populateSpinner(R.id.buildingSelectSpinner2,R.array.buildingOptions);
+		
+		Spinner spin = (Spinner) findViewById(R.id.buildingSelectSpinner2);
+		spin.setOnItemSelectedListener(new BuildingListener());
+	}
+	
+	private void populateSpinner(int fieldID, int arrayID) {
+		Spinner spinner = (Spinner) findViewById(fieldID);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayID, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
-		//TODO integrate building/room spinners
 	}
 
 	@Override	
@@ -89,13 +100,13 @@ public class EventCreation extends Activity {
 	public void submitHandler(View v)	{
 		String response = doEvent(tgc);
 		
-		if (response == null)	{
+		if (response == null || response.equals(""))	{
 			setError("Invalid response from server.");
 			return;
 		}
 		
 		String[] pieces = response.split(":", 2);
-		
+		Log.e("EventError",pieces[0]);
 		if (!pieces[0].equals("0"))	{
 			switch(Integer.parseInt(pieces[0]))	{
 			case -1:
@@ -142,6 +153,7 @@ public class EventCreation extends Activity {
 		       });
 			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
+		        	   Utility.deauth();
 		           }
 		       });
 			finish();
@@ -174,8 +186,9 @@ public class EventCreation extends Activity {
 		if (!this.parseParameters()) return "-3:" + this.parameters;
 		HttpResponse out = null;
 		DefaultHttpClient client = new DefaultHttpClient();
-		//TODO: change to dev.its.ucdavis.edu
-		HttpGet request = new HttpGet("http://128.120.151.3/development/CowsMobileProxy.php" + ticketString + setupRecurrence() + this.parameters);
+		String url = "http://dev.its.ucdavis.edu/v1/CowsMobile/CowsMobileProxy.php" + ticketString + setupRecurrence() + this.parameters;
+		Log.e("EventURL",url);
+		HttpGet request = new HttpGet(url);
 		
 		try {
 			out = client.execute(request);
@@ -225,6 +238,7 @@ public class EventCreation extends Activity {
 		if (!parseAndValidateText(R.id.Phone)) return false;
 		if (!parseAndValidateTimes(R.id.StartTime,R.id.EndTime)) return false;
 		if (!parseAndValidateDates(R.id.Date)) return false;
+		if (!parseAndValidateBuilding(R.id.buildingSelectSpinner2,R.id.roomSelectSpinner2)) return false;
 		this.parameters += Utility.getString("Notes",((TextView)findViewById(R.id.Notes)).getText().toString());
 		
 		//Static Parameters
@@ -241,9 +255,25 @@ public class EventCreation extends Activity {
 		return true;
 	}
 
+	private boolean parseAndValidateBuilding(int buildingselectspinner2,
+			int roomselectspinner2) {
+		String room = ((Spinner) findViewById(roomselectspinner2)).getSelectedItem().toString();
+		String building = ((Spinner) findViewById(buildingselectspinner2)).getSelectedItem().toString();
+		if (room.contains("Select"))	{
+			this.parameters = "You must select a room";
+			return false;
+		}
+		if (building.contains("Select"))	{
+			this.parameters = "You must select a Building";
+			return false;
+		}
+		this.parameters += Utility.getString("BuildingAndRoom", building.replace(" ", "_") + "!" + room);
+		return true;
+	}
+
 	private boolean parseAndValidateMultiSpinner(int id, boolean validate) {
 		MultiSelectSpinner spinner = (MultiSelectSpinner) findViewById(id);
-		List<String> selected = spinner.getSelectedStrings();
+		List<Integer> selected = spinner.getSelectedIndicies();
 		if (validate)	{
 			if(selected.size() == 0)	{
 				this.parameters = spinner.getTag().toString() + " requires at least 1 option to be selected";
@@ -251,11 +281,19 @@ public class EventCreation extends Activity {
 			}
 		}
 		String out = "";
-		for (String cat : selected)	{
-			out += cat + "&";
+		for (int cat : selected)	{
+			out += getAttr(cat,spinner.getTag().toString()) + "&";
 		}
-		this.parameters += Utility.getString(spinner.getTag().toString(),out.substring(0, out.length()-2));
+		if (out.length()>0)	{
+			out.substring(0, out.length()-2);
+		}
+		this.parameters += Utility.getString(spinner.getTag().toString(),out);
 		return true;
+	}
+
+	private String getAttr(int index, String set) {
+		//TODO get attribute string array
+		return null;
 	}
 
 	/**
