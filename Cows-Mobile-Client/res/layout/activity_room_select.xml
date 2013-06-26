@@ -11,13 +11,13 @@
     tools:context=".RoomSelect" >
 
     <Spinner
-        android:id="@+id/buildingSelectSpinner2"
+        android:id="@+id/buildingSelectSpinner"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:prompt="@string/building_prompt" />
 
     <Spinner
-        android:id="@+id/roomSelectSpinner2"
+        android:id="@+id/roomSelectSpinner"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:prompt="@string/room_prompt" />

@@ -26,15 +26,16 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 public class RoomEventView extends Activity {
-
-	private static final int TIMEOUT_MILLISEC = 10000;
+	private int day, month, year;
+	private String roomCode;
+	private static final int TIMEOUT_MILLISEC = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_event_view);
 		
-		
+		getData();
 		getEvents();
 	}
 
@@ -47,6 +48,7 @@ public class RoomEventView extends Activity {
 	
 	public void getEvents() {
 	    try {
+	    	String date = month + "/" + day + "/" + year;
 	        HttpParams httpParams = new BasicHttpParams();
 	        HttpConnectionParams.setConnectionTimeout(httpParams,
 	                TIMEOUT_MILLISEC);
@@ -59,10 +61,10 @@ public class RoomEventView extends Activity {
 	        HttpClient httpclient = new DefaultHttpClient(p);
 	        
 	        TextView text = (TextView) findViewById(R.id.testString);
-	        text.setText("test");
+	        text.setText("");
 	        
-	        //Use 10.0.2.2:8080/ for emulator, change to actual address later
-	        String url = "http://128.120.151.196/cows/COWS%20TV%20Display/ajaxEvents.php";
+	        String url = "http://128.120.151.196/cows/COWS%20TV%20Display/ajaxEvents.php"
+	        			 + "?date=" + date + "&bldgRoom=" + roomCode;
 	        HttpPost httppost = new HttpPost(url);
 	        
 
@@ -77,8 +79,7 @@ public class RoomEventView extends Activity {
 	            // Parse
 	            JSONObject json = new JSONObject(responseBody);
 	            
-	            text.setText("test2");
-	            text.setText(json.getString("2"));
+	            text.setText(json.toString());
 
 
 	        } catch (ClientProtocolException e) {
@@ -93,6 +94,13 @@ public class RoomEventView extends Activity {
 	        Toast.makeText(this, "Request failed: " + t.toString(),
 	                Toast.LENGTH_LONG).show();
 	    }
+	}
+	
+	private void getData() {
+		day = getIntent().getExtras().getInt("day");
+		month = getIntent().getExtras().getInt("month");
+		year = getIntent().getExtras().getInt("year");
+		roomCode = getIntent().getExtras().getString("roomCode");
 	}
 
 }

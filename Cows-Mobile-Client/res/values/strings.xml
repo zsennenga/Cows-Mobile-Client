@@ -28,18 +28,17 @@
     </string-array>
     <string-array name="roomOptions">
         <item>Select Any Room</item>
-        <item>1142</item>
-        <item>1142</item>
-        <item>1103</item>
-        <item>1111</item>
-        <item>1162</item>
-        <item>1106</item>
-        <item>1119</item>
-        <item>1121</item>
-        <item>1123</item>
-        <item>1161</item>
-        <item>1104</item>
-        <item>1113</item>
+        <item>1142 in 1590 Tilia</item>
+        <item>1103 in 1605 Tilia</item>
+        <item>1111 in 1605 Tilia</item>
+        <item>1162 in 1605 Tilia</item>
+        <item>1106 in 1715 Tilia</item>
+        <item>1119 in 1715 Tilia</item>
+        <item>1121 in 1715 Tilia</item>
+        <item>1123 in 1715 Tilia</item>
+        <item>1161 in 1715 Tilia</item>
+        <item>1104 in 215 Sage</item>
+        <item>1113 in 215 Sage</item>
     </string-array>
     <string-array name="roomOptions1590">
         <item>Select Room in 1590 Tilia</item>
