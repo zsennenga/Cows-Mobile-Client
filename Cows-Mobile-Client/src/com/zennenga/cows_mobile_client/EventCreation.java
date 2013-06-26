@@ -292,8 +292,17 @@ public class EventCreation extends Activity {
 	}
 
 	private String getAttr(int index, String set) {
-		//TODO get attribute string array
-		return null;
+		String[] vals;
+		if (set.equals("DisplayLocations"))	{
+			 vals = getResources().getStringArray(R.id.locattr);
+		}
+		else if (set.equals("Categories"))	{
+			 vals = getResources().getStringArray(R.id.catattr);
+		}
+		else if (set.equals("EventTypeName"))	{
+			 vals = getResources().getStringArray(R.id.eventattr);
+		}
+		return vals[index];
 	}
 
 	/**
@@ -381,7 +390,7 @@ public class EventCreation extends Activity {
 			this.parameters = spin.getTag().toString() + " must have an item selected";
 			return false;
 		}
-		this.parameters += Utility.getString(spin.getTag().toString(),spin.getSelectedItem().toString());
+		this.parameters += Utility.getString(spin.getTag().toString(),getAttr(spin.getSelectedItemPosition(),spin.getTag().toString()));
 		return true;
 	}
 	/**
