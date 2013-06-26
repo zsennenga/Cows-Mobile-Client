@@ -195,6 +195,7 @@ public class EventCreation extends Activity {
 		if (this.recurrence.equals("")) {
 			String retString = "";
 			retString += Utility.getString("IsRepeating","false");
+			retString += Utility.getString("RecurrenceAppliesTo", "None");
 			retString += Utility.getString("RecurrenceMonday","false");
 			retString += Utility.getString("RecurrenceTuesday","false");
 			retString += Utility.getString("RecurrenceWednesday","false");
@@ -225,6 +226,18 @@ public class EventCreation extends Activity {
 		if (!parseAndValidateTimes(R.id.StartTime,R.id.EndTime)) return false;
 		if (!parseAndValidateDates(R.id.Date)) return false;
 		this.parameters += Utility.getString("Notes",((TextView)findViewById(R.id.Notes)).getText().toString());
+		
+		//Static Parameters
+		//No idea
+		this.parameters += Utility.getString("ByRoom","true");
+		this.parameters += Utility.getString("IsOffRecurrence","false");
+		//Only relevant for editing
+		this.parameters += Utility.getString("WasRepeating","false");
+		//This is an app for its
+		this.parameters += Utility.getString("SiteId","its");
+		//No events on weekends
+		this.parameters += Utility.getString("RecurrenceSaturday","false");
+		this.parameters += Utility.getString("RecurrenceSunday","false");
 		return true;
 	}
 
@@ -301,6 +314,8 @@ public class EventCreation extends Activity {
 		}
 		this.parameters += Utility.getString("StartTime",timeToStr(startHour,startMinute));
 		this.parameters += Utility.getString("EndTime",timeToStr(endHour,endMinute));
+		this.parameters += Utility.getString("DisplayStartTime",timeToStr(startHour,startMinute));
+		this.parameters += Utility.getString("DisplayEndTime",timeToStr(endHour,endMinute));
 		return true;
 	}
 	/**
