@@ -3,8 +3,10 @@ package com.zennenga.cows_mobile_client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -55,7 +57,14 @@ public class Utility {
 	 * @return &field=value
 	 */
 	public static String getString(String field,String value)	{
-		return "&" + field + "=" + value;
+		String val = "";
+		try {
+			val = URLEncoder.encode(value,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return "&" + field + "=" + value;
+		}
+		return "&" + field + "=" + val;
 	}
 	/**
 	 * 

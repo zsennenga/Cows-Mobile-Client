@@ -22,7 +22,7 @@
             android:text="@string/recurrence_enabled" />
 
         <DatePicker
-            android:id="@+id/datePicker1"
+            android:id="@+id/Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:calendarViewShown="false" />

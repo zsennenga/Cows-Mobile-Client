@@ -9,7 +9,7 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class CasAuth extends Activity {
 	CookieManager cookieManager;
@@ -39,7 +39,8 @@ public class CasAuth extends Activity {
 	}
 
 	private void setError(String error)	{
-		((TextView)findViewById(R.id.error)).setText(error);
+		//((TextView)findViewById(R.id.error)).setText(error);
+		Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
 		return;
 	}
 

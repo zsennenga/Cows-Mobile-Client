@@ -40,10 +40,11 @@
 
                 <EditText
                     android:id="@+id/Title"
-                    android:layout_width="986dp"
+                    android:layout_width="1034dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:tag="EventTitle" />
             </LinearLayout>
 
             <LinearLayout
@@ -54,19 +55,14 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/start_time_and_date_"
+                    android:text="Start Time;"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TimePicker
                     android:id="@+id/StartTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <DatePicker
-                    android:id="@+id/StartDate"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:calendarViewShown="false" />
+                    android:tag="StartTime" />
             </LinearLayout>
 
             <LinearLayout
@@ -77,19 +73,14 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/end_time_and_date_"
+                    android:text="End Time:"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TimePicker
                     android:id="@+id/EndTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <DatePicker
-                    android:id="@+id/EndDate"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:calendarViewShown="false" />
+                    android:tag="EndTime" />
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +100,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:tag="ContactPhone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Date for Event"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <DatePicker
+                    android:id="@+id/Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false"
+                    android:tag="StartDate" />
+
+                <Button
+                    android:id="@+id/Recurrence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="doRecurrence"
+                    android:text="@string/configure_recurrence" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -129,7 +150,8 @@
                     android:layout_width="948dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:tag="Description" />
             </LinearLayout>
 
             <LinearLayout
@@ -148,7 +170,8 @@
                     android:id="@+id/eventType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:tag="EventTypeName" />
             </LinearLayout>
 
             <LinearLayout
@@ -167,8 +190,8 @@
                     android:id="@+id/Categories"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_weight="1" />
-
+                    android:layout_weight="1"
+                    android:tag="Categories" />
             </LinearLayout>
 
             <LinearLayout
@@ -188,7 +211,8 @@
                     android:layout_width="1079dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:tag="Notes" />
             </LinearLayout>
 
             <LinearLayout
@@ -206,38 +230,34 @@
                 <com.zennenga.cows_mobile_client.MultiSelectSpinner
                     android:id="@+id/Locations"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:tag="Locations" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/Recurrence"
+            <LinearLayout
+                android:id="@+id/linearLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="doRecurrence"
-                android:text="@string/configure_recurrence" />
+                android:layout_weight="1"
+                android:layout_gravity="center" >
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="submitHandler"
+                    android:text="@string/submit" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="backHandler"
+                    android:text="@string/back" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" >
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="submitHandler"
-                android:text="@string/submit"/>
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="backHandler"
-                android:text="@string/back" />
-        </LinearLayout>
     </RelativeLayout>
 
 </ScrollView>
