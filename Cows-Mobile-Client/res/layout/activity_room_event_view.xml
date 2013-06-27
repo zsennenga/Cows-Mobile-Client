@@ -175,15 +175,16 @@
 	    </TableRow>
 	    <TableRow>
 	        	<Button
-		            android:id="@+id/createEventFromEventViewButton"
-		            style="?android:attr/buttonBarButtonStyle"
-		            android:text="@string/create_event" />
-	        	<Button
 		            android:id="@+id/backButtonToRoomSelect"
+		            style="?android:attr/buttonBarButtonStyle"
+		            android:gravity="left"
+		            android:text="@string/back" />
+	        	<Button
+		            android:id="@+id/createEventFromEventViewButton"
 		            style="?android:attr/buttonBarButtonStyle"
 		            android:layout_marginLeft="20dip"
 		            android:gravity="left"
-		            android:text="@string/back" />
+		            android:text="@string/create_event" />
 	    </TableRow>
 	</TableLayout>
 
