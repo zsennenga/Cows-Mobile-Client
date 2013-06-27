@@ -185,6 +185,10 @@ public class EventCreation extends Activity {
 
 	private boolean parseAndValidateBuilding(int buildingselectspinner2,
 			int roomselectspinner2) {
+		if (((Spinner) findViewById(roomselectspinner2)).getSelectedItem() == null)	{
+			this.parameters = "You must select a room";
+			return false;
+		}
 		String room = ((Spinner) findViewById(roomselectspinner2)).getSelectedItem().toString();
 		String building = ((Spinner) findViewById(buildingselectspinner2)).getSelectedItem().toString();
 		if (room.contains("Select"))	{
@@ -230,6 +234,7 @@ public class EventCreation extends Activity {
 		else if (set.equals("EventTypeName"))	{
 			 vals = getResources().getStringArray(R.array.eventattr);
 		}
+		else return "ERROR";
 		return vals[index];
 	}
 
