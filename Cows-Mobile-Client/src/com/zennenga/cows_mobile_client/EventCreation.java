@@ -8,7 +8,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,7 +31,7 @@ public class EventCreation extends Activity {
 	String tgc = "";
 	String parameters = "";
 	String recurrence = "";
-	View temp = null;
+	View view = null;
 	int tries = 0;
 	
 	@Override
@@ -71,7 +74,7 @@ public class EventCreation extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent d)	{
 		if (requestCode == 1)	{
 			this.tgc = d.getStringExtra("tgc");
-			submitHandler(this.temp);
+			submitHandler(this.view);
 		}
 		else if (requestCode == 2)	{
 			this.recurrence = d.getStringExtra("recurrence");
@@ -85,7 +88,6 @@ public class EventCreation extends Activity {
 	public void backHandler(View v)	{
 		int i = 0;
 		while (!Utility.deauth())	{
-			Utility.deauth();
 			if (i > 10) break;
 			i++;
 		}
@@ -96,72 +98,19 @@ public class EventCreation extends Activity {
 	 * @param v
 	 */
 	public void submitHandler(View v)	{
-		String response = doEvent(tgc);
-		
-		if (response == null || response.equals(""))	{
-			setError("Invalid response from server.");
+		this.parameters = "";
+		if (!this.parseParameters()) {
+			showMessage(this.parameters);
 			return;
 		}
-		
-		String[] pieces = response.split(":", 2);
-		Log.e("EventError",pieces[0]);
-		if (!pieces[0].equals("0"))	{
-			switch(Integer.parseInt(pieces[0]))	{
-			case -1:
-				//Generic error
-				setError("Error: " + pieces[1] + " Please retry your submission.");
-				return;
-			case -2:
-				//Failed Auth
-				Intent i = new Intent(v.getContext(), CasAuth.class);
-				i.putExtra("retryingAuth",true);
-				i.putExtra("error", pieces[1]);
-				startActivityForResult(i, 1);
-				this.temp = v;
-				return;
-			case -3:
-				//Event Error
-				setError("Event error: " + pieces[1] + " Please fix this error, and retry your submission.");
-				return;
-			case -4:
-				//cURL error
-				this.tries++;
-				if (this.tries >= 5)	{
-					setError("Network Error: " + pieces[1]);
-					return;
-				}
-				else submitHandler(v);
-				return;
-			default:
-				//Generic Error
-				setError("Error: " + pieces[1]);
-				return;
-			}
-		}
-		else	{
-			//Generate Alert dialog to tell the user they can create another activity
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			final Intent i = new Intent(v.getContext(), EventCreation.class);
-			builder.setMessage("Event Creation complete! Would you like to create another?").setTitle("Success!");
-			builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-		        	   Utility.deauth();
-		   			   finish();
-		           }
-		       });
-			builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-	        	   	i.putExtra("TGC", tgc);	
-	   				startActivity(i);
-	   				finish();
-					}   
-		       });
-			builder.show();
-		}
+		this.view = v;
+		String url = "http://dev.its.ucdavis.edu/v1/CowsMobile/CowsMobileProxy.php?ticket=" + tgc + setupRecurrence() + this.parameters;
+		this.parameters = "";
+		AsyncEvent event = new AsyncEvent();
+		event.execute(url);
 	}
 	
-	private void setError(String error)	{
-		//((TextView)findViewById(R.id.error)).setText(error);
+	private void showMessage(String error)	{
 		Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
 		return;
 	}
@@ -175,31 +124,7 @@ public class EventCreation extends Activity {
 		i.putExtra("recurrenceIn",this.recurrence);
 		startActivityForResult(i, 2);
 	}
-	/**
-	 * Sends the event request to the cows server (via Cows-Mobile-Server)
-	 * 
-	 * @param TicketGrantingCookie
-	 * @return Response from Cows-Mobile-Server
-	 */
-	private String doEvent(String tgc) {
-		String ticketString = "?ticket=" + tgc;
-		if (!this.parseParameters()) return "-3:" + this.parameters;
-		HttpResponse out = null;
-		DefaultHttpClient client = new DefaultHttpClient();
-		String url = "http://dev.its.ucdavis.edu/v1/CowsMobile/CowsMobileProxy.php" + ticketString + setupRecurrence() + this.parameters;
-		Log.e("EventURL",url);
-		HttpGet request = new HttpGet(url);
-		
-		try {
-			out = client.execute(request);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		this.parameters = "";
-		return Utility.httpResponseToString(out);
-	}
+
 	/**
 	 * Generate default recurrence string if one has not been generated by doRecurrence
 	 * @return Recurrence parameter string
@@ -413,5 +338,115 @@ public class EventCreation extends Activity {
 			return true;
 		}
 	}
+	private class AsyncEvent extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected void onPreExecute()	{
+			Button b = (Button) findViewById(R.id.button1);
+			b.setEnabled(false);
+			b = (Button) findViewById(R.id.button2);
+			b.setEnabled(false);
+			showMessage("Please Wait. Submitting event to COWS...");
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			HttpResponse out = null;
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
+			HttpConnectionParams.setSoTimeout(client.getParams(), 5000);
+		
+			HttpGet request = new HttpGet(params[0]);
+			try {
+				out = client.execute(request);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+				return null;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+			return Utility.httpResponseToString(out);
+		}
+		
+		@Override
+		protected void onPostExecute(String response)	{
+			
+			if (response == null || response.equals(""))	{
+				showMessage("Invalid response from server.");
+				return;
+			}
+			
+			String[] pieces = response.split(":", 2);
+			
+			if (!pieces[0].equals("0"))	{
+				handleServerError(pieces[0],pieces[1]);
+				Button b = (Button) findViewById(R.id.button1);
+				b.setEnabled(true);
+				b = (Button) findViewById(R.id.button2);
+				b.setEnabled(true);
+			}
+			else	{
+				//Generate Alert dialog to tell the user they can create another activity
+				finishDialog();
+			}
+		}
+	}
+	public void handleServerError(String errorCode, String error) {
+		switch(Integer.parseInt(errorCode))	{
+		case -1:
+			//Generic error
+			showMessage("Error: " + error + " Please retry your submission.");
+			return;
+		case -2:
+			//Failed Auth
+			Intent i = new Intent(this.view.getContext(), CasAuth.class);
+			i.putExtra("retryingAuth",true);
+			i.putExtra("error", error);
+			startActivityForResult(i, 1);
+			return;
+		case -3:
+			//Event Error
+			showMessage("Event error: " + error + " Please fix this error, and retry your submission.");
+			return;
+		case -4:
+			//cURL error
+			this.tries++;
+			if (this.tries >= 5)	{
+				showMessage("Network Error: " + error);
+				return;
+			}
+			else submitHandler((this.view));
+			return;
+		default:
+			//Generic Error
+			showMessage("Error: " + error);
+			return;
+		}
+	}
 
+	public void finishDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.view.getContext());
+		final Intent i = new Intent(this.view.getContext(), EventCreation.class);
+		builder.setMessage("Event Creation complete! Would you like to create another?").setTitle("Success!");
+		builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				int i = 0;
+				while (!Utility.deauth())	{
+					if (i > 10) break;
+					i++;
+				}
+	   			   finish();
+	           }
+	       });
+		builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+        	   	i.putExtra("TGC", tgc);	
+   				startActivity(i);
+   				finish();
+				}   
+	       });
+		builder.show();
+		
+	}
 }
