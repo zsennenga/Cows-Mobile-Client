@@ -67,9 +67,8 @@ public class RoomEventView extends Activity {
 	        // Instantiate an HttpClient
 	        HttpClient httpclient = new DefaultHttpClient(p);
 	        
-	        String url = "http://128.120.151.196/cows/COWS%20TV%20Display/ajaxEvents.php"
+	        String url = "http://dev.its.ucdavis.edu/v1/TabletDisplay/ajaxEvents.php"
 	        			 + "?date=" + date + "&bldgRoom=" + roomCode;
-	        Log.e(url, ACCESSIBILITY_SERVICE);
 	        HttpPost httppost = new HttpPost(url);
 	        
 
