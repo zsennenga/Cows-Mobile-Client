@@ -2,7 +2,6 @@ package com.zennenga.cows_mobile_client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -18,16 +17,22 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 public class RoomEventView extends Activity {
 	private int day, month, year;
 	private String roomCode;
+	public static final int MAX_EVENT_DISPLAY = 10;
 	private static final int TIMEOUT_MILLISEC = 1000;
 
 	@Override
@@ -35,6 +40,8 @@ public class RoomEventView extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_event_view);
 		
+		addListenerOnBackButton();
+		addListenerOnCreateButton();
 		getData();
 		getEvents();
 	}
@@ -60,11 +67,9 @@ public class RoomEventView extends Activity {
 	        // Instantiate an HttpClient
 	        HttpClient httpclient = new DefaultHttpClient(p);
 	        
-	        TextView text = (TextView) findViewById(R.id.testString);
-	        text.setText("");
-	        
 	        String url = "http://128.120.151.196/cows/COWS%20TV%20Display/ajaxEvents.php"
 	        			 + "?date=" + date + "&bldgRoom=" + roomCode;
+	        Log.e(url, ACCESSIBILITY_SERVICE);
 	        HttpPost httppost = new HttpPost(url);
 	        
 
@@ -77,11 +82,67 @@ public class RoomEventView extends Activity {
 	            ResponseHandler<String> responseHandler = new BasicResponseHandler();
 	            String responseBody = httpclient.execute(httppost, responseHandler);
 	            // Parse
-	            JSONObject json = new JSONObject(responseBody);
+	            JSONArray json = new JSONArray(responseBody);
+	            JSONObject obj;
+	            String title, time;
+	            int eventsDisplayed = 0;
+	            TextView timeText, titleText;
 	            
-	            text.setText(json.toString());
-
-
+	            while(eventsDisplayed < MAX_EVENT_DISPLAY) {
+	            
+		            try {         
+		            	obj = json.getJSONObject(eventsDisplayed);
+		            } 
+		            catch (JSONException e) {
+		            	break;    
+		            }
+		            switch(eventsDisplayed) {
+			            case 0: 
+			            	timeText = (TextView) findViewById(R.id.rowTime1);
+				            titleText = (TextView) findViewById(R.id.rowTitle1);
+			            	break;
+			            case 1: 
+			            	timeText = (TextView) findViewById(R.id.rowTime2);
+				            titleText = (TextView) findViewById(R.id.rowTitle2);
+			            	break;
+			            case 2: 
+			            	timeText = (TextView) findViewById(R.id.rowTime3);
+				            titleText = (TextView) findViewById(R.id.rowTitle3);
+			            	break;
+			            case 3: 
+			            	timeText = (TextView) findViewById(R.id.rowTime4);
+				            titleText = (TextView) findViewById(R.id.rowTitle4);
+			            	break;
+			            case 4: 
+			            	timeText = (TextView) findViewById(R.id.rowTime5);
+				            titleText = (TextView) findViewById(R.id.rowTitle5);
+			            	break;
+			            case 5: 
+			            	timeText = (TextView) findViewById(R.id.rowTime6);
+				            titleText = (TextView) findViewById(R.id.rowTitle6);
+			            	break;
+			            case 6: 
+			            	timeText = (TextView) findViewById(R.id.rowTime7);
+				            titleText = (TextView) findViewById(R.id.rowTitle7);
+			            	break;
+			            case 7: 
+			            	timeText = (TextView) findViewById(R.id.rowTime8);
+				            titleText = (TextView) findViewById(R.id.rowTitle8);
+			            	break;
+			            case 8: 
+			            	timeText = (TextView) findViewById(R.id.rowTime9);
+				            titleText = (TextView) findViewById(R.id.rowTitle9);
+			            	break;
+			            default: 
+			            	timeText = (TextView) findViewById(R.id.rowTime10);
+				            titleText = (TextView) findViewById(R.id.rowTitle10);
+		            }    
+		            title = obj.getString("Title"); 
+		            time = obj.getString("Time"); 
+		            timeText.setText(time);
+		            titleText.setText(title);
+		            eventsDisplayed++;
+	            }
 	        } catch (ClientProtocolException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -101,6 +162,25 @@ public class RoomEventView extends Activity {
 		month = getIntent().getExtras().getInt("month");
 		year = getIntent().getExtras().getInt("year");
 		roomCode = getIntent().getExtras().getString("roomCode");
+	}
+	
+	public void addListenerOnCreateButton() {
+		final Button backButton = (Button) findViewById(R.id.createEventFromEventViewButton);
+		backButton.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+	        	Intent i = new Intent(v.getContext(), CasAuth.class);
+	        	startActivity(i);
+	        }
+	    });
+	}
+	
+	public void addListenerOnBackButton() {
+		final Button backButton = (Button) findViewById(R.id.backButtonToRoomSelect);
+		backButton.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+	        	finish();
+	        }
+	    });
 	}
 
 }

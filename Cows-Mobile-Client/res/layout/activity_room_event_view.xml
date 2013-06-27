@@ -8,16 +8,183 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RoomEventView" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-    
-    <TextView
-        android:id="@+id/testString"
-        android:layout_margin="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST" />
+    <TableLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:stretchColumns="1">
+	    <TableRow>
+
+	        <TextView
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:text="@string/time"
+	            android:textSize="32sp"
+	            android:textStyle="bold" />
+
+	        <TextView
+	            android:layout_marginLeft="100dip"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:text="@string/event"
+	            android:textSize="32sp"
+	            android:textStyle="bold" />
+
+	    </TableRow>
+	
+	    <TableRow>
+
+	        <TextView
+	            android:id="@+id/rowTime1"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle1"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime2"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle2"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime3"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle3"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime4"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+
+	        <TextView
+	            android:id="@+id/rowTitle4"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime5"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle5"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime6"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle6"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime7"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle7"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime8"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle8"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime9"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle9"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    
+	    <TableRow>
+	        <TextView
+	            android:id="@+id/rowTime10"
+	            android:textSize="24sp"
+				android:gravity="left"
+	            android:padding="3dip" />
+	        <TextView
+	            android:id="@+id/rowTitle10"
+	            android:textSize="24sp"
+	            android:gravity="left"
+	            android:padding="3dip"
+	            android:layout_marginLeft="100dip" />
+	    </TableRow>
+	    <TableRow>
+	        	<Button
+		            android:id="@+id/createEventFromEventViewButton"
+		            style="?android:attr/buttonBarButtonStyle"
+		            android:text="@string/create_event" />
+	        	<Button
+		            android:id="@+id/backButtonToRoomSelect"
+		            style="?android:attr/buttonBarButtonStyle"
+		            android:layout_marginLeft="20dip"
+		            android:gravity="left"
+		            android:text="@string/back" />
+	    </TableRow>
+	</TableLayout>
 
 </RelativeLayout>

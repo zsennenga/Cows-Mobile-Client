@@ -231,7 +231,7 @@
                     android:id="@+id/Locations"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:tag="DisplayLocations" />
+                    android:tag="Locations" />
             </LinearLayout>
 
             <LinearLayout

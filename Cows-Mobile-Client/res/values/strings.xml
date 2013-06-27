@@ -18,16 +18,18 @@
     <string name="submit">Submit</string>
     <string name="next">Next</string>
     <string name="ucdLogo">UCD Logo</string>
+    <string name="time">Time</string>
+    <string name="event">Event</string>
 
     <string-array name="buildingOptions">
-        <item>Select Building</item>
+        <item>All Buildings</item>
         <item>1590 Tilia</item>
         <item>1605 Tilia</item>
         <item>1715 Tilia</item>
         <item>215 Sage</item>
     </string-array>
     <string-array name="roomOptions">
-        <item>Select Any Room</item>
+        <item>All Rooms</item>
         <item>1142 in 1590 Tilia</item>
         <item>1103 in 1605 Tilia</item>
         <item>1111 in 1605 Tilia</item>
@@ -41,17 +43,16 @@
         <item>1113 in 215 Sage</item>
     </string-array>
     <string-array name="roomOptions1590">
-        <item>Select Room in 1590 Tilia</item>
         <item>1142</item>
     </string-array>
     <string-array name="roomOptions1605">
-        <item>Select Room in 1605 Tilia</item>
+        <item>All Rooms in 1605 Tilia</item>
         <item>1103</item>
         <item>1111</item>
         <item>1162</item>
     </string-array>
     <string-array name="roomOptions1715">
-        <item>Select Room in 1715 Tilia</item>
+        <item>All Rooms in 1715 Tilia</item>
         <item>1106</item>
         <item>1119</item>
         <item>1121</item>
@@ -59,7 +60,7 @@
         <item>1161</item>
     </string-array>
     <string-array name="roomOptions215">
-        <item>Select Room in 215 Sage</item>
+        <item>All Rooms in 215 Sage</item>
         <item>1104</item>
         <item>1113</item>
     </string-array>
