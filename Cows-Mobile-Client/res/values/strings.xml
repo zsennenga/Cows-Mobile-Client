@@ -83,6 +83,35 @@
 
     </string-array>
     
+    <string-array name="locattr">
+        <item>Front-TV</item>
+        <item>ITSWebsite</item>
+    </string-array>
+    <string-array name="eventattr">
+        <item>Board_Meeting</item>
+		<item>China_Center</item>
+		<item>CWEE</item>
+		<item>EEC</item>
+		<item>EI_Seminars</item>
+		<item>Energy_Institute</item>
+		<item>ITS_Seminar</item>
+		<item>Maintenance_Other</item>
+		<item>Meetings</item>
+		<item>NextSTEPS_Seminars</item>
+		<item>Office_Hours</item>
+		<item>Other_ITS_Seminars</item>
+		<item>Phev</item>
+		<item>Policy_Institute</item>
+		<item>STEPS</item>
+		<item>WCEC_Meetings</item>
+    </string-array>
+    <string-array name="catattr">
+        <item>Class</item>
+        <item>Conference</item>
+        <item>Meeting</item>
+        <item>Other</item>
+        <item>Seminars</item>
+    </string-array>
 
     <string name="title_activity_done_or_more">DoneOrMore</string>
     <string name="done_creating_events">Done Creating Events</string>

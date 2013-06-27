@@ -145,18 +145,20 @@ public class EventCreation extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			final Intent i = new Intent(v.getContext(), EventCreation.class);
 			builder.setMessage("Event Creation complete! Would you like to create another?").setTitle("Success!");
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		        	   	i.putExtra("TGC", tgc);	
-		   				startActivity(i);
-		           }
-		       });
-			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
+			builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
 		        	   Utility.deauth();
+		   			   finish();
 		           }
 		       });
-			finish();
+			builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+	        	   	i.putExtra("TGC", tgc);	
+	   				startActivity(i);
+	   				finish();
+					}   
+		       });
+			builder.show();
 		}
 	}
 	
@@ -197,7 +199,7 @@ public class EventCreation extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		this.parameters = "";
 		return Utility.httpResponseToString(out);
 	}
 	/**
@@ -244,9 +246,12 @@ public class EventCreation extends Activity {
 		//Static Parameters
 		//No idea
 		this.parameters += Utility.getString("ByRoom","true");
-		this.parameters += Utility.getString("IsOffRecurrence","false");
+		this.parameters += Utility.getString("IsOffRecurrence","False");
+		this.parameters += Utility.getString("Locations", "");
+		this.parameters += Utility.getString("ConflictLastModified", "1/1/0001 12:00:00 AM");
+		this.parameters += Utility.getString("gridScrollLeft", "480");
 		//Only relevant for editing
-		this.parameters += Utility.getString("WasRepeating","false");
+		this.parameters += Utility.getString("WasRepeating","False");
 		//This is an app for its
 		this.parameters += Utility.getString("SiteId","its");
 		//No events on weekends
@@ -285,22 +290,22 @@ public class EventCreation extends Activity {
 			out += getAttr(cat,spinner.getTag().toString()) + "&";
 		}
 		if (out.length()>0)	{
-			out.substring(0, out.length()-2);
+			out = out.substring(0, out.length()-1);
+			this.parameters += Utility.getString(spinner.getTag().toString(),out);
 		}
-		this.parameters += Utility.getString(spinner.getTag().toString(),out);
 		return true;
 	}
 
 	private String getAttr(int index, String set) {
-		String[] vals;
+		String[] vals = null;
 		if (set.equals("DisplayLocations"))	{
-			 vals = getResources().getStringArray(R.id.locattr);
+			 vals = getResources().getStringArray(R.array.locattr);
 		}
 		else if (set.equals("Categories"))	{
-			 vals = getResources().getStringArray(R.id.catattr);
+			 vals = getResources().getStringArray(R.array.catattr);
 		}
 		else if (set.equals("EventTypeName"))	{
-			 vals = getResources().getStringArray(R.id.eventattr);
+			 vals = getResources().getStringArray(R.array.eventattr);
 		}
 		return vals[index];
 	}
@@ -314,7 +319,7 @@ public class EventCreation extends Activity {
 	private boolean parseAndValidateDates(int date) {
 		DatePicker dateView = (DatePicker) findViewById(date);
 		int day = dateView.getDayOfMonth();
-		int month = dateView.getMonth();
+		int month = dateView.getMonth()+1;
 		int year = dateView.getYear();
 		Calendar cal = Calendar.getInstance();
 		
