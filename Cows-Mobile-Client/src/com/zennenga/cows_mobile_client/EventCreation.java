@@ -18,14 +18,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-//TODO: handle differences in values and displaynames of ALL spinner fields
+
 public class EventCreation extends Activity {
 	String tgc = "";
 	String parameters = "";
