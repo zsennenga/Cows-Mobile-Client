@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 
+import com.zennenga.utility.Utility;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -96,7 +98,7 @@ public class EventCreation extends Activity {
 			return;
 		}
 		this.view = v;
-		String url = Utility.baseUrl + "?ticket=" + tgc + setupRecurrence() + this.parameters;
+		String url = Utility.BASE_URL + "?ticket=" + tgc + setupRecurrence() + this.parameters;
 		this.parameters = "";
 		AsyncEvent event = new AsyncEvent();
 		event.execute(url);
@@ -202,28 +204,13 @@ public class EventCreation extends Activity {
 		}
 		String out = "";
 		for (int cat : selected)	{
-			out += getAttr(cat,spinner.getTag().toString()) + "&";
+			//out += getAttr(cat,spinner.getTag().toString()) + "&";
 		}
 		if (out.length()>0)	{
 			out = out.substring(0, out.length()-1);
 			this.parameters += Utility.getString(spinner.getTag().toString(),out);
 		}
 		return true;
-	}
-
-	private String getAttr(int index, String set) {
-		String[] vals = null;
-		if (set.equals("DisplayLocations"))	{
-			 vals = getResources().getStringArray(R.array.locattr);
-		}
-		else if (set.equals("Categories"))	{
-			 vals = getResources().getStringArray(R.array.catattr);
-		}
-		else if (set.equals("EventTypeName"))	{
-			 vals = getResources().getStringArray(R.array.eventattr);
-		}
-		else return "ERROR";
-		return vals[index];
 	}
 
 	/**
@@ -312,7 +299,7 @@ public class EventCreation extends Activity {
 			this.parameters = spin.getTag().toString() + " must have an item selected";
 			return false;
 		}
-		this.parameters += Utility.getString(spin.getTag().toString(),getAttr(spin.getSelectedItemPosition(),spin.getTag().toString()));
+		//this.parameters += Utility.getString(spin.getTag().toString(),getAttr(spin.getSelectedItemPosition(),spin.getTag().toString()));
 		return true;
 	}
 	/**

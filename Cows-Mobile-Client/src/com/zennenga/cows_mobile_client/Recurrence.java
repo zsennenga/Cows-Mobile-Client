@@ -19,13 +19,6 @@ public class Recurrence extends Activity {
 			//TODO set each existing form based on existing recurrence information
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.recurrence, menu);
-		return true;
-	}
 	
 	public void saveHandler(View v)	{
 		String recurrenceOut = "";

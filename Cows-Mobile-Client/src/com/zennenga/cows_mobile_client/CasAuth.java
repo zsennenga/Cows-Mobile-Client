@@ -1,5 +1,7 @@
 package com.zennenga.cows_mobile_client;
 
+import com.zennenga.utility.Utility;
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
