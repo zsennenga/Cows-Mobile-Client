@@ -26,4 +26,7 @@ public class MultiSpinnerField extends BaseField {
 		}
 		this.data = this.data.substring(0,this.data.length()-1);
 	}
+	public void setSpinner(MultiSelectSpinner multiSpinner) {
+		this.spinner = multiSpinner;
+	}
 }

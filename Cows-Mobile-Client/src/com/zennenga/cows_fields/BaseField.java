@@ -3,6 +3,8 @@ package com.zennenga.cows_fields;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import com.zennenga.cows_mobile_client.MultiSelectSpinner;
+
 public abstract class BaseField {
 	protected String fieldName;
 	protected String data;
