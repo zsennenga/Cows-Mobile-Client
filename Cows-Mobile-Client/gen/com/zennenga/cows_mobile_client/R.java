@@ -9,21 +9,17 @@ package com.zennenga.cows_mobile_client;
 
 public final class R {
     public static final class array {
+        public static final int Categories=0x7f06000b;
+        public static final int EventTypes=0x7f060006;
+        public static final int Locations=0x7f06000a;
         public static final int buildingOptions=0x7f060000;
-        /**  215 Tilia 
-         */
+        public static final int catattr=0x7f060009;
+        public static final int eventattr=0x7f060008;
+        public static final int locattr=0x7f060007;
         public static final int roomOptions=0x7f060001;
-        /**  1590 Tilia 
-         */
-        public static final int roomOptions1509=0x7f060002;
-        /**  1605 Tilia 
-         */
+        public static final int roomOptions1590=0x7f060002;
         public static final int roomOptions1605=0x7f060003;
-        /**  1715 Tilia 
-         */
         public static final int roomOptions1715=0x7f060004;
-        /**  215 Sage 
-         */
         public static final int roomOptions215=0x7f060005;
     }
     public static final class attr {
@@ -40,122 +36,125 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int ucd_logo=0x7f020001;
     }
     public static final class id {
-        public static final int Categories=0x7f09001a;
-        public static final int Description =0x7f090014;
-        public static final int EndDate=0x7f09000e;
-        public static final int EndTime=0x7f09000d;
-        public static final int EventType=0x7f090017;
-        public static final int LinearLayout1=0x7f090030;
-        public static final int Locations=0x7f090020;
-        public static final int Notes=0x7f09001d;
-        public static final int Phone=0x7f090011;
-        public static final int Recurrence=0x7f090021;
-        public static final int StartDate=0x7f09000b;
-        public static final int StartTime=0x7f09000a;
-        public static final int Title=0x7f090008;
-        public static final int a=0x7f090006;
+        public static final int Categories=0x7f09001b;
+        public static final int Date=0x7f090011;
+        public static final int Description =0x7f090015;
+        public static final int EndTime=0x7f09000b;
+        public static final int LinearLayout1=0x7f090043;
+        public static final int Locations=0x7f090021;
+        public static final int Notes=0x7f09001e;
+        public static final int Phone=0x7f09000e;
+        public static final int Recurrence=0x7f090012;
+        public static final int StartTime=0x7f090009;
+        public static final int Title=0x7f090007;
+        public static final int a=0x7f090005;
         public static final int aa=0x7f090000;
-        public static final int action_settings=0x7f090035;
-        public static final int b=0x7f09000f;
-        public static final int backButtonToHomeScreen=0x7f090034;
-        public static final int buildingSelectSpinner=0x7f090031;
+        public static final int ab=0x7f090029;
+        public static final int action_settings=0x7f090049;
+        public static final int ad=0x7f09002a;
+        public static final int b=0x7f09000c;
+        public static final int backButtonToHomeScreen=0x7f090047;
+        public static final int backButtonToRoomSelect=0x7f090041;
+        public static final int buildingSelectSpinner=0x7f090044;
+        public static final int buildingSelectSpinner2=0x7f090022;
         public static final int button1=0x7f090003;
-        public static final int button2=0x7f090004;
-        public static final int c=0x7f090012;
-        public static final int checkBox1=0x7f090026;
-        public static final int checkBox2=0x7f090029;
-        public static final int checkBox3=0x7f09002a;
-        public static final int checkBox4=0x7f09002b;
-        public static final int checkBox5=0x7f09002c;
-        public static final int checkBox6=0x7f09002d;
-        public static final int createEventButton=0x7f090023;
-        public static final int d=0x7f090015;
-        public static final int datePicker1=0x7f090027;
-        public static final int datePicker2=0x7f090028;
+        public static final int button2=0x7f090025;
+        public static final int c=0x7f090013;
+        public static final int createEventButton=0x7f090026;
+        public static final int createEventFromEventViewButton=0x7f090042;
+        public static final int d=0x7f090016;
+        public static final int datePicker2=0x7f09002b;
         public static final int error=0x7f090001;
-        public static final int f=0x7f090018;
-        public static final int g=0x7f09001b;
-        public static final int h=0x7f09001e;
-        public static final int linearLayout1=0x7f090022;
-        public static final int nextButtonToScheduledEvents=0x7f090033;
-        public static final int roomSelectSpinner=0x7f090032;
-        public static final int s=0x7f090005;
-        public static final int testString=0x7f09002f;
-        public static final int textView1=0x7f090007;
-        public static final int textView2=0x7f090009;
-        public static final int textView3=0x7f09000c;
-        public static final int textView4=0x7f090010;
-        public static final int textView5=0x7f090013;
-        public static final int textView6=0x7f090016;
-        public static final int textView7=0x7f090019;
-        public static final int textView8=0x7f09001c;
-        public static final int textView9=0x7f09001f;
-        public static final int viewEventsButton=0x7f090024;
+        public static final int eventDatePicker=0x7f090046;
+        public static final int eventType=0x7f090018;
+        public static final int f=0x7f090019;
+        public static final int g=0x7f09001c;
+        public static final int h=0x7f09001f;
+        public static final int i=0x7f09000f;
+        public static final int linearLayout1=0x7f090024;
+        public static final int nextButtonToScheduledEvents=0x7f090048;
+        public static final int roomSelectSpinner=0x7f090045;
+        public static final int roomSelectSpinner2=0x7f090023;
+        public static final int rowTime1=0x7f09002d;
+        public static final int rowTime10=0x7f09003f;
+        public static final int rowTime2=0x7f09002f;
+        public static final int rowTime3=0x7f090031;
+        public static final int rowTime4=0x7f090033;
+        public static final int rowTime5=0x7f090035;
+        public static final int rowTime6=0x7f090037;
+        public static final int rowTime7=0x7f090039;
+        public static final int rowTime8=0x7f09003b;
+        public static final int rowTime9=0x7f09003d;
+        public static final int rowTitle1=0x7f09002e;
+        public static final int rowTitle10=0x7f090040;
+        public static final int rowTitle2=0x7f090030;
+        public static final int rowTitle3=0x7f090032;
+        public static final int rowTitle4=0x7f090034;
+        public static final int rowTitle5=0x7f090036;
+        public static final int rowTitle6=0x7f090038;
+        public static final int rowTitle7=0x7f09003a;
+        public static final int rowTitle8=0x7f09003c;
+        public static final int rowTitle9=0x7f09003e;
+        public static final int s=0x7f090004;
+        public static final int textView1=0x7f090006;
+        public static final int textView10=0x7f090010;
+        public static final int textView2=0x7f090008;
+        public static final int textView3=0x7f09000a;
+        public static final int textView4=0x7f09000d;
+        public static final int textView5=0x7f090014;
+        public static final int textView6=0x7f090017;
+        public static final int textView7=0x7f09001a;
+        public static final int textView8=0x7f09001d;
+        public static final int textView9=0x7f090020;
+        public static final int viewEventsButton=0x7f090027;
         public static final int webView=0x7f090002;
-        public static final int y=0x7f09002e;
-        public static final int z=0x7f090025;
+        public static final int y=0x7f09002c;
+        public static final int z=0x7f090028;
     }
     public static final class layout {
         public static final int activity_cas_auth=0x7f030000;
-        public static final int activity_done_or_more=0x7f030001;
-        public static final int activity_event_creation=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_recurrence=0x7f030004;
-        public static final int activity_room_event_view=0x7f030005;
-        public static final int activity_room_select=0x7f030006;
+        public static final int activity_event_creation=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_recurrence=0x7f030003;
+        public static final int activity_room_event_view=0x7f030004;
+        public static final int activity_room_select=0x7f030005;
     }
     public static final class menu {
-        public static final int cas_auth=0x7f080000;
-        public static final int done_or_more=0x7f080001;
-        public static final int event_creation=0x7f080002;
-        public static final int main=0x7f080003;
-        public static final int recurrence=0x7f080004;
-        public static final int room_event_view=0x7f080005;
-        public static final int room_select=0x7f080006;
+        public static final int recurrence=0x7f080000;
+        public static final int room_event_view=0x7f080001;
+        public static final int room_select=0x7f080002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int back=0x7f050009;
-        public static final int building_prompt=0x7f050007;
-        public static final int building_select=0x7f05000c;
-        public static final int categories_=0x7f05001b;
-        public static final int configure_recurrence=0x7f05001e;
-        public static final int create_event=0x7f05000b;
-        public static final int create_more_events=0x7f050013;
-        public static final int description_=0x7f050019;
-        public static final int display_locations_=0x7f05001d;
-        public static final int done_creating_events=0x7f050012;
-        public static final int end_time_and_date_=0x7f050017;
-        public static final int event_types_=0x7f05001a;
-        public static final int friday=0x7f050025;
-        public static final int hello_world=0x7f050002;
-        public static final int monday=0x7f050021;
-        public static final int next=0x7f05000f;
-        public static final int notes_=0x7f05001c;
-        public static final int phone_number_=0x7f050018;
-        public static final int recurrence_days=0x7f050020;
-        public static final int recurrence_enabled=0x7f05001f;
-        public static final int room_prompt=0x7f050008;
-        public static final int room_select=0x7f05000d;
-        public static final int save=0x7f050026;
-        public static final int start_time_and_date_=0x7f050016;
-        public static final int submit=0x7f05000e;
-        public static final int thursday=0x7f050024;
-        public static final int title_=0x7f050015;
-        public static final int title_activity_cas_auth=0x7f050003;
-        public static final int title_activity_done_or_more=0x7f050011;
-        public static final int title_activity_event_creation=0x7f050004;
-        public static final int title_activity_recurrence=0x7f050014;
-        public static final int title_activity_room_event_view=0x7f050006;
-        public static final int title_activity_room_select=0x7f050005;
-        public static final int tuesday=0x7f050022;
-        public static final int ucdLogo=0x7f050010;
-        public static final int view_events=0x7f05000a;
-        public static final int wednesday=0x7f050023;
+        public static final int back=0x7f050008;
+        public static final int building_prompt=0x7f050006;
+        public static final int categories_=0x7f050014;
+        public static final int configure_recurrence=0x7f050017;
+        public static final int create_event=0x7f05000a;
+        public static final int description_=0x7f050012;
+        public static final int display_locations_=0x7f050016;
+        public static final int end_time_=0x7f05001a;
+        public static final int event=0x7f05000e;
+        public static final int event_types_=0x7f050013;
+        public static final int next=0x7f05000c;
+        public static final int notes_=0x7f050015;
+        public static final int phone_number_=0x7f050011;
+        public static final int room_prompt=0x7f050007;
+        public static final int save=0x7f050018;
+        public static final int set_date_for_event=0x7f05001b;
+        public static final int start_time_=0x7f050019;
+        public static final int submit=0x7f05000b;
+        public static final int time=0x7f05000d;
+        public static final int title_=0x7f050010;
+        public static final int title_activity_cas_auth=0x7f050002;
+        public static final int title_activity_event_creation=0x7f050003;
+        public static final int title_activity_recurrence=0x7f05000f;
+        public static final int title_activity_room_event_view=0x7f050005;
+        public static final int title_activity_room_select=0x7f050004;
+        public static final int view_events=0x7f050009;
     }
     public static final class style {
         /** 
