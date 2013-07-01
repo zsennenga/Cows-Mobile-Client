@@ -1,8 +1,6 @@
 package com.zennenga.cows_mobile_client;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
