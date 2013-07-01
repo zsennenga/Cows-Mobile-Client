@@ -4,20 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".EventCreation" >
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical" >
 
             <TextView
@@ -168,7 +156,7 @@
 
                 <Spinner
                     android:id="@+id/eventType"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:tag="EventTypeName" />
@@ -188,7 +176,7 @@
 
                 <com.zennenga.cows_mobile_client.MultiSelectSpinner
                     android:id="@+id/Categories"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:tag="Categories" />
@@ -236,8 +224,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
+                android:layout_height="wrap_content" >
 
                 <Spinner
                     android:id="@+id/buildingSelectSpinner2"
@@ -277,7 +264,5 @@
             </LinearLayout>
 
         </LinearLayout>
-
-    </RelativeLayout>
 
 </ScrollView>
