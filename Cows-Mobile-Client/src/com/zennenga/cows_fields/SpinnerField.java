@@ -14,6 +14,10 @@ public class SpinnerField extends BaseField {
 		this.spinner = s;
 	}
 	
+	public void setSpinner(Spinner s)	{
+		this.spinner = s;
+	}
+	
 	@Override
 	public void setData(String newData)  throws IllegalArgumentException {
 		if (this.spinner.getSelectedItem() == null) throw new IllegalArgumentException(this.fieldName + " is not optional");

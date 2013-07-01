@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class DateField extends BaseField {
 	private int[] comparator;
 	
-	DateField(String field, String data) {
+	public DateField(String field, String data) {
 		this.fieldName = field;
 		this.data = data;
 		this.comparator = null;
