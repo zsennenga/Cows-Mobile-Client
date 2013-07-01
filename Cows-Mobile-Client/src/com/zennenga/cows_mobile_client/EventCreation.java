@@ -16,8 +16,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class EventCreation extends Activity {
 	String tgc = "";
@@ -43,9 +40,10 @@ public class EventCreation extends Activity {
 		
 		//Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
-		multiSpinner.setItems(new String[] {"Display on Front TV","Homepage Event Listings"});
+		multiSpinner.setItems(getResources().getStringArray(R.array.Locations));
+		
 		multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
-		multiSpinner.setItems(new String[] {"Classes","Conferences","Meetings","Other","Seminars"});
+		multiSpinner.setItems(getResources().getStringArray(R.array.Categories));
 
 		//Populate Single Spinners
 		populateSpinner(R.id.eventType,R.array.EventTypes);
@@ -62,12 +60,6 @@ public class EventCreation extends Activity {
 		spinner.setAdapter(adapter);
 	}
 
-	@Override	
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.event_creation, menu);
-		return true;
-	}
 	/**
 	 * Handle cas reauthentication and recurrence configuration
 	 */
@@ -100,20 +92,16 @@ public class EventCreation extends Activity {
 	public void submitHandler(View v)	{
 		this.parameters = "";
 		if (!this.parseParameters()) {
-			showMessage(this.parameters);
+			Utility.showMessage(this.parameters, getApplicationContext());
 			return;
 		}
 		this.view = v;
-		String url = "http://dev.its.ucdavis.edu/v1/CowsMobile/CowsMobileProxy.php?ticket=" + tgc + setupRecurrence() + this.parameters;
+		String url = Utility.baseUrl + "?ticket=" + tgc + setupRecurrence() + this.parameters;
 		this.parameters = "";
 		AsyncEvent event = new AsyncEvent();
 		event.execute(url);
 	}
-	
-	private void showMessage(String error)	{
-		Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-		return;
-	}
+
 	/**
 	 * Setup recurrence
 	 * 
@@ -244,6 +232,7 @@ public class EventCreation extends Activity {
 	 * @param startdate
 	 * @return
 	 */
+	
 	private boolean parseAndValidateDates(int date) {
 		DatePicker dateView = (DatePicker) findViewById(date);
 		int day = dateView.getDayOfMonth();
@@ -351,7 +340,7 @@ public class EventCreation extends Activity {
 			b.setEnabled(false);
 			b = (Button) findViewById(R.id.button2);
 			b.setEnabled(false);
-			showMessage("Please Wait. Submitting event to COWS...");
+			Utility.showMessage("Please Wait. Submitting event to COWS...", getApplicationContext());
 		}
 		
 		@Override
@@ -378,7 +367,7 @@ public class EventCreation extends Activity {
 		protected void onPostExecute(String response)	{
 			
 			if (response == null || response.equals(""))	{
-				showMessage("Invalid response from server.");
+				Utility.showMessage("Invalid response from server.", getApplicationContext());
 				return;
 			}
 			
@@ -401,7 +390,7 @@ public class EventCreation extends Activity {
 		switch(Integer.parseInt(errorCode))	{
 		case -1:
 			//Generic error
-			showMessage("Error: " + error + " Please retry your submission.");
+			Utility.showMessage("Error: " + error + " Please retry your submission.", getApplicationContext());
 			return;
 		case -2:
 			//Failed Auth
@@ -412,20 +401,20 @@ public class EventCreation extends Activity {
 			return;
 		case -3:
 			//Event Error
-			showMessage("Event error: " + error + " Please fix this error, and retry your submission.");
+			Utility.showMessage("Event error: " + error + " Please fix this error, and retry your submission.", getApplicationContext());
 			return;
 		case -4:
 			//cURL error
 			this.tries++;
 			if (this.tries >= 5)	{
-				showMessage("Network Error: " + error);
+				Utility.showMessage("Network Error: " + error, getApplicationContext());
 				return;
 			}
 			else submitHandler((this.view));
 			return;
 		default:
 			//Generic Error
-			showMessage("Error: " + error);
+			Utility.showMessage("Error: " + error, getApplicationContext());
 			return;
 		}
 	}

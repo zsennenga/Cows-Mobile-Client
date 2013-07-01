@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 public class CasAuth extends Activity {
 	CookieManager cookieManager;
@@ -33,23 +31,12 @@ public class CasAuth extends Activity {
 			   }
 		});
 		if (getIntent().getBooleanExtra("retryingAuth", false))	{
-			setError("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.");
+			Utility.showMessage("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.", getApplicationContext());
 		}
 		this.cookieManager = CookieManager.getInstance();
 	}
 
-	private void setError(String error)	{
-		//((TextView)findViewById(R.id.error)).setText(error);
-		Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-		return;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.cas_auth, menu);
-		return true;
-	}
+	
 	/**
 	 * Takes a cookie and pulls out the CASTGC if it exists, then clears all cookies.
 	 * 
@@ -73,6 +60,8 @@ public class CasAuth extends Activity {
 						i.putExtra("TGC", pieces[1]);
 						this.setResult(RESULT_OK, i);
 					}
+					cookieManager.removeAllCookie();
+					cookieManager.removeSessionCookie();
 					finish();
 				}
 			}
