@@ -13,7 +13,6 @@ public class RoomSelectOnItemSelectedListener implements OnItemSelectedListener 
 	 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
 		roomSelectedString = "None";
 	}
 	
