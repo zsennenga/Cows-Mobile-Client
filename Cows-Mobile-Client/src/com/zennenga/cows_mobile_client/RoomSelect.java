@@ -3,7 +3,6 @@ package com.zennenga.cows_mobile_client;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -120,11 +119,4 @@ public class RoomSelect extends Activity {
 		return "";
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.room_select, menu);
-		return true;
-	}
-
 }
