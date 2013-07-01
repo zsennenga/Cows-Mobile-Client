@@ -17,8 +17,6 @@ import android.webkit.CookieManager;
  *
  */
 //TODO abstract http requests to class take in url, return body of response
-//TODO move getString to validator class
-//TODO HashMap for parameters
 //TODO use setError on all text fields in EventCreation
 //TODO use setMinDate on calendar
 public class MainActivity extends Activity {
