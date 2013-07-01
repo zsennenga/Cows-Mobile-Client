@@ -1,6 +1,4 @@
-gen/
-R.java
-BuildConfig.java
+/gen
 
 classes.dex
 # Compiled source #
