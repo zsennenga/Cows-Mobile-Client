@@ -1,8 +1,8 @@
-/gen
+gen/
 R.java
 BuildConfig.java
-classes.dex
 
+classes.dex
 # Compiled source #
 ###################
 *.com
