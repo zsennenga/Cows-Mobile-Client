@@ -14,7 +14,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.zennenga.cows_mobile_client.R;
-import com.zennenga.cows_mobile_client.R.array;
 
 import android.content.Context;
 import android.util.Log;

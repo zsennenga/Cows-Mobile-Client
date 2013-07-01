@@ -63,7 +63,6 @@ public class Validator {
 		fieldMap.put("RecurrenceSunday",new StaticField("RecurrenceSunday","false"));
 	}
 	
-
 	public String getString() {
 		Collection<BaseField> values = fieldMap.values();
 		String retString = "";
@@ -84,5 +83,9 @@ public class Validator {
 	
 	public void setField(String fieldName, String data) throws IllegalArgumentException {
 		fieldMap.get(fieldName).setData(data);
+	}
+	
+	public BaseField getField(String fieldName)	{
+		return fieldMap.get(fieldName);
 	}
 }
