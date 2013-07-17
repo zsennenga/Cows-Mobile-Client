@@ -21,16 +21,16 @@ public class DateField extends BaseField {
 		int[] dateInfo = this.parseDateString(newData);
 		if (dateInfo[2] < cal.get(Calendar.YEAR)) 
 			throw new IllegalArgumentException("Year must be equal to or greater than the current one");
-		if (dateInfo[1] < cal.get(Calendar.MONTH)) 
+		if (dateInfo[0] < cal.get(Calendar.MONTH)) 
 			throw new IllegalArgumentException("Month must be equal to or greater than the current one");
-		if (dateInfo[0] < cal.get(Calendar.DAY_OF_MONTH)) 
+		if (dateInfo[1] < cal.get(Calendar.DAY_OF_MONTH)) 
 			throw new IllegalArgumentException("Day must be equal to or greater than the current one");
 		if (this.comparator != null)	{
 			if (dateInfo[2] < this.comparator[2]) 
 				throw new IllegalArgumentException("Year must be equal to or greater than the year of the comparator");
-			if (dateInfo[1] < this.comparator[1]) 
-				throw new IllegalArgumentException("Month must be equal to or greater than the month of the comparator");
 			if (dateInfo[0] < this.comparator[0]) 
+				throw new IllegalArgumentException("Month must be equal to or greater than the month of the comparator");
+			if (dateInfo[1] < this.comparator[1]) 
 				throw new IllegalArgumentException("Day must be equal to or greater than the day of the comparator");
 		}
 		this.data = newData;
@@ -58,9 +58,9 @@ public class DateField extends BaseField {
 				throw new IllegalArgumentException("Date String not well-formed");
 			}
 		}
-		if (newCalData[0] <= 0 || newCalData[0] > 31) 
+		if (newCalData[1] <= 0 || newCalData[1] > 31) 
 			throw new IllegalArgumentException("Day outside of Range");
-		if (newCalData[1] <= 0 || newCalData[1] > 12) 
+		if (newCalData[0] <= 0 || newCalData[0] > 12) 
 			throw new IllegalArgumentException("Month outside of Range");
 		if (newCalData[2] <= 0 || newCalData[2] > 9999) 
 			throw new IllegalArgumentException("Year outside of Range");

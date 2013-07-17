@@ -18,6 +18,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -88,7 +90,7 @@ public class EventCreation extends Activity {
 					@Override
 					public void onDateChanged(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
-						String date = dayOfMonth + "/" + monthOfYear + "/" + year;
+						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
 						try	{
 							getValidator.setField("StartDate", date);
 							((DateField)getValidator.getField("EndDate")).setComparator(date);
@@ -177,6 +179,7 @@ public class EventCreation extends Activity {
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 				TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
+				if (t.getCurrentMinute() % 15 == 0) return;
 				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 				try {
@@ -197,6 +200,7 @@ public class EventCreation extends Activity {
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 				TimePicker t = ((TimePicker)findViewById(R.id.EndTime));
+				if (t.getCurrentMinute() % 15 == 0) return;
 				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 				try {
@@ -216,8 +220,28 @@ public class EventCreation extends Activity {
 		});
 		t = ((TimePicker)findViewById(R.id.StartTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+		int mins = t.getCurrentMinute();
+		if (mins == 0)	{
+			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
+			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
+		}
+		else	{
+			getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+		}
+
+		
 		t = ((TimePicker)findViewById(R.id.EndTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+		t.setCurrentHour((t.getCurrentHour()+1) % 24);
+		mins = t.getCurrentMinute();
+		if (mins == 0)	{
+			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
+			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
+		}
+		getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+		getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+
 	}
 	/**
 	 * Converts a value 0-59 to the closest 15 minute block
@@ -225,7 +249,8 @@ public class EventCreation extends Activity {
 	 * @return
 	 */
 	private Integer getNewMins(Integer currentMinute) {
-		if (currentMinute % 15 > 7) return ((int)Math.floor(currentMinute/15)+1) * 15;
+		int ret = 0;
+		if (currentMinute % 15 < 7) return (((int)Math.floor(currentMinute/15)+1) * 15) % 60;
 		else return (int)Math.floor(currentMinute/15)*15;
 	}
 	/**
@@ -235,17 +260,26 @@ public class EventCreation extends Activity {
 	 */
 	private void setTextListener(int field, final String fieldName) {
 		final TextView textField = ((TextView) findViewById(field));
-		textField.setOnFocusChangeListener(new OnFocusChangeListener() {
+		textField.addTextChangedListener(new TextWatcher() {
+
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus)	{
-					try {
-						getValidator.setField(fieldName, textField.getText().toString());
-					}
-					catch (IllegalArgumentException e)	{
-						textField.setError(e.getMessage());
-					}
+			public void afterTextChanged(Editable s) {
+				try {
+					getValidator.setField(fieldName, s.toString());
 				}
+				catch (IllegalArgumentException e)	{
+					textField.setError(e.getMessage());
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
 		});
 	}
@@ -333,7 +367,7 @@ public class EventCreation extends Activity {
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
 			HttpConnectionParams.setSoTimeout(client.getParams(), 5000);
-		
+			Log.e("URL", params[0]);
 			HttpGet request = new HttpGet(params[0]);
 			try {
 				out = client.execute(request);

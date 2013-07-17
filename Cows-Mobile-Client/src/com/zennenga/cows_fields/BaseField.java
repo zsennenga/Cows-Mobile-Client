@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 
 public abstract class BaseField {
 	protected String fieldName;
-	protected String data;
+	protected String data = "";
 	protected Boolean beenValidated = false;
 	protected Boolean optional = false;
 	

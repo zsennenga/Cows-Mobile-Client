@@ -1,7 +1,6 @@
 package com.zennenga.cows_fields;
 
 public class TextField extends BaseField {
-	boolean optional = false;
 	
 	public TextField(String fieldName, String data, boolean optional)	{
 		this.fieldName = fieldName;
