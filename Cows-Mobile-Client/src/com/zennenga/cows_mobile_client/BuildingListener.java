@@ -1,5 +1,7 @@
 package com.zennenga.cows_mobile_client;
 
+import com.zennenga.utility.Validator;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -7,10 +9,15 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class BuildingListener implements OnItemSelectedListener {
+	
+		Validator v;
+		BuildingListener(Validator getValidator)	{
+			this.v = getValidator;
+		}
 	    @Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-	    	
 	    	String building = parent.getSelectedItem().toString();
+	    	v.setField("BuildingAndRoom", building + ":");
 	    	if (building.contains("215"))	{
 	    		populateSpinner(R.id.roomSelectSpinner2,R.array.roomOptions215, (View) parent.getParent());
 	    	}
@@ -23,6 +30,7 @@ public class BuildingListener implements OnItemSelectedListener {
 	    	else if (building.contains("1715"))	{
 	    		populateSpinner(R.id.roomSelectSpinner2,R.array.roomOptions1715, (View) parent.getParent());
 	    	}
+	    	((Spinner)((View)parent.getParent()).findViewById(R.id.roomSelectSpinner2)).setOnItemSelectedListener(new RoomListener(v));
 	    }
 	    @Override
 	    public void onNothingSelected(AdapterView<?> parent)	{

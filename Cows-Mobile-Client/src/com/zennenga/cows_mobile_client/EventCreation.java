@@ -1,6 +1,7 @@
 package com.zennenga.cows_mobile_client;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -19,22 +20,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.zennenga.cows_fields.BaseField;
-import com.zennenga.cows_fields.BooleanField;
-import com.zennenga.cows_fields.BuildingField;
-import com.zennenga.cows_fields.DateField;
 import com.zennenga.cows_fields.MultiSpinnerField;
 import com.zennenga.cows_fields.SpinnerField;
-import com.zennenga.cows_fields.StaticField;
-import com.zennenga.cows_fields.TextField;
-import com.zennenga.cows_fields.TimeField;
 
 public class EventCreation extends Activity {
 	String tgc = "";
@@ -48,7 +45,7 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		
-		this.getValidator = new Validator();
+		this.getValidator = new Validator(this.view);
 		
 		//Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
@@ -64,16 +61,121 @@ public class EventCreation extends Activity {
 		populateSpinner(R.id.buildingSelectSpinner2,R.array.buildingOptions);
 		
 		Spinner spin = (Spinner) findViewById(R.id.buildingSelectSpinner2);
-		spin.setOnItemSelectedListener(new BuildingListener());
+		spin.setOnItemSelectedListener(new BuildingListener(this.getValidator));
 		
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
 		((SpinnerField) this.getValidator.getField(spin.getTag().toString())).setSpinner(spin);
+		
+		//Text Setting/validation
 		setTextListener(R.id.Title,"Title");
 		setTextListener(R.id.Description,"Description");
-		setTextListener(R.id.Phone,"PhoneNumber");
+		setTextListener(R.id.Phone,"ContactPhone");
 		setTextListener(R.id.Notes,"Notes");
+		
+		//Time setting and validation
+		setTimeListener(R.id.StartTime,"StartTime");
+		setTimeListener(R.id.EndTime,"EndTime");
+		
+		//Date setting and validation
+		DatePicker date = (DatePicker) findViewById(R.id.Date);
+		date.init(Calendar.getInstance().get(Calendar.YEAR), 
+				Calendar.getInstance().get(Calendar.MONTH), 
+				Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 
+				new OnDateChangedListener()	{
+
+					@Override
+					public void onDateChanged(DatePicker view, int year,
+							int monthOfYear, int dayOfMonth) {
+						String date = dayOfMonth + "/" + monthOfYear + "/" + year;
+						try	{
+							getValidator.setField("StartDate", date);
+							getValidator.setField("EndDate", date);
+						}
+						catch (IllegalArgumentException e)	{
+							Utility.showMessage(e.getMessage(), ((View) view.getParent()).getContext());
+						}
+					}
+			
+		});
+		date.setMinDate(System.currentTimeMillis() - 1000);
+		
+		//Multispinner setting and validation
+		setMultiSpinnerListener(R.id.Categories,"Categories");
+		setMultiSpinnerListener(R.id.Locations,"Locations");
+		
+		//Spinner setting and validation
+		spin = (Spinner) findViewById(R.id.eventType);
+		spin.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				try {
+					getValidator.setField("EventTypeName", "");
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
+				}
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				try {
+					getValidator.setField("EventTypeName", "");
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
+				}
+			}
+		});
 	}
 	
+	private void setMultiSpinnerListener(int fieldId, final String fieldName) {
+		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(R.id.Categories);
+		ms.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				try {
+					getValidator.setField(fieldName, "");
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				try {
+					getValidator.setField(fieldName, "");
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
+				}
+			}
+			
+		});
+	}
+
+	private void setTimeListener(int field, final String fieldIdentifier) {
+		TimePicker t = ((TimePicker)findViewById(field));
+		final String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
+		t.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus)	{
+					getValidator.setField(fieldIdentifier, time);
+					getValidator.setField("Display" + fieldIdentifier, time);
+				}
+				
+			}
+			
+		});
+	}
+
 	private void setTextListener(int field, final String fieldName) {
 		final TextView textField = ((TextView) findViewById(field));
 		textField.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -135,7 +237,7 @@ public class EventCreation extends Activity {
 			getString = this.getValidator.getString();
 		}
 		catch(IllegalArgumentException e)	{
-			Utility.showMessage(e.getMessage(), this.view.getContext());
+			Utility.showMessage(e.getMessage(), getApplicationContext());
 			return;
 		}
 		String url = Utility.BASE_URL + "?ticket=" + tgc + getString;

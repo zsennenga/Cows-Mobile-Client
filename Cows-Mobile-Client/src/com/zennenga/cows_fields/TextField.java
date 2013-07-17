@@ -11,6 +11,7 @@ public class TextField extends BaseField {
 	
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
+		this.beenValidated = false;
 		if(newData.length() == 0 && !this.optional)	{
 			throw new IllegalArgumentException(this.fieldName + " may not be blank");
 		}

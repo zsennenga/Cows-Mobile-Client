@@ -9,10 +9,12 @@ public class DateField extends BaseField {
 		this.fieldName = field;
 		this.data = data;
 		this.comparator = null;
+		this.beenValidated = true;
 	}
 
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
+		this.beenValidated = false;
 		Calendar cal = Calendar.getInstance();
 		int[] dateInfo = this.parseDateString(newData);
 		if (dateInfo[2] >= cal.get(Calendar.YEAR)) 

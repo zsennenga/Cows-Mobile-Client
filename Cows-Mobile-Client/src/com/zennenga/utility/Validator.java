@@ -1,8 +1,12 @@
 package com.zennenga.utility;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+
+import android.view.View;
+import android.widget.Button;
 
 import com.zennenga.cows_fields.BaseField;
 import com.zennenga.cows_fields.BooleanField;
@@ -13,12 +17,14 @@ import com.zennenga.cows_fields.SpinnerField;
 import com.zennenga.cows_fields.StaticField;
 import com.zennenga.cows_fields.TextField;
 import com.zennenga.cows_fields.TimeField;
+import com.zennenga.cows_mobile_client.R;
 
 public class Validator {
 	private HashMap<String,BaseField> fieldMap;
 	
-	
-	public Validator()	{
+	Button b;
+	public Validator(View v)	{
+		this.b = (Button) v.findViewById(R.id.button1);
 		this.fieldMap = new HashMap<String,BaseField>();
 		//Base Fields (Text)
 		fieldMap.put("EventTitle", new TextField("Title","",false));
@@ -31,8 +37,10 @@ public class Validator {
 		fieldMap.put("DisplayStartTime", new TimeField("DisplayStartTime","12:00"));
 		fieldMap.put("DisplayEndTime", new TimeField("DisplayEndTime","12:00"));
 		//Base Fields (Date)
-		fieldMap.put("StartDate", new DateField("StartDate","1/1/1"));
-		fieldMap.put("EndDate", new DateField("EndDate","1/1/1"));
+		Calendar c = Calendar.getInstance();
+		String date = c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
+ 		fieldMap.put("StartDate", new DateField("StartDate",date));
+		fieldMap.put("EndDate", new DateField("EndDate",date));
 		//Base Fields (Single spinner)
 		fieldMap.put("EventTypeName", new SpinnerField(null,Utility.EVENT_ATTRIBUTE_ARRAY));
 		//Base Fields (MultiSpinner)
@@ -76,6 +84,7 @@ public class Validator {
 				}
 			}
 			else	{
+				b.setActivated(false);
 				throw new IllegalArgumentException(f.getFieldName() + " was not set");
 			}
 		}
@@ -84,8 +93,19 @@ public class Validator {
 	
 	public void setField(String fieldName, String data) throws IllegalArgumentException {
 		fieldMap.get(fieldName).setData(data);
+		this.updateButton(R.id.button1);
 	}
 	
+	private void updateButton(int button) {
+		Collection<BaseField> values = fieldMap.values();
+		for (BaseField f : values)	{
+			if (!f.checkValidation())	{
+				return;
+			}
+		}
+		b.setActivated(true);
+	}
+
 	public BaseField getField(String fieldName)	{
 		return fieldMap.get(fieldName);
 	}

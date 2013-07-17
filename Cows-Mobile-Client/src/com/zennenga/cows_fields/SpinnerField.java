@@ -20,6 +20,7 @@ public class SpinnerField extends BaseField {
 	
 	@Override
 	public void setData(String newData)  throws IllegalArgumentException {
+		this.beenValidated = false;
 		if (this.spinner.getSelectedItem() == null) throw new IllegalArgumentException(this.fieldName + " is not optional");
 		this.data = Utility.getAttr(this.spinner.getSelectedItemPosition(), this.arrayChoice, this.spinner.getContext());
 		this.beenValidated = true;

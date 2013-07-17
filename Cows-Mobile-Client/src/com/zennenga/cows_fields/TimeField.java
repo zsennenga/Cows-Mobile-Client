@@ -10,6 +10,7 @@ public class TimeField extends BaseField {
 
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
+		this.beenValidated = false;
 		if (comparator != null)	{
 			int[] newTimeData = parseTimeStringToArray(newData);
 			int[] newTimeDataComparator = parseTimeStringToArray(this.comparator);
