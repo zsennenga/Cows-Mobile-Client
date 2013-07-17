@@ -12,6 +12,9 @@ public class BuildingField extends BaseField {
 		this.room = room;
 		this.fieldName = "BuildingAndRoom";
 	}
+	/**
+	 * Updates either the building or the room depending on the format of the newData string
+	 */
 	@Override
 	public void setData(String newData) {
 		this.beenValidated = false;

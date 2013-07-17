@@ -11,30 +11,38 @@ public class DateField extends BaseField {
 		this.comparator = null;
 		this.beenValidated = true;
 	}
-
+	/**
+	 * Checks that a string is a valid date and it is valid relative to the comparator
+	 */
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
 		this.beenValidated = false;
 		Calendar cal = Calendar.getInstance();
 		int[] dateInfo = this.parseDateString(newData);
-		if (dateInfo[2] >= cal.get(Calendar.YEAR)) 
+		if (dateInfo[2] < cal.get(Calendar.YEAR)) 
 			throw new IllegalArgumentException("Year must be equal to or greater than the current one");
-		if (dateInfo[1] >= cal.get(Calendar.MONTH)) 
+		if (dateInfo[1] < cal.get(Calendar.MONTH)) 
 			throw new IllegalArgumentException("Month must be equal to or greater than the current one");
-		if (dateInfo[0] >= cal.get(Calendar.DAY_OF_MONTH)) 
+		if (dateInfo[0] < cal.get(Calendar.DAY_OF_MONTH)) 
 			throw new IllegalArgumentException("Day must be equal to or greater than the current one");
 		if (this.comparator != null)	{
-			if (dateInfo[2] <= this.comparator[2]) 
+			if (dateInfo[2] < this.comparator[2]) 
 				throw new IllegalArgumentException("Year must be equal to or greater than the year of the comparator");
-			if (dateInfo[1] <= this.comparator[1]) 
+			if (dateInfo[1] < this.comparator[1]) 
 				throw new IllegalArgumentException("Month must be equal to or greater than the month of the comparator");
-			if (dateInfo[0] <= this.comparator[0]) 
+			if (dateInfo[0] < this.comparator[0]) 
 				throw new IllegalArgumentException("Day must be equal to or greater than the day of the comparator");
 		}
 		this.data = newData;
 		this.beenValidated = true;
 	}
-	
+	/**
+	 * Changes a date in the format Day/Month/Year into an int arry
+	 * 
+	 * @param data
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	private int[] parseDateString(String data) throws IllegalArgumentException {
 		int[] newCalData = new int[] {
 				-1,
@@ -58,7 +66,15 @@ public class DateField extends BaseField {
 			throw new IllegalArgumentException("Year outside of Range");
 		return newCalData;
 	}
-	
+	/**
+	 * Comparators are used to check if a date comes before another date.
+	 * If this is a EndDate set the comparator to the StartDate
+	 * 
+	 * Do not set the comparator on StartDate
+	 * 
+	 * @param c
+	 * @throws IllegalArgumentException
+	 */
 	public void setComparator(String c)	throws IllegalArgumentException{
 		this.comparator = parseDateString(c);
 	}

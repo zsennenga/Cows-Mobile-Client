@@ -8,7 +8,9 @@ public class TextField extends BaseField {
 		this.data = data;
 		this.optional = optional;
 	}
-	
+	/**
+	 * Checks that the string is not blank and if the field isn't optional
+	 */
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
 		this.beenValidated = false;

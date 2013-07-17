@@ -7,7 +7,9 @@ public class StaticField extends BaseField {
 		this.fieldName = field;
 		this.beenValidated = true;
 	}
-	
+	/**
+	 * Performs no validation
+	 */
 	@Override
 	public void setData(String newData) {
 		this.beenValidated = false;

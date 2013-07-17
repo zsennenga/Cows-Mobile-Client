@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
@@ -29,10 +30,12 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.TimePicker.OnTimeChangedListener;
 
-import com.zennenga.cows_fields.MultiSpinnerField;
-import com.zennenga.cows_fields.SpinnerField;
+import com.zennenga.cows_fields.*;
 
+//TODO fix timepicker validation
+//TODO fix layout being too close to screen edge on left
 public class EventCreation extends Activity {
 	String tgc = "";
 	View view = null;
@@ -45,7 +48,7 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		
-		this.getValidator = new Validator(this.view);
+		this.getValidator = new Validator((Button) findViewById(R.id.button1));
 		
 		//Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
@@ -64,17 +67,16 @@ public class EventCreation extends Activity {
 		spin.setOnItemSelectedListener(new BuildingListener(this.getValidator));
 		
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
-		((SpinnerField) this.getValidator.getField(spin.getTag().toString())).setSpinner(spin);
+		spin.setOnItemSelectedListener(new RoomListener(getValidator));
 		
 		//Text Setting/validation
-		setTextListener(R.id.Title,"Title");
+		setTextListener(R.id.Title,"EventTitle");
 		setTextListener(R.id.Description,"Description");
 		setTextListener(R.id.Phone,"ContactPhone");
 		setTextListener(R.id.Notes,"Notes");
 		
 		//Time setting and validation
-		setTimeListener(R.id.StartTime,"StartTime");
-		setTimeListener(R.id.EndTime,"EndTime");
+		setTimeListener();
 		
 		//Date setting and validation
 		DatePicker date = (DatePicker) findViewById(R.id.Date);
@@ -89,6 +91,7 @@ public class EventCreation extends Activity {
 						String date = dayOfMonth + "/" + monthOfYear + "/" + year;
 						try	{
 							getValidator.setField("StartDate", date);
+							((DateField)getValidator.getField("EndDate")).setComparator(date);
 							getValidator.setField("EndDate", date);
 						}
 						catch (IllegalArgumentException e)	{
@@ -105,6 +108,7 @@ public class EventCreation extends Activity {
 		
 		//Spinner setting and validation
 		spin = (Spinner) findViewById(R.id.eventType);
+		((SpinnerField) getValidator.getField("EventTypeName")).setSpinner(spin);
 		spin.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
@@ -130,9 +134,14 @@ public class EventCreation extends Activity {
 			}
 		});
 	}
-	
+	/**
+	 * Sets Listeners for a MultiSelectSpinners
+	 * @param fieldId
+	 * @param fieldName
+	 */
 	private void setMultiSpinnerListener(int fieldId, final String fieldName) {
-		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(R.id.Categories);
+		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(fieldId);
+		((MultiSpinnerField) getValidator.getField(fieldName)).setSpinner(ms);
 		ms.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
@@ -158,24 +167,72 @@ public class EventCreation extends Activity {
 			
 		});
 	}
-
-	private void setTimeListener(int field, final String fieldIdentifier) {
-		TimePicker t = ((TimePicker)findViewById(field));
-		final String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-		t.setOnFocusChangeListener(new OnFocusChangeListener() {
+	/**
+	 * Sets the Listeners for StartTime and EndTime
+	 */
+	private void setTimeListener() {
+		TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
+		t.setOnTimeChangedListener(new OnTimeChangedListener() {
 
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus)	{
-					getValidator.setField(fieldIdentifier, time);
-					getValidator.setField("Display" + fieldIdentifier, time);
+			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
+				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
+				try {
+					getValidator.setField("StartTime", time);
+					getValidator.setField("DisplayStartTime", time);
+					
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
 				}
 				
 			}
 			
 		});
-	}
+		t = ((TimePicker)findViewById(R.id.EndTime));
+		t.setOnTimeChangedListener(new OnTimeChangedListener() {
 
+			@Override
+			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				TimePicker t = ((TimePicker)findViewById(R.id.EndTime));
+				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
+				try {
+					getValidator.setField("EndTime", time);
+					getValidator.setField("DisplayEndTime", time);
+					((TimeField)getValidator.getField("StartTime")).setComparator(time);
+					if (((TimeField)getValidator.getField("StartTime")).checkValidation())	{
+						getValidator.setField("StartTime", ((TimeField)getValidator.getField("StartTime")).getTime());
+					}
+				}
+				catch (IllegalArgumentException e)	{
+					Utility.showMessage(e.getMessage(), getApplicationContext());
+				}
+				
+			}
+			
+		});
+		t = ((TimePicker)findViewById(R.id.StartTime));
+		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+		t = ((TimePicker)findViewById(R.id.EndTime));
+		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+	}
+	/**
+	 * Converts a value 0-59 to the closest 15 minute block
+	 * @param currentMinute
+	 * @return
+	 */
+	private Integer getNewMins(Integer currentMinute) {
+		if (currentMinute % 15 > 7) return ((int)Math.floor(currentMinute/15)+1) * 15;
+		else return (int)Math.floor(currentMinute/15)*15;
+	}
+	/**
+	 * Stores + validates text on every focus change
+	 * @param field
+	 * @param fieldName
+	 */
 	private void setTextListener(int field, final String fieldName) {
 		final TextView textField = ((TextView) findViewById(field));
 		textField.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -192,13 +249,16 @@ public class EventCreation extends Activity {
 			}
 		});
 	}
-
+	/**
+	 * Adds all values to a spinner.
+	 * @param fieldID
+	 * @param arrayID
+	 */
 	private void populateSpinner(int fieldID, int arrayID) {
 		Spinner spinner = (Spinner) findViewById(fieldID);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayID, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
-		((SpinnerField) this.getValidator.getField(spinner.getTag().toString())).setSpinner(spinner);
 	}
 
 	/**

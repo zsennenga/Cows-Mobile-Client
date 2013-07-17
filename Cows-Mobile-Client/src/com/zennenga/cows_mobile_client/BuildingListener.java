@@ -30,7 +30,6 @@ public class BuildingListener implements OnItemSelectedListener {
 	    	else if (building.contains("1715"))	{
 	    		populateSpinner(R.id.roomSelectSpinner2,R.array.roomOptions1715, (View) parent.getParent());
 	    	}
-	    	((Spinner)((View)parent.getParent()).findViewById(R.id.roomSelectSpinner2)).setOnItemSelectedListener(new RoomListener(v));
 	    }
 	    @Override
 	    public void onNothingSelected(AdapterView<?> parent)	{

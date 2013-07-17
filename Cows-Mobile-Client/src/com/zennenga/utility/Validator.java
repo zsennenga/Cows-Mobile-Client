@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 
-import android.view.View;
 import android.widget.Button;
 
 import com.zennenga.cows_fields.BaseField;
@@ -22,9 +21,11 @@ import com.zennenga.cows_mobile_client.R;
 public class Validator {
 	private HashMap<String,BaseField> fieldMap;
 	
-	Button b;
-	public Validator(View v)	{
-		this.b = (Button) v.findViewById(R.id.button1);
+	private Button b;
+	
+	public Validator(Button b)	{
+		this.b = b;
+		b.setActivated(false);
 		this.fieldMap = new HashMap<String,BaseField>();
 		//Base Fields (Text)
 		fieldMap.put("EventTitle", new TextField("Title","",false));
@@ -42,10 +43,10 @@ public class Validator {
  		fieldMap.put("StartDate", new DateField("StartDate",date));
 		fieldMap.put("EndDate", new DateField("EndDate",date));
 		//Base Fields (Single spinner)
-		fieldMap.put("EventTypeName", new SpinnerField(null,Utility.EVENT_ATTRIBUTE_ARRAY));
+		fieldMap.put("EventTypeName", new SpinnerField(Utility.EVENT_ATTRIBUTE_ARRAY));
 		//Base Fields (MultiSpinner)
-		fieldMap.put("Locations", new MultiSpinnerField(null,Utility.LOCATION_ATTRIBUTE_ARRAY,true));
-		fieldMap.put("Categories", new MultiSpinnerField(null,Utility.CATEGORY_ATTRIBUTE_ARRAY,false));
+		fieldMap.put("Locations", new MultiSpinnerField(Utility.LOCATION_ATTRIBUTE_ARRAY,true));
+		fieldMap.put("Categories", new MultiSpinnerField(Utility.CATEGORY_ATTRIBUTE_ARRAY,false));
 		//Base field (BuildingAndRoom)
 		fieldMap.put("BuildingAndRoom", new BuildingField("",""));
 		//Recurrences
@@ -71,7 +72,11 @@ public class Validator {
 		fieldMap.put("RecurrenceSaturday",new StaticField("RecurrenceSaturday","false"));
 		fieldMap.put("RecurrenceSunday",new StaticField("RecurrenceSunday","false"));
 	}
-	
+	/**
+	 * Returns the full string of GET parameters
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public String getString() throws IllegalArgumentException {
 		Collection<BaseField> values = fieldMap.values();
 		String retString = "";
@@ -90,14 +95,23 @@ public class Validator {
 		}
 		return retString;
 	}
-	
+	/**
+	 * Update the fieldmap with the given data and check if the submit button can be activated
+	 * @param fieldName
+	 * @param data
+	 * @throws IllegalArgumentException
+	 */
 	public void setField(String fieldName, String data) throws IllegalArgumentException {
 		fieldMap.get(fieldName).setData(data);
 		this.updateButton(R.id.button1);
 	}
-	
+	/**
+	 * Unlock the button if all necessary fields have been set and validated
+	 * @param button
+	 */
 	private void updateButton(int button) {
 		Collection<BaseField> values = fieldMap.values();
+		b.setActivated(false);
 		for (BaseField f : values)	{
 			if (!f.checkValidation())	{
 				return;
@@ -105,7 +119,11 @@ public class Validator {
 		}
 		b.setActivated(true);
 	}
-
+	/**
+	 * Getter for a specific field
+	 * @param fieldName
+	 * @return
+	 */
 	public BaseField getField(String fieldName)	{
 		return fieldMap.get(fieldName);
 	}

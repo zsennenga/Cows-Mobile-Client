@@ -1,11 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/s"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
@@ -50,7 +51,8 @@
                     android:id="@+id/StartTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="StartTime" />
+                    android:tag="StartTime"
+                    android:addStatesFromChildren="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +70,8 @@
                     android:id="@+id/EndTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="EndTime" />
+                    android:tag="EndTime"
+                    android:addStatesFromChildren="true" />
             </LinearLayout>
 
             <LinearLayout

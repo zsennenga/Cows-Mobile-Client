@@ -2,12 +2,16 @@ package com.zennenga.cows_fields;
 
 public class TimeField extends BaseField {
 	private String comparator;
+	private String baseTime;
 	
 	public TimeField(String fieldName, String data) {
 		this.fieldName = fieldName;
 		this.data = parseTimeStringToString(data);
+		this.baseTime = data;
 	}
-
+	/**
+	 * Converts a 24 hour time string into a 12 hour one and checks against a comparator
+	 */
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
 		this.beenValidated = false;
@@ -16,13 +20,26 @@ public class TimeField extends BaseField {
 			int[] newTimeDataComparator = parseTimeStringToArray(this.comparator);
 			if (newTimeData[0] > newTimeDataComparator[0])
 				throw new IllegalArgumentException("End time must come after Start time");
-			else if (newTimeData[0] == newTimeDataComparator[0] && newTimeDataComparator[1] <= newTimeData[1])
+			else if (newTimeData[0] == newTimeDataComparator[0] && newTimeData[1]> newTimeDataComparator[1])
 				throw new IllegalArgumentException("End time must come after Start time");
 		}
 		this.data = parseTimeStringToString(newData);
+		this.baseTime = newData;
 		this.beenValidated = true;
 	}
-	
+	/**
+	 * Returns the 24 hour time string
+	 * @return
+	 */
+	public String getTime() {
+		return this.baseTime;
+	}
+	/**
+	 * Converts 24-hour time to 12-hour time
+	 * @param data
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	private String parseTimeStringToString(String data)  throws IllegalArgumentException {
 		int [] timeData = parseTimeStringToArray(data);
 		String meridian = " AM";
@@ -30,7 +47,12 @@ public class TimeField extends BaseField {
 		if (timeData[0] >= 11 && timeData[0] != 23) meridian = " PM";
 		return finalHour + ":" + timeData[1] + meridian;
 	}
-	
+	/**
+	 * Converts a 24 hour time string into an array of it's components
+	 * @param data
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	private int[] parseTimeStringToArray(String data) throws IllegalArgumentException{
 		int[] newTimeData = new int[] {
 				-1,
@@ -42,16 +64,23 @@ public class TimeField extends BaseField {
 				newTimeData[i++] = Integer.parseInt(calendarItem);
 			}
 			catch (NumberFormatException e)	{
-				throw new IllegalArgumentException("Date String not well-formed");
+				throw new IllegalArgumentException("Time String not well-formed");
 			}
 		}
-		if (newTimeData[0] <= 0 || newTimeData[0] > 23) 
+		if (newTimeData[0] < 0 || newTimeData[0] > 23) 
 			throw new IllegalArgumentException("Hour outside of Range");
-		if (newTimeData[1] <= 0 || newTimeData[1] > 59) 
+		if (newTimeData[1] < 0 || newTimeData[1] > 59) 
 			throw new IllegalArgumentException("Minute outside of Range");
 		return newTimeData;
 	}
-	
+	/**
+	 * Sets the comparator used by setData
+	 * If this is StartTime, set the comparator to EndTime
+	 * 
+	 *  Do not set the comparator on EndTime
+	 *
+	 * @param c
+	 */
 	public void setComparator(String c)	{
 		this.comparator = c;
 	}
