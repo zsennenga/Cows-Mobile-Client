@@ -63,7 +63,7 @@ public class Validator {
 		fieldMap.put("RecurrenceSunday",new StaticField("RecurrenceSunday","false"));
 	}
 	
-	public String getString() {
+	public String getString() throws IllegalArgumentException {
 		Collection<BaseField> values = fieldMap.values();
 		String retString = "";
 		for (BaseField f : values)	{

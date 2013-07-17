@@ -18,6 +18,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -67,9 +68,29 @@ public class EventCreation extends Activity {
 		
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
 		((SpinnerField) this.getValidator.getField(spin.getTag().toString())).setSpinner(spin);
-		
+		setTextListener(R.id.Title,"Title");
+		setTextListener(R.id.Description,"Description");
+		setTextListener(R.id.Phone,"PhoneNumber");
+		setTextListener(R.id.Notes,"Notes");
 	}
 	
+	private void setTextListener(int field, final String fieldName) {
+		final TextView textField = ((TextView) findViewById(field));
+		textField.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus)	{
+					try {
+						getValidator.setField(fieldName, textField.getText().toString());
+					}
+					catch (IllegalArgumentException e)	{
+						textField.setError(e.getMessage());
+					}
+				}
+			}
+		});
+	}
+
 	private void populateSpinner(int fieldID, int arrayID) {
 		Spinner spinner = (Spinner) findViewById(fieldID);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayID, android.R.layout.simple_spinner_item);
@@ -109,7 +130,15 @@ public class EventCreation extends Activity {
 	 */
 	public void submitHandler(View v)	{
 		this.view = v;
-		String url = Utility.BASE_URL + "?ticket=" + tgc + this.getValidator.getString();
+		String getString = "";
+		try {
+			getString = this.getValidator.getString();
+		}
+		catch(IllegalArgumentException e)	{
+			Utility.showMessage(e.getMessage(), this.view.getContext());
+			return;
+		}
+		String url = Utility.BASE_URL + "?ticket=" + tgc + getString;
 		AsyncEvent event = new AsyncEvent();
 		event.execute(url);
 	}

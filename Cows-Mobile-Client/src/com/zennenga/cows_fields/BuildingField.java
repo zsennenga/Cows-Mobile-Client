@@ -17,6 +17,7 @@ public class BuildingField extends BaseField {
 		String[] buildingData = newData.split(":");
 		if (buildingData[0].length() > 0) this.building = buildingData[0];
 		else if (buildingData[1].length() > 0) this.room = buildingData[1];
+		else throw new IllegalArgumentException("Invalid Building/Room selection");
 	}
 	@Override
 	public String getData() throws UnsupportedEncodingException	{
