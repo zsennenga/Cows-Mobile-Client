@@ -17,6 +17,7 @@ import com.zennenga.cows_fields.TimeField;
 public class Validator {
 	private HashMap<String,BaseField> fieldMap;
 	
+	
 	public Validator()	{
 		this.fieldMap = new HashMap<String,BaseField>();
 		//Base Fields (Text)
