@@ -6,17 +6,12 @@ import android.content.Intent;
 import android.view.View;
 
 public class Recurrence extends Activity {
-	String recurrenceIn;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recurrence);
-		this.recurrenceIn = getIntent().getStringExtra("recurrenceIn");
-		if (!this.recurrenceIn.equals(""))	{
-			String[] pieces = this.recurrenceIn.split("&");
-			//TODO set each existing form based on existing recurrence information
-		}
+		
 	}
 	
 	public void saveHandler(View v)	{
@@ -30,7 +25,6 @@ public class Recurrence extends Activity {
 	
 	public void backHandler(View v)	{
 		Intent i = new Intent();
-		i.putExtra("recurrenceOut", this.recurrenceIn);
 		this.setResult(RESULT_OK,i);
 		finish();
 	}

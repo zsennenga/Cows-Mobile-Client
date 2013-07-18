@@ -341,9 +341,10 @@ public class EventCreation extends Activity {
 	 * @param v
 	 */
 	public void doRecurrence(View v)	{
-		Intent i = new Intent(v.getContext(), Recurrence.class);
+		//Intent i = new Intent(v.getContext(), Recurrence.class);
 		//TODO Handle recurrence
-		startActivityForResult(i, 2);
+		//startActivityForResult(i, 2);
+		Utility.showMessage("Sorry, Recurrences not implemented yet",getApplicationContext());
 	}
 	/**
 	 * AsyncTask to execute the event HTTP request

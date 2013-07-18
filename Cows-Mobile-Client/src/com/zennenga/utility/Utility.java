@@ -25,6 +25,7 @@ public class Utility {
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
+		
 	/**
 	 * Deauthenticates the client from CAS
 	 * 
