@@ -1,7 +1,5 @@
 package com.zennenga.cows_fields;
 
-import android.util.Log;
-
 public class TimeField extends BaseField {
 	private String comparator;
 	private String baseTime;
@@ -43,7 +41,6 @@ public class TimeField extends BaseField {
 	 * @throws IllegalArgumentException
 	 */
 	private String parseTimeStringToString(String data)  throws IllegalArgumentException {
-		Log.e("Time",data);
 		int [] timeData = parseTimeStringToArray(data);
 		String meridian = " AM";
 		int finalHour = ((timeData[0] % 12)+1);

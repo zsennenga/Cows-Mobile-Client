@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 
-import android.util.Log;
 import android.widget.Button;
 
 import com.zennenga.cows_fields.BaseField;
@@ -40,7 +39,7 @@ public class Validator {
 		fieldMap.put("DisplayEndTime", new TimeField("DisplayEndTime","12:00"));
 		//Base Fields (Date)
 		Calendar c = Calendar.getInstance();
-		String date = c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR);
+		String date = (c.get(Calendar.MONTH)+1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR);
  		fieldMap.put("StartDate", new DateField("StartDate",date));
 		fieldMap.put("EndDate", new DateField("EndDate",date));
 		//Base Fields (Single spinner)
@@ -80,15 +79,11 @@ public class Validator {
 	 */
 	public String getString() throws IllegalArgumentException {
 		Collection<BaseField> values = fieldMap.values();
-		String retString = "";
-		String temp = "";
+		String retString = "";	
 		for (BaseField f : values)	{
 			if (f.checkValidation())	{
 				try {
-					Log.e("Field",f.getFieldName());
-					temp = f.getData();
-					Log.e("Val", temp);
-					retString += temp;
+					retString += f.getData();
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}

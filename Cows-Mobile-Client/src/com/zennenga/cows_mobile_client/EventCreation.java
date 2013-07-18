@@ -20,9 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -36,7 +34,6 @@ import android.widget.TimePicker.OnTimeChangedListener;
 
 import com.zennenga.cows_fields.*;
 
-//TODO fix timepicker validation
 //TODO fix layout being too close to screen edge on left
 public class EventCreation extends Activity {
 	String tgc = "";
@@ -218,16 +215,17 @@ public class EventCreation extends Activity {
 			}
 			
 		});
+		
 		t = ((TimePicker)findViewById(R.id.StartTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 		int mins = t.getCurrentMinute();
 		if (mins == 0)	{
-			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
-			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
+			getValidator.setField("StartTime", t.getCurrentHour() + ":00");
+			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":00");
 		}
 		else	{
-			getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
-			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+			getValidator.setField("StartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
 		}
 
 		
@@ -239,8 +237,10 @@ public class EventCreation extends Activity {
 			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
 			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
 		}
-		getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
-		getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+		else	{
+			getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+		}
 
 	}
 	/**
@@ -249,7 +249,6 @@ public class EventCreation extends Activity {
 	 * @return
 	 */
 	private Integer getNewMins(Integer currentMinute) {
-		int ret = 0;
 		if (currentMinute % 15 < 7) return (((int)Math.floor(currentMinute/15)+1) * 15) % 60;
 		else return (int)Math.floor(currentMinute/15)*15;
 	}
@@ -294,7 +293,6 @@ public class EventCreation extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 	}
-
 	/**
 	 * Handle cas reauthentication and recurrence configuration
 	 */
@@ -338,7 +336,6 @@ public class EventCreation extends Activity {
 		AsyncEvent event = new AsyncEvent();
 		event.execute(url);
 	}
-
 	/**
 	 * Setup recurrence
 	 * 
@@ -349,7 +346,11 @@ public class EventCreation extends Activity {
 		//TODO Handle recurrence
 		startActivityForResult(i, 2);
 	}
-	
+	/**
+	 * AsyncTask to execute the event HTTP request
+	 * @author its-zach
+	 *
+	 */
 	private class AsyncEvent extends AsyncTask<String, String, String> {
 		
 		@Override
@@ -367,7 +368,6 @@ public class EventCreation extends Activity {
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
 			HttpConnectionParams.setSoTimeout(client.getParams(), 5000);
-			Log.e("URL", params[0]);
 			HttpGet request = new HttpGet(params[0]);
 			try {
 				out = client.execute(request);
@@ -442,7 +442,6 @@ public class EventCreation extends Activity {
 			return;
 		}
 	}
-	
 	/**
 	 * Generates an Alert Dialog to ask the user if they want to create
 	 * another event or finish and logout
