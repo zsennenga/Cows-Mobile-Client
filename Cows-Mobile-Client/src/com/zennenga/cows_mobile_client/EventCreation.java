@@ -75,7 +75,7 @@ public class EventCreation extends Activity {
 		setTextListener(R.id.Notes,"Notes");
 		
 		//Time setting and validation
-		setTimeListener();
+		setupTimeFields();
 		
 		//Date setting and validation
 		DatePicker date = (DatePicker) findViewById(R.id.Date);
@@ -169,7 +169,7 @@ public class EventCreation extends Activity {
 	/**
 	 * Sets the Listeners for StartTime and EndTime
 	 */
-	private void setTimeListener() {
+	private void setupTimeFields() {
 		TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
 		t.setOnTimeChangedListener(new OnTimeChangedListener() {
 
@@ -227,7 +227,6 @@ public class EventCreation extends Activity {
 			getValidator.setField("StartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
 			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
 		}
-
 		
 		t = ((TimePicker)findViewById(R.id.EndTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
@@ -248,7 +247,7 @@ public class EventCreation extends Activity {
 	 * @param currentMinute
 	 * @return
 	 */
-	private Integer getNewMins(Integer currentMinute) {
+	private int getNewMins(Integer currentMinute) {
 		if (currentMinute % 15 < 7) return (((int)Math.floor(currentMinute/15)+1) * 15) % 60;
 		else return (int)Math.floor(currentMinute/15)*15;
 	}

@@ -25,7 +25,7 @@ public class Validator {
 	
 	public Validator(Button b)	{
 		this.b = b;
-		b.setActivated(false);
+		b.setEnabled(false);
 		this.fieldMap = new HashMap<String,BaseField>();
 		//Base Fields (Text)
 		fieldMap.put("EventTitle", new TextField("EventTitle","",false));
@@ -89,7 +89,7 @@ public class Validator {
 				}
 			}
 			else	{
-				b.setActivated(false);
+				b.setEnabled(false);
 				throw new IllegalArgumentException(f.getFieldName() + " was not set");
 			}
 		}
@@ -111,13 +111,13 @@ public class Validator {
 	 */
 	private void updateButton(int button) {
 		Collection<BaseField> values = fieldMap.values();
-		b.setActivated(false);
+		b.setEnabled(false);
 		for (BaseField f : values)	{
 			if (!f.checkValidation())	{
 				return;
 			}
 		}
-		b.setActivated(true);
+		b.setEnabled(true);
 	}
 	/**
 	 * Getter for a specific field
