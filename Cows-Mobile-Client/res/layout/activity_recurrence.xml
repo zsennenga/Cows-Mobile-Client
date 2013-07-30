@@ -14,64 +14,115 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/ab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recurrence Start Date: "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <DatePicker
-                android:id="@+id/Date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recurrence End Date: "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <DatePicker
-                android:id="@+id/datePicker2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/y"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:layout_weight="0.13" >
+
+            <LinearLayout
+                android:id="@+id/aaz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/az"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <DatePicker
+                        android:id="@+id/startDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:calendarViewShown="false" />
+
+                    <DatePicker
+                        android:id="@+id/endDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="49dp"
+                        android:calendarViewShown="false" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/azz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/frequency"
+                        android:layout_alignBottom="@+id/frequency"
+                        android:layout_marginRight="35dp"
+                        android:layout_toLeftOf="@+id/frequency"
+                        android:paddingLeft="25dp"
+                        android:text="Medium Text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                    <Spinner
+                        android:id="@+id/type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/startDate"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@+id/frequency" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.zennenga.cows_mobile_client.MultiSelectSpinner
+                android:id="@+id/days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/DayOfMonth"
+                android:layout_marginRight="157dp"
+                android:layout_marginTop="78dp" />
+
+            <Spinner
+                android:id="@+id/DayOfMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="83dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
             <Button
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:text="@string/save" />
+                android:text="Back" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="38dp"
-                android:text="@string/back" />
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="Submit" />
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Clear" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

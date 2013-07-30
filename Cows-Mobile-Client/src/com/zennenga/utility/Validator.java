@@ -58,8 +58,9 @@ public class Validator {
 		fieldMap.put("RecurrenceThursday",new BooleanField("RecurrenceThursday","false"));
 		fieldMap.put("RecurrenceFriday",new BooleanField("RecurrenceFriday","false"));
 		fieldMap.put("RecurrenceIsDayOfMonth",new BooleanField("RecurrenceIsDayOfMonth","false"));
-		fieldMap.put("RecurrenceStartDate",new DateField("RecurrenceStartDate","7/5/2013"));
-		fieldMap.put("RecurrenceEndDate",new DateField("RecurrenceEndDate","8/4/2013"));
+		fieldMap.put("RecurrenceStartDate",new DateField("RecurrenceStartDate",date));
+		date = (c.get(Calendar.MONTH)+1) + "/" + (1+c.get(Calendar.DAY_OF_MONTH)) + "/" + c.get(Calendar.YEAR);
+		fieldMap.put("RecurrenceEndDate",new DateField("RecurrenceEndDate",date));
 		fieldMap.put("RecurrenceFrequency",new StaticField("RecurrenceFrequency","1"));
 		fieldMap.put("RecurrenceType",new StaticField("RecurrenceType","D"));
 		//Static Fields
@@ -71,6 +72,7 @@ public class Validator {
 		fieldMap.put("SiteId",new StaticField("SiteId","its"));
 		fieldMap.put("RecurrenceSaturday",new StaticField("RecurrenceSaturday","false"));
 		fieldMap.put("RecurrenceSunday",new StaticField("RecurrenceSunday","false"));
+		
 	}
 	/**
 	 * Returns the full string of GET parameters
