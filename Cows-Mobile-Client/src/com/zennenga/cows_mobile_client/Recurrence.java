@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.zennenga.utility.Utility;
 
@@ -34,16 +36,20 @@ public class Recurrence extends Activity {
 		//Spinners
 		
 		Spinner s = (Spinner) findViewById(R.id.dom);
+		int index = 0;
+		
+		if (!fields.get("RecurrenceIsDayOfMonth").equals("true")) index = 1;
+		s.setSelection(index);
+		
 		s.setVisibility(1);
 		
 		s = (Spinner) findViewById(R.id.type);
 		populateSpinner(R.id.type,R.array.recurrenceType);
 		
-		int index = 0;
+		index = 0;
 		
 		if (fields.get("RecurrenceType").equals("W")) index = 1;
 		else if (fields.get("RecurrenceType").equals("M")) index = 2;
-		
 		s.setSelection(index);
 		
 		//Multi Spinners
@@ -53,6 +59,8 @@ public class Recurrence extends Activity {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.daysOfWeek, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		m.setAdapter(adapter);
+		
+		setupMultiSpinner();
 		
 		
 		//Date Pickers
@@ -64,6 +72,24 @@ public class Recurrence extends Activity {
 		d.setMinDate(System.currentTimeMillis() + 24*60*60*1000 - 1000);
 	}
 	
+	private void setupMultiSpinner() {
+		MultiSelectSpinner m = (MultiSelectSpinner) findViewById(R.id.days);
+		
+		List<Integer> indices = new ArrayList<Integer>();
+		if (fields.get("RecurrenceMonday").equals("true")) indices.add(1);
+		if (fields.get("RecurrenceTuesday").equals("true")) indices.add(2);
+		if (fields.get("RecurrenceWednesday").equals("true")) indices.add(3);
+		if (fields.get("RecurrenceThursday").equals("true")) indices.add(4);
+		if (fields.get("RecurrenceFriday").equals("true")) indices.add(5);
+		int index[] = new int[indices.size()];
+		for (int i = 0; i < indices.size(); i++)	{
+			index[i] = indices.get(i);
+		}
+		
+		m.setSelection(index);
+		
+	}
+
 	private void updateFields()	{
 		for (String field : Utility.recurrenceFields)	{
 			try {
