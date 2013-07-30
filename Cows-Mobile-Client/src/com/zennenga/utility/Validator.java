@@ -16,7 +16,6 @@ import com.zennenga.cows_fields.SpinnerField;
 import com.zennenga.cows_fields.StaticField;
 import com.zennenga.cows_fields.TextField;
 import com.zennenga.cows_fields.TimeField;
-import com.zennenga.cows_mobile_client.R;
 
 public class Validator {
 	private HashMap<String,BaseField> fieldMap;
@@ -103,15 +102,18 @@ public class Validator {
 	 * @param data
 	 * @throws IllegalArgumentException
 	 */
-	public void setField(String fieldName, String data) throws IllegalArgumentException {
+	public void setField(String fieldName, String data, boolean recurrence) throws IllegalArgumentException {
 		fieldMap.get(fieldName).setData(data);
-		this.updateButton(R.id.button1);
+		if (!recurrence) this.updateButton();
+	}
+	public void setField(String fieldName, String data) throws IllegalArgumentException	{
+		setField(fieldName,data,false);
 	}
 	/**
 	 * Unlock the button if all necessary fields have been set and validated
 	 * @param button
 	 */
-	private void updateButton(int button) {
+	private void updateButton() {
 		Collection<BaseField> values = fieldMap.values();
 		b.setEnabled(false);
 		for (BaseField f : values)	{
@@ -120,6 +122,15 @@ public class Validator {
 			}
 		}
 		b.setEnabled(true);
+	}
+	
+	/**
+	 * Checks if all recurrence fields have been validated
+	 * 
+	 * @param b
+	 */
+	public void enableRecurrenceButton(Button b)	{
+		
 	}
 	/**
 	 * Getter for a specific field

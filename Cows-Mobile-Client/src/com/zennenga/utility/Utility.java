@@ -25,6 +25,36 @@ public class Utility {
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
+	
+	public static final String[] recurrenceFields = {
+		"IsRepeating",
+		"RecurrenceAppliesTo",
+		"RecurrenceMonday",
+		"RecurrenceMonday",
+		"RecurrenceMonday",
+		"RecurrenceMonday",
+		"RecurrenceMonday",
+		"RecurrenceIsDayOfMonth",
+		"RecurrenceStartDate",
+		"RecurrenceEndDate",
+		"RecurrenceFrequency",
+		"RecurrenceType"
+	};
+	
+	public static final String[] recurrenceValues = {
+		"false",
+		"None",
+		"false",
+		"false",
+		"false",
+		"false",
+		"false",
+		"false",
+		"8/1/2050",
+		"8/2/2050",
+		"1",
+		"D"
+	};
 		
 	/**
 	 * Deauthenticates the client from CAS

@@ -80,6 +80,26 @@
 
     </string-array>
     
+    <string-array name="recurrenceType">
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+    </string-array>
+    
+    <string-array name="daysOfWeek">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
+    
+    <string-array name="typeattr">
+        <item>D</item>
+        <item>W</item>
+        <item>M</item>
+    </string-array>
+    
     <string-array name="locattr">
         <item>Front-TV</item>
         <item>ITSWebsite</item>

@@ -47,7 +47,7 @@ public class EventCreation extends Activity {
 	String tgc = "";
 	View view = null;
 	int tries = 0;
-	Validator getValidator;
+	public static Validator getValidator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,23 +55,23 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		
-		this.getValidator = new Validator((Button) findViewById(R.id.button1));
+		EventCreation.getValidator = new Validator((Button) findViewById(R.id.button1));
 		
 		//Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
 		multiSpinner.setItems(getResources().getStringArray(R.array.Locations));
-		((MultiSpinnerField) this.getValidator.getField(multiSpinner.getTag().toString())).setSpinner(multiSpinner);
+		((MultiSpinnerField) EventCreation.getValidator.getField(multiSpinner.getTag().toString())).setSpinner(multiSpinner);
 		
 		multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
 		multiSpinner.setItems(getResources().getStringArray(R.array.Categories));
-		((MultiSpinnerField) this.getValidator.getField(multiSpinner.getTag().toString())).setSpinner(multiSpinner);
+		((MultiSpinnerField) EventCreation.getValidator.getField(multiSpinner.getTag().toString())).setSpinner(multiSpinner);
 
 		//Populate Single Spinners
 		populateSpinner(R.id.eventType,R.array.EventTypes);
 		populateSpinner(R.id.buildingSelectSpinner2,R.array.buildingOptions);
 		
 		Spinner spin = (Spinner) findViewById(R.id.buildingSelectSpinner2);
-		spin.setOnItemSelectedListener(new BuildingListener(this.getValidator));
+		spin.setOnItemSelectedListener(new BuildingListener(EventCreation.getValidator));
 		
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
 		spin.setOnItemSelectedListener(new RoomListener(getValidator));
@@ -333,7 +333,7 @@ public class EventCreation extends Activity {
 		this.view = v;
 		String getString = "";
 		try {
-			getString = this.getValidator.getString();
+			getString = EventCreation.getValidator.getString();
 		}
 		catch(IllegalArgumentException e)	{
 			Utility.showMessage(e.getMessage(), getApplicationContext());

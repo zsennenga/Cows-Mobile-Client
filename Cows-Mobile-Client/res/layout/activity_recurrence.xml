@@ -84,12 +84,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/DayOfMonth"
+                android:layout_below="@+id/dom"
                 android:layout_marginRight="157dp"
                 android:layout_marginTop="78dp" />
 
             <Spinner
-                android:id="@+id/DayOfMonth"
+                android:id="@+id/dom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -105,7 +105,8 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back" />
+                android:text="Back"
+                android:onClick="backHandler" />
 
             <Button
                 android:id="@+id/button2"
@@ -113,7 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="Submit" />
+                android:text="Submit"
+                android:onClick="submitHandler" />
 
             <Button
                 android:id="@+id/clear"
@@ -121,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:text="Clear" />
+                android:text="Clear"
+                android:onClick="clearHandler" />
         </RelativeLayout>
     </LinearLayout>
 
