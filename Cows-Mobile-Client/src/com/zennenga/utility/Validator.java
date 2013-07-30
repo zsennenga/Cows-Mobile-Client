@@ -30,7 +30,7 @@ public class Validator {
 		//Base Fields (Text)
 		fieldMap.put("EventTitle", new TextField("EventTitle","",false));
 		fieldMap.put("ContactPhone", new TextField("ContactPhone","",false));
-		fieldMap.put("Description", new TextField("Description","",false));
+		fieldMap.put("Description", new TextField("Description","",true));
 		fieldMap.put("Notes", new TextField("Notes","",true));
 		//Base Fields (Time)
 		fieldMap.put("StartTime", new TimeField("StartTime","12:00"));

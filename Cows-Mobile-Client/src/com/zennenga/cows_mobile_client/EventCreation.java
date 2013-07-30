@@ -1,12 +1,19 @@
 package com.zennenga.cows_mobile_client;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 
 import com.zennenga.utility.Utility;
@@ -20,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -331,9 +339,10 @@ public class EventCreation extends Activity {
 			Utility.showMessage(e.getMessage(), getApplicationContext());
 			return;
 		}
-		String url = Utility.BASE_URL + "?ticket=" + tgc + getString;
+		String url = Utility.BASE_URL;
+		getString += "&tgc=" + this.tgc + "&siteId=its";
 		AsyncEvent event = new AsyncEvent();
-		event.execute(url);
+		event.execute(url,getString);
 	}
 	/**
 	 * Setup recurrence
@@ -364,12 +373,30 @@ public class EventCreation extends Activity {
 		
 		@Override
 		protected String doInBackground(String... params) {
+			List<NameValuePair> hParams = new ArrayList<NameValuePair>(2);
+			String paramTokens[] = params[1].split("&");
+			
+			for (String paramToken : paramTokens)	{
+				if (paramToken != "")	{
+					String[] token = paramToken.split("=");
+					if (token.length == 1)	{
+						hParams.add(new BasicNameValuePair(token[0], ""));
+					} else
+						try {
+							hParams.add(new BasicNameValuePair(token[0], URLDecoder.decode(token[1],"UTF-8")));
+						} catch (UnsupportedEncodingException e) {
+							return "-1:This should never happen";	
+						}
+				}
+			}
+			
 			HttpResponse out = null;
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
 			HttpConnectionParams.setSoTimeout(client.getParams(), 5000);
-			HttpGet request = new HttpGet(params[0]);
+			HttpPost request = new HttpPost(params[0]);
 			try {
+				request.setEntity(new UrlEncodedFormEntity(hParams));
 				out = client.execute(request);
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -383,15 +410,22 @@ public class EventCreation extends Activity {
 		
 		@Override
 		protected void onPostExecute(String response)	{
+
+			Log.i("Response", response);
 			
 			if (response == null || response.equals(""))	{
 				Utility.showMessage("Invalid response from server.", getApplicationContext());
+				Button b = (Button) findViewById(R.id.button1);
+				b.setEnabled(true);
+				b = (Button) findViewById(R.id.button2);
+				b.setEnabled(true);
 				return;
 			}
 			
+			
 			String[] pieces = response.split(":", 2);
 			
-			if (!pieces[0].equals("0"))	{
+			if (!pieces[0].equals("0") && !pieces[0].equals("-8"))	{
 				handleServerError(pieces[0],pieces[1]);
 				Button b = (Button) findViewById(R.id.button1);
 				b.setEnabled(true);

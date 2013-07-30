@@ -11,6 +11,8 @@ public class BuildingField extends BaseField {
 		this.building = building;
 		this.room = room;
 		this.fieldName = "BuildingAndRoom";
+		this.beenValidated = false;
+		this.optional = false;
 	}
 	/**
 	 * Updates either the building or the room depending on the format of the newData string

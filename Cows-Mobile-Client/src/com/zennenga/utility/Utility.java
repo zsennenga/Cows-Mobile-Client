@@ -21,7 +21,7 @@ import android.webkit.CookieManager;
 import android.widget.Toast;
 
 public class Utility {
-	public static final String BASE_URL = "http://dev.its.ucdavis.edu/v1/CowsMobile/CowsMobileProxy.php";
+	public static final String BASE_URL = "http://dev.its.ucdavis.edu/scripts/CowsMobileServer.php";
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
