@@ -1,8 +1,10 @@
 package com.zennenga.utility;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import android.widget.Button;
@@ -58,7 +60,10 @@ public class Validator {
 		fieldMap.put("RecurrenceFriday",new BooleanField("RecurrenceFriday","false"));
 		fieldMap.put("RecurrenceIsDayOfMonth",new BooleanField("RecurrenceIsDayOfMonth","false"));
 		fieldMap.put("RecurrenceStartDate",new DateField("RecurrenceStartDate",date));
-		date = (c.get(Calendar.MONTH)+1) + "/" + (1+c.get(Calendar.DAY_OF_MONTH)) + "/" + c.get(Calendar.YEAR);
+		c.setTime(new GregorianCalendar().getTime());
+		c.add(Calendar.DAY_OF_YEAR,2);
+		SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
+		date = format.format(c.getTime());
 		fieldMap.put("RecurrenceEndDate",new DateField("RecurrenceEndDate",date));
 		fieldMap.put("RecurrenceFrequency",new StaticField("RecurrenceFrequency","1"));
 		fieldMap.put("RecurrenceType",new StaticField("RecurrenceType","D"));
@@ -103,8 +108,15 @@ public class Validator {
 	 * @throws IllegalArgumentException
 	 */
 	public void setField(String fieldName, String data, boolean recurrence) throws IllegalArgumentException {
-		fieldMap.get(fieldName).setData(data);
+		try	{
+			fieldMap.get(fieldName).setData(data);
+		}
+		catch (Exception e)	{
+			Utility.showMessage(e.getMessage());
+			return;
+		}
 		if (!recurrence) this.updateButton();
+		Utility.clearToast();
 	}
 	public void setField(String fieldName, String data) throws IllegalArgumentException	{
 		setField(fieldName,data,false);

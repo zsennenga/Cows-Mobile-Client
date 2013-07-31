@@ -152,7 +152,8 @@
     <string name="save">Save</string>
     <string name="start_time_">Start Time:</string>
     <string name="end_time_">End Time:</string>
-    <string name="set_date_for_event">Set Date for Event</string>
+    <string name="set_date_for_event">Event Date:</string>
     <string name="clear">Clear</string>
+    <string name="event_reoccurs_every_">Event reoccurs every:</string>
 
 </resources>

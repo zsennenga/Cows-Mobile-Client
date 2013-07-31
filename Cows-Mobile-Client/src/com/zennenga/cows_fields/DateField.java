@@ -33,7 +33,7 @@ public class DateField extends BaseField {
 				throw new IllegalArgumentException("Year must be equal to or greater than the year of the comparator");
 			if (dateInfo[0] < this.comparator[0]) 
 				throw new IllegalArgumentException("Month must be equal to or greater than the month of the comparator");
-			if (dateInfo[1] < this.comparator[1]) 
+			if (dateInfo[1] < this.comparator[1] && dateInfo[0] == this.comparator[0]) 
 				throw new IllegalArgumentException("Day must be equal to or greater than the day of the comparator");
 		}
 		this.data = newData;

@@ -11,7 +11,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class Recurrence extends Activity {
 			
 		});
 		
-		s.setVisibility(4);
+		s.setVisibility(View.GONE);
 		
 		populateSpinner(R.id.type,R.array.recurrenceType);
 		s = (Spinner) findViewById(R.id.type);
@@ -108,46 +108,47 @@ public class Recurrence extends Activity {
 				
 				if (selected.equals("Month"))	{
 					String options[] = new String[2];
-					SimpleDateFormat format1=new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat format1=new SimpleDateFormat("MM/dd/yyyy");
 					Date dt1;
 					try {
-						dt1 = format1.parse(EventCreation.getValidator.getField("RecurrenceStartDate").getData());
-					} catch (UnsupportedEncodingException e) {
-						return;
+						dt1 = format1.parse(EventCreation.getValidator.getField("RecurrenceStartDate").getRawData());
 					} catch (ParseException e) {
 						Log.e("DateError", "Parse error");
 						return;
 					}
-					DateFormat format2=new SimpleDateFormat("EEEE"); 
+					DateFormat format2 = new SimpleDateFormat("EEEE"); 
 					DateFormat format3 = new SimpleDateFormat("F");
 					DateFormat format4 = new SimpleDateFormat("d");
-					String finalDay=format2.format(dt1);
-					String xth = format3.format(dt1);
+					String finalDay = format2.format(dt1);
+					int xth = Integer.parseInt(format3.format(dt1));
 					int dom = Integer.parseInt(format4.format(dt1));
 					
-					options[0] = dom + Utility.ordinal(dom) + " day";
-					options[1] = xth + Utility.ordinal(dom) + " " + finalDay;
+					options[0] = Utility.ordinal(dom) + " day";
+					options[1] = Utility.ordinal(xth) + " " + finalDay;
 					
-					Spinner spinner = (Spinner) findViewById(R.id.type);
+					Spinner spinner = (Spinner) findViewById(R.id.dom);
 					ArrayAdapter<String> adapter = new ArrayAdapter<String>(arg0.getContext(), android.R.layout.simple_spinner_dropdown_item, options); 
 					spinner.setAdapter(adapter);
-					spinner.setVisibility(0);
+					spinner.setVisibility(View.VISIBLE);
+					findViewById(R.id.days).setVisibility(View.GONE);
 					EventCreation.getValidator.setField("RecurrenceType", "M");
 					
 					int index = 0;
-					Spinner s = (Spinner) findViewById(R.id.dom);
 					
 					if (!fields.get("RecurrenceIsDayOfMonth").equals("true")) {
 						index = 1;
 					}
-					s.setSelection(index);
+					spinner.setSelection(index);
 					
 				}
 				else if (selected.equals("Day"))	{
 					EventCreation.getValidator.setField("RecurrenceType", "D");
+					findViewById(R.id.days).setVisibility(View.GONE);
+					findViewById(R.id.dom).setVisibility(View.GONE);
 				}
 				else if (selected.equals("Week"))	{
-					findViewById(R.id.days).setVisibility(0);
+					findViewById(R.id.days).setVisibility(View.VISIBLE);
+					findViewById(R.id.dom).setVisibility(View.GONE);
 					EventCreation.getValidator.setField("RecurrenceType", "W");
 				}
 
@@ -155,8 +156,8 @@ public class Recurrence extends Activity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				findViewById(R.id.days).setVisibility(4);
-				findViewById(R.id.dom).setVisibility(4);
+				findViewById(R.id.days).setVisibility(View.GONE);
+				findViewById(R.id.dom).setVisibility(View.GONE);
 			}
 			
 			
@@ -176,7 +177,7 @@ public class Recurrence extends Activity {
 		
 		setupMultiSpinner();
 		
-		m.setVisibility(4);
+		m.setVisibility(View.GONE);
 		
 		m.setOnItemSelectedListener(new OnItemSelectedListener(){
 
@@ -237,9 +238,11 @@ public class Recurrence extends Activity {
 						try	{
 							EventCreation.getValidator.setField("RecurrenceStartDate", date);
 							((DateField)EventCreation.getValidator.getField("RecurrenceEndDate")).setComparator(date);
+							date = EventCreation.getValidator.getField("RecurrenceEndDate").getRawData();
+							EventCreation.getValidator.setField("RecurrenceEndDate", date);
 						}
 						catch (IllegalArgumentException e)	{
-							Utility.showMessage(e.getMessage(), ((View) view.getParent()).getContext());
+							Utility.showMessage(e.getMessage());
 						}
 					}
 			
@@ -254,12 +257,16 @@ public class Recurrence extends Activity {
 					@Override
 					public void onDateChanged(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
-						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
+						Calendar c = Calendar.getInstance();
+						c.setTime(new GregorianCalendar().getTime());
+						c.add(Calendar.DAY_OF_YEAR,2);
+						SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
+						String date = format.format(c.getTime());
 						try	{
 							EventCreation.getValidator.setField("RecurrenceEndDate", date);
 						}
 						catch (IllegalArgumentException e)	{
-							Utility.showMessage(e.getMessage(), ((View) view.getParent()).getContext());
+							Utility.showMessage(e.getMessage());
 						}
 					}
 			
@@ -287,12 +294,8 @@ public class Recurrence extends Activity {
 
 	private void updateFields()	{
 		for (String field : Utility.recurrenceFields)	{
-			try {
-				String s = EventCreation.getValidator.getField(field).getData();
+				String s = EventCreation.getValidator.getField(field).getRawData();
 				this.fields.put(field, s);
-			} catch (UnsupportedEncodingException e) {
-				finish();
-			}
 		}
 	}
 	

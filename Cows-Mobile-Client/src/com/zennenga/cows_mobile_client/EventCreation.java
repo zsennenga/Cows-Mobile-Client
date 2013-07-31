@@ -96,17 +96,13 @@ public class EventCreation extends Activity {
 					public void onDateChanged(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
 						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
-						try	{
 							EventCreation.getValidator.setField("StartDate", date);
 							EventCreation.getValidator.setField("EndDate", date);
-						}
-						catch (IllegalArgumentException e)	{
-							Utility.showMessage(e.getMessage(), ((View) view.getParent()).getContext());
-						}
 					}
 			
 		});
 		date.setMinDate(System.currentTimeMillis() - 1000);
+		
 		
 		//Multispinner setting and validation
 		setMultiSpinnerListener(R.id.Categories,"Categories");
@@ -120,23 +116,13 @@ public class EventCreation extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				try {
+			
 					EventCreation.getValidator.setField("EventTypeName", "");
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
-				
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				try {
 					EventCreation.getValidator.setField("EventTypeName", "");
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
 			}
 		});
 	}
@@ -153,22 +139,12 @@ public class EventCreation extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				try {
 					EventCreation.getValidator.setField(fieldName, "");
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				try {
 					EventCreation.getValidator.setField(fieldName, "");
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
 			}
 			
 		});
@@ -186,15 +162,8 @@ public class EventCreation extends Activity {
 				if (t.getCurrentMinute() % 15 == 0) return;
 				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-				try {
 					getValidator.setField("StartTime", time);
 					getValidator.setField("DisplayStartTime", time);
-					
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
-				
 			}
 			
 		});
@@ -207,17 +176,12 @@ public class EventCreation extends Activity {
 				if (t.getCurrentMinute() % 15 == 0) return;
 				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-				try {
 					getValidator.setField("EndTime", time);
 					getValidator.setField("DisplayEndTime", time);
 					((TimeField)getValidator.getField("StartTime")).setComparator(time);
 					if (((TimeField)getValidator.getField("StartTime")).checkValidation())	{
 						getValidator.setField("StartTime", ((TimeField)getValidator.getField("StartTime")).getTime());
 					}
-				}
-				catch (IllegalArgumentException e)	{
-					Utility.showMessage(e.getMessage(), getApplicationContext());
-				}
 				
 			}
 			
@@ -269,12 +233,7 @@ public class EventCreation extends Activity {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				try {
 					getValidator.setField(fieldName, s.toString());
-				}
-				catch (IllegalArgumentException e)	{
-					textField.setError(e.getMessage());
-				}
 			}
 
 			@Override
@@ -335,11 +294,15 @@ public class EventCreation extends Activity {
 			getString = EventCreation.getValidator.getString();
 		}
 		catch(IllegalArgumentException e)	{
-			Utility.showMessage(e.getMessage(), getApplicationContext());
+			Utility.showMessage(e.getMessage());
 			return;
 		}
 		String url = Utility.BASE_URL;
-		getString += "&tgc=" + this.tgc;
+		getString += "&tgc=" + this.tgc + "&siteId=its";
+		
+		Log.i("Start",EventCreation.getValidator.getField("RecurrenceStartDate").getRawData());
+		Log.i("End",EventCreation.getValidator.getField("RecurrenceEndDate").getRawData());
+		
 		AsyncEvent event = new AsyncEvent();
 		event.execute(url,getString);
 	}
@@ -367,7 +330,7 @@ public class EventCreation extends Activity {
 			b.setEnabled(false);
 			b = (Button) findViewById(R.id.button2);
 			b.setEnabled(false);
-			Utility.showMessage("Please Wait. Submitting event to COWS...", getApplicationContext());
+			Utility.showMessage("Please Wait. Submitting event to COWS...");
 		}
 		
 		@Override
@@ -413,7 +376,7 @@ public class EventCreation extends Activity {
 			Log.i("Response", response);
 			
 			if (response == null || response.equals(""))	{
-				Utility.showMessage("Invalid response from server.", getApplicationContext());
+				Utility.showMessage("Invalid response from server.");
 				Button b = (Button) findViewById(R.id.button1);
 				b.setEnabled(true);
 				b = (Button) findViewById(R.id.button2);
@@ -447,7 +410,7 @@ public class EventCreation extends Activity {
 		switch(Integer.parseInt(errorCode))	{
 		case -1:
 			//Generic error
-			Utility.showMessage("Error: " + error + " Please retry your submission.", getApplicationContext());
+			Utility.showMessage("Error: " + error + " Please retry your submission.");
 			return;
 		case -2:
 			//Failed Auth
@@ -458,20 +421,20 @@ public class EventCreation extends Activity {
 			return;
 		case -3:
 			//Event Error
-			Utility.showMessage("Event error: " + error + " Please fix this error, and retry your submission.", getApplicationContext());
+			Utility.showMessage("Event error: " + error + " Please fix this error, and retry your submission.");
 			return;
 		case -4:
 			//cURL error
 			this.tries++;
 			if (this.tries >= 5)	{
-				Utility.showMessage("Network Error: " + error, getApplicationContext());
+				Utility.showMessage("Network Error: " + error);
 				return;
 			}
 			else submitHandler((this.view));
 			return;
 		default:
 			//Generic Error
-			Utility.showMessage("Error: " + error, getApplicationContext());
+			Utility.showMessage("Error: " + error);
 			return;
 		}
 	}

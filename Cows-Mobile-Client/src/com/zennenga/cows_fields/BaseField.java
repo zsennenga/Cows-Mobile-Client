@@ -37,4 +37,8 @@ public abstract class BaseField {
 	public String getFieldName()	{
 		return this.fieldName;
 	}
+	
+	public String getRawData()	{
+		return this.data;
+	}
 }

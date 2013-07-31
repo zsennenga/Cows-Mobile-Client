@@ -33,7 +33,7 @@ public class CasAuth extends Activity {
 			   }
 		});
 		if (getIntent().getBooleanExtra("retryingAuth", false))	{
-			Utility.showMessage("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.", getApplicationContext());
+			Utility.showMessage("CAS Error: " + getIntent().getStringExtra("error") + " Please reauthenticate.");
 		}
 		this.cookieManager = CookieManager.getInstance();
 	}

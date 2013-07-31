@@ -15,8 +15,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.zennenga.cows_mobile_client.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class Utility {
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
+	private static Toast t;
+	private static Context c;
 		
 	public static final String[] recurrenceFields = {
 		"IsRepeating",
@@ -55,6 +59,16 @@ public class Utility {
 		"1",
 		"D"
 	};
+	
+	@SuppressLint("ShowToast")
+	public static void initToast(Context c)	{
+		Utility.c = c;
+		Utility.t = Toast.makeText(c, "", Toast.LENGTH_LONG);
+	}
+	
+	public static void clearToast()	{
+		Utility.t.cancel();
+	}
 		
 	/**
 	 * Deauthenticates the client from CAS
@@ -138,12 +152,12 @@ public class Utility {
 	}
 	/**
 	 * Show a toast with a message, usually an error message
-	 * 
 	 * @param Message
-	 * @param appContext
 	 */
-	public static void showMessage(String error, Context appContext)	{
-		Toast.makeText(appContext, error, Toast.LENGTH_LONG).show();
+	public static void showMessage(String error)	{
+		if (Utility.t.getView().getVisibility() == View.VISIBLE) Utility.t.cancel();
+		Utility.t = Toast.makeText(Utility.c, error, Toast.LENGTH_LONG);
+		Utility.t.show();
 		return;
 	}
 	/**

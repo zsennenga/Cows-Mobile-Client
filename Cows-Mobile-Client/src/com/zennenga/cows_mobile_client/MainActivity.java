@@ -1,5 +1,7 @@
 package com.zennenga.cows_mobile_client;
 
+import com.zennenga.utility.Utility;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.Activity;
@@ -30,6 +32,7 @@ public class MainActivity extends Activity {
 		//TODO: remove the need for this policy
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
+		Utility.initToast(getApplicationContext());
 	}
 
 	/**

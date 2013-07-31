@@ -10,7 +10,7 @@ public class BooleanField extends BaseField{
 	@Override
 	public void setData(String newData) {
 		this.beenValidated = false;
-		if (newData != "false" && newData != "true") throw new IllegalArgumentException("Boolean fields must have a boolean value");
+		if (!newData.equals("false") && !newData.equals("true")) throw new IllegalArgumentException("Boolean fields must have a boolean value");
 		this.data = newData;
 		this.beenValidated = true;
 	}
