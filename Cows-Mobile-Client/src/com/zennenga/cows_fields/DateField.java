@@ -2,6 +2,8 @@ package com.zennenga.cows_fields;
 
 import java.util.Calendar;
 
+import android.util.Log;
+
 public class DateField extends BaseField {
 	private int[] comparator;
 	
@@ -19,12 +21,13 @@ public class DateField extends BaseField {
 		this.beenValidated = false;
 		Calendar cal = Calendar.getInstance();
 		int[] dateInfo = this.parseDateString(newData);
+		Log.i("Date", newData);
 		if (dateInfo[2] < cal.get(Calendar.YEAR)) 
-			throw new IllegalArgumentException("Year must be equal to or greater than the current one");
+			throw new IllegalArgumentException("Year must be equal to or greater than today's year");
 		if (dateInfo[0] < cal.get(Calendar.MONTH)) 
-			throw new IllegalArgumentException("Month must be equal to or greater than the current one");
-		if (dateInfo[1] < cal.get(Calendar.DAY_OF_MONTH)) 
-			throw new IllegalArgumentException("Day must be equal to or greater than the current one");
+			throw new IllegalArgumentException("Month must be equal to or greater than the today's month");
+		if (dateInfo[1] < cal.get(Calendar.DAY_OF_MONTH) && dateInfo[0] == cal.get(Calendar.MONTH)) 
+			throw new IllegalArgumentException("Day must be equal to or greater than the today's day");
 		if (this.comparator != null)	{
 			if (dateInfo[2] < this.comparator[2]) 
 				throw new IllegalArgumentException("Year must be equal to or greater than the year of the comparator");
@@ -77,5 +80,10 @@ public class DateField extends BaseField {
 	 */
 	public void setComparator(String c)	throws IllegalArgumentException{
 		this.comparator = parseDateString(c);
+	}
+	public void updateAndComparator(String date) {
+		this.comparator = null;
+		this.setData(date);
+		this.setComparator(date);
 	}
 }

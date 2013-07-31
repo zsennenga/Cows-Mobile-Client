@@ -150,7 +150,7 @@
     <string name="display_locations_">"Display Locations: "</string>
     <string name="configure_recurrence">Configure Recurrence</string>
     <string name="save">Save</string>
-    <string name="start_time_">Start Time;</string>
+    <string name="start_time_">Start Time:</string>
     <string name="end_time_">End Time:</string>
     <string name="set_date_for_event">Set Date for Event</string>
     <string name="clear">Clear</string>

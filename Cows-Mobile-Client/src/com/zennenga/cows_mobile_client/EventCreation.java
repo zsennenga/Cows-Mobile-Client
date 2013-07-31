@@ -74,7 +74,7 @@ public class EventCreation extends Activity {
 		spin.setOnItemSelectedListener(new BuildingListener(EventCreation.getValidator));
 		
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
-		spin.setOnItemSelectedListener(new RoomListener(getValidator));
+		spin.setOnItemSelectedListener(new RoomListener(EventCreation.getValidator));
 		
 		//Text Setting/validation
 		setTextListener(R.id.Title,"EventTitle");
@@ -97,9 +97,8 @@ public class EventCreation extends Activity {
 							int monthOfYear, int dayOfMonth) {
 						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
 						try	{
-							getValidator.setField("StartDate", date);
-							((DateField)getValidator.getField("EndDate")).setComparator(date);
-							getValidator.setField("EndDate", date);
+							EventCreation.getValidator.setField("StartDate", date);
+							EventCreation.getValidator.setField("EndDate", date);
 						}
 						catch (IllegalArgumentException e)	{
 							Utility.showMessage(e.getMessage(), ((View) view.getParent()).getContext());
@@ -115,14 +114,14 @@ public class EventCreation extends Activity {
 		
 		//Spinner setting and validation
 		spin = (Spinner) findViewById(R.id.eventType);
-		((SpinnerField) getValidator.getField("EventTypeName")).setSpinner(spin);
+		((SpinnerField) EventCreation.getValidator.getField("EventTypeName")).setSpinner(spin);
 		spin.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				try {
-					getValidator.setField("EventTypeName", "");
+					EventCreation.getValidator.setField("EventTypeName", "");
 				}
 				catch (IllegalArgumentException e)	{
 					Utility.showMessage(e.getMessage(), getApplicationContext());
@@ -133,7 +132,7 @@ public class EventCreation extends Activity {
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				try {
-					getValidator.setField("EventTypeName", "");
+					EventCreation.getValidator.setField("EventTypeName", "");
 				}
 				catch (IllegalArgumentException e)	{
 					Utility.showMessage(e.getMessage(), getApplicationContext());
@@ -148,14 +147,14 @@ public class EventCreation extends Activity {
 	 */
 	private void setMultiSpinnerListener(int fieldId, final String fieldName) {
 		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(fieldId);
-		((MultiSpinnerField) getValidator.getField(fieldName)).setSpinner(ms);
+		((MultiSpinnerField) EventCreation.getValidator.getField(fieldName)).setSpinner(ms);
 		ms.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				try {
-					getValidator.setField(fieldName, "");
+					EventCreation.getValidator.setField(fieldName, "");
 				}
 				catch (IllegalArgumentException e)	{
 					Utility.showMessage(e.getMessage(), getApplicationContext());
@@ -165,7 +164,7 @@ public class EventCreation extends Activity {
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				try {
-					getValidator.setField(fieldName, "");
+					EventCreation.getValidator.setField(fieldName, "");
 				}
 				catch (IllegalArgumentException e)	{
 					Utility.showMessage(e.getMessage(), getApplicationContext());
