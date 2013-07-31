@@ -25,7 +25,7 @@ public class Utility {
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
-	
+		
 	public static final String[] recurrenceFields = {
 		"IsRepeating",
 		"RecurrenceAppliesTo",
@@ -167,5 +167,23 @@ public class Utility {
 			default:
 				throw new IllegalArgumentException("Invalid attribute array");
 		}
+	}
+	
+	/**
+	 * Gets ordinal for day of month
+	 * @param i
+	 * @return
+	 */
+	public static String ordinal(int i) {
+	    String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+	    switch (i % 100) {
+	    case 11:
+	    case 12:
+	    case 13:
+	        return i + "th";
+	    default:
+	        return i + sufixes[i % 10];
+
+	    }
 	}
 }
