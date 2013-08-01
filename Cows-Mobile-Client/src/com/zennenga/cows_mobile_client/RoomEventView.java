@@ -111,10 +111,10 @@ public class RoomEventView extends Activity {
 			try {
 				responseBody = httpclient.execute(httpGet, responseHandler);
 			} catch (ClientProtocolException e) {
-				Utility.showMessage(e.getMessage());
+				Utility.showMessage("Unable to execute http request. Check that network is enabled.");
 				e.printStackTrace();
 			} catch (IOException e) {
-				Utility.showMessage(e.getMessage());
+				Utility.showMessage("Unable to execute http request. Check that network is enabled.");
 				e.printStackTrace();
 			}
 			return responseBody;
@@ -126,7 +126,7 @@ public class RoomEventView extends Activity {
 			try {
 				json = new JSONArray(response);
 			} catch (JSONException e) {
-				Utility.showMessage(e.getMessage());
+				Utility.showMessage("Invalid response. Check that network is enabled");
 				e.printStackTrace();
 				return;
 			}
