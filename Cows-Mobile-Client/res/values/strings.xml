@@ -151,5 +151,8 @@
     <string name="recurrence_settings">Recurrence Settings</string>
     <string name="recurrence_end_date_">Recurrence End Date:</string>
     <string name="event_creation">Event Creation</string>
+    <string name="event_date_">"Event Date: "</string>
+    <string name="event_lookup">Event Lookup</string>
+    <string name="events">Events</string>
 
 </resources>

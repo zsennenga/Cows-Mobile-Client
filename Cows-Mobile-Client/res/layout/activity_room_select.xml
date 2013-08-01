@@ -10,43 +10,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RoomSelect" >
 
-    <Spinner
-        android:id="@+id/buildingSelectSpinner"
+    <LinearLayout
+        android:id="@+id/azzza"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:prompt="@string/building_prompt" />
+        android:layout_height="0dp"
+        android:layout_weight="0.90"
+        android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/roomSelectSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:prompt="@string/room_prompt" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/event_lookup"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="50sp" />
 
-    <DatePicker
-        android:id="@+id/eventDatePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"  />
+        <Spinner
+            android:id="@+id/buildingSelectSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:prompt="@string/building_prompt" />
+
+        <Spinner
+            android:id="@+id/roomSelectSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:prompt="@string/room_prompt" />
+
+        <LinearLayout
+            android:id="@+id/zzaz"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="7dp"
+                android:text="@string/event_date_"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <DatePicker
+                android:id="@+id/eventDatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:calendarViewShown="false"
+                android:padding="7dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|bottom" >
+
         <Button
             android:id="@+id/backButtonToHomeScreen"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back" />
 
         <Button
             android:id="@+id/nextButtonToScheduledEvents"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next" />
-
-        
     </LinearLayout>
 
 </LinearLayout>
