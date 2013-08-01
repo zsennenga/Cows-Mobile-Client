@@ -155,20 +155,8 @@ public class EventCreation extends Activity {
 	 * Sets the Listeners for StartTime and EndTime
 	 */
 	private void setupTimeFields() {
-		TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
-		t.setOnTimeChangedListener(new OnTimeChangedListener() {
-
-			@Override
-			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-				TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
-				if (t.getCurrentMinute() % 15 != 0) t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
-				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-					getValidator.setField("StartTime", time);
-					getValidator.setField("DisplayStartTime", time);
-			}
-			
-		});
-		t = ((TimePicker)findViewById(R.id.EndTime));
+		
+		TimePicker t = ((TimePicker)findViewById(R.id.EndTime));
 		t.setOnTimeChangedListener(new OnTimeChangedListener() {
 
 			@Override
@@ -189,21 +177,23 @@ public class EventCreation extends Activity {
 		});
 		
 		t = ((TimePicker)findViewById(R.id.StartTime));
-		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
-		int mins = t.getCurrentMinute();
-		if (mins == 0)	{
-			getValidator.setField("StartTime", t.getCurrentHour() + ":00");
-			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":00");
-		}
-		else	{
-			getValidator.setField("StartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
-			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
-		}
+		t.setOnTimeChangedListener(new OnTimeChangedListener() {
+
+			@Override
+			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
+				if (t.getCurrentMinute() % 15 != 0) t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
+					getValidator.setField("StartTime", time);
+					getValidator.setField("DisplayStartTime", time);
+			}
+			
+		});
 		
 		t = ((TimePicker)findViewById(R.id.EndTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 		t.setCurrentHour((t.getCurrentHour()+1) % 24);
-		mins = t.getCurrentMinute();
+		int mins = t.getCurrentMinute();
 		if (mins == 0)	{
 			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
 			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
@@ -211,6 +201,18 @@ public class EventCreation extends Activity {
 		else	{
 			getValidator.setField("EndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
 			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+		}
+		
+		t = ((TimePicker)findViewById(R.id.StartTime));
+		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+		mins = t.getCurrentMinute();
+		if (mins == 0)	{
+			getValidator.setField("StartTime", t.getCurrentHour() + ":00");
+			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":00");
+		}
+		else	{
+			getValidator.setField("StartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
+			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":" + t.getCurrentMinute());
 		}
 
 	}

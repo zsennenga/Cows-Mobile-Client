@@ -190,15 +190,16 @@ public class Recurrence extends Activity {
 		
 		DatePicker d = (DatePicker) findViewById(R.id.startDate);
 		d.setMinDate(System.currentTimeMillis() - 1000);
-		d.init(Calendar.getInstance().get(Calendar.YEAR), 
-				Calendar.getInstance().get(Calendar.MONTH), 
-				Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 
+		String dateVal[] = EventCreation.getValidator.getField("RecurrenceStartDate").getRawData().split("/");
+		d.init(Integer.parseInt(dateVal[2]), 
+				Integer.parseInt(dateVal[0])-1, 
+						Integer.parseInt(dateVal[1]), 
 				new OnDateChangedListener()	{
 
 					@Override
 					public void onDateChanged(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
-						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
+						String date = (monthOfYear	+1) + "/" + dayOfMonth + "/" + year;
 						try	{
 							EventCreation.getValidator.setField("RecurrenceStartDate", date);
 							((DateField)EventCreation.getValidator.getField("RecurrenceEndDate")).setComparator(date);
@@ -213,19 +214,16 @@ public class Recurrence extends Activity {
 		});
 		
 		d = (DatePicker) findViewById(R.id.endDate);
-		d.init(Calendar.getInstance().get(Calendar.YEAR), 
-				Calendar.getInstance().get(Calendar.MONTH), 
-				Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+1, 
+		dateVal = EventCreation.getValidator.getField("RecurrenceEndDate").getRawData().split("/");
+		d.init(Integer.parseInt(dateVal[2]), 
+				Integer.parseInt(dateVal[0])-1, 
+				Integer.parseInt(dateVal[1]), 
 				new OnDateChangedListener()	{
 
 					@Override
 					public void onDateChanged(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
-						Calendar c = Calendar.getInstance();
-						c.setTime(new GregorianCalendar().getTime());
-						c.add(Calendar.DAY_OF_YEAR,2);
-						SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
-						String date = format.format(c.getTime());
+						String date = (monthOfYear+1) + "/" + dayOfMonth + "/" + year;
 						try	{
 							EventCreation.getValidator.setField("RecurrenceEndDate", date);
 						}

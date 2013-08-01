@@ -30,5 +30,10 @@ public class BuildingField extends BaseField {
 	public String getData() throws UnsupportedEncodingException	{
 		return "&" + this.fieldName + "=" + URLEncoder.encode(building.replace(" ", "_") + "!" + room,"UTF-8");
 	}
+	
+	@Override
+	public Boolean checkValidation()	{
+		return this.room != "" && this.building != "";
+	}
 
 }

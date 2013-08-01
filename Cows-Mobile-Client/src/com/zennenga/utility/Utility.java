@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.util.Calendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -52,8 +53,8 @@ public class Utility {
 		"false",
 		"false",
 		"false",
-		"8/1/2050",
-		"8/2/2050",
+		(Calendar.getInstance().get(Calendar.MONTH)+1) + "/" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.YEAR),
+		(Calendar.getInstance().get(Calendar.MONTH)+1) + "/" + (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+1) + "/" + Calendar.getInstance().get(Calendar.YEAR),
 		"1",
 		"D"
 	};

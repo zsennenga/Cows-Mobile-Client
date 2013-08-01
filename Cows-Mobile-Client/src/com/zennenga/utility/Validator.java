@@ -62,7 +62,7 @@ public class Validator {
 		fieldMap.put("RecurrenceIsDayOfMonth",new BooleanField("RecurrenceIsDayOfMonth","false"));
 		fieldMap.put("RecurrenceStartDate",new DateField("RecurrenceStartDate",date));
 		c.setTime(new GregorianCalendar().getTime());
-		c.add(Calendar.DAY_OF_YEAR,2);
+		c.add(Calendar.MONTH,1);
 		SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
 		date = format.format(c.getTime());
 		fieldMap.put("RecurrenceEndDate",new DateField("RecurrenceEndDate",date));
