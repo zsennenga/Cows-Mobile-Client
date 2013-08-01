@@ -18,7 +18,6 @@ import com.zennenga.cows_mobile_client.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ public class Utility {
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
 	private static Toast t;
-	private static Context c;
 		
 	public static final String[] recurrenceFields = {
 		"IsRepeating",
@@ -61,13 +59,12 @@ public class Utility {
 	};
 	
 	@SuppressLint("ShowToast")
-	public static void initToast(Context c)	{
-		Utility.c = c;
-		Utility.t = Toast.makeText(c, "", Toast.LENGTH_LONG);
+	public static void updateContext(Context c)	{
+		Utility.t = Toast.makeText(c, "blah", Toast.LENGTH_LONG);
 	}
 	
 	public static void clearToast()	{
-		Utility.t.cancel();
+		//if (Utility.t != null && Utility.t.getView().getVisibility() == View.VISIBLE) Utility.t.setText("a");
 	}
 		
 	/**
@@ -155,8 +152,9 @@ public class Utility {
 	 * @param Message
 	 */
 	public static void showMessage(String error)	{
-		if (Utility.t.getView().getVisibility() == View.VISIBLE) Utility.t.cancel();
-		Utility.t = Toast.makeText(Utility.c, error, Toast.LENGTH_LONG);
+		Log.i("Toast", error);
+		//if (Utility.t != null && Utility.t.getView().getVisibility() == View.VISIBLE) Utility.t.cancel();
+		Utility.t.setText(error);
 		Utility.t.show();
 		return;
 	}

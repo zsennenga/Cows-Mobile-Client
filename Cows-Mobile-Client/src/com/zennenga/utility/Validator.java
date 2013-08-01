@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import android.util.Log;
 import android.widget.Button;
 
 import com.zennenga.cows_fields.BaseField;
@@ -107,18 +108,20 @@ public class Validator {
 	 * @param data
 	 * @throws IllegalArgumentException
 	 */
-	public void setField(String fieldName, String data, boolean recurrence) throws IllegalArgumentException {
+	public void setField(String fieldName, String data, boolean recurrence) {
 		try	{
+			Log.i("Field", "Setting " + fieldName);
 			fieldMap.get(fieldName).setData(data);
+			if (!recurrence) this.updateButton();
+			Utility.clearToast();
 		}
-		catch (Exception e)	{
+		catch (IllegalArgumentException e)	{
+			Log.i("Toast", "Got error");
 			Utility.showMessage(e.getMessage());
 			return;
 		}
-		if (!recurrence) this.updateButton();
-		Utility.clearToast();
 	}
-	public void setField(String fieldName, String data) throws IllegalArgumentException	{
+	public void setField(String fieldName, String data) {
 		setField(fieldName,data,false);
 	}
 	/**

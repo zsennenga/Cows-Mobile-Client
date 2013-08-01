@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Recurrence Settings"
+            android:text="@string/recurrence_settings"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30sp" />
 
@@ -76,7 +76,7 @@
                         <Spinner
                             android:id="@+id/dom"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight=".5" />
 
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:padding="5dp"
-                            android:text="Recurrence Start Date: "
+                            android:text="@string/recurrence_start_date_"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <DatePicker
@@ -129,7 +129,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:padding="5dp"
-                            android:text="Recurrence End Date:"
+                            android:text="@string/recurrence_end_date_"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <DatePicker

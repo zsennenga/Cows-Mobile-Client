@@ -74,6 +74,27 @@ public class MultiSelectSpinner extends Spinner implements OnMultiChoiceClickLis
             _proxyAdapter.clear();
             _proxyAdapter.add(buildSelectedItemString());
             setSelection(0);
+            
+            String s = String.valueOf(isChecked);
+            
+
+			switch(which)	{
+				case 0:
+					EventCreation.getValidator.setField("RecurrenceMonday", s, true);
+					break;
+				case 1:
+					EventCreation.getValidator.setField("RecurrenceTuesday", s, true);
+					break;
+				case 2:
+					EventCreation.getValidator.setField("RecurrenceWednesday", s, true);
+					break;
+				case 3:
+					EventCreation.getValidator.setField("RecurrenceThursday", s, true);
+					break;
+				case 4:
+					EventCreation.getValidator.setField("RecurrenceFriday", s, true);
+					break;
+			}
         }
         else {
             throw new IllegalArgumentException("Argument 'which' is out of bounds.");
@@ -163,6 +184,10 @@ public class MultiSelectSpinner extends Spinner implements OnMultiChoiceClickLis
                 throw new IllegalArgumentException("Index " + index + " is out of bounds.");
             }
         }
+        _proxyAdapter.clear();
+        _proxyAdapter.add(buildSelectedItemString());
+        setSelection(0);
+        
     }
     
     /**

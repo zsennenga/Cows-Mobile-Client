@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Cows-Mobile-Client</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_cas_auth">CasAuth</string>
     <string name="title_activity_event_creation">EventCreation</string>
     <string name="title_activity_room_select">RoomSelect</string>
@@ -94,12 +93,6 @@
         <item>Friday</item>
     </string-array>
     
-    <string-array name="typeattr">
-        <item>D</item>
-        <item>W</item>
-        <item>M</item>
-    </string-array>
-    
     <string-array name="locattr">
         <item>Front-TV</item>
         <item>ITSWebsite</item>
@@ -149,11 +142,14 @@
     <string name="notes_">"Notes: "</string>
     <string name="display_locations_">"Display Locations: "</string>
     <string name="configure_recurrence">Configure Recurrence</string>
-    <string name="save">Save</string>
     <string name="start_time_">Start Time:</string>
     <string name="end_time_">End Time:</string>
     <string name="set_date_for_event">Event Date:</string>
     <string name="clear">Clear</string>
     <string name="event_reoccurs_every_">Event reoccurs every:</string>
+    <string name="recurrence_start_date_">"Recurrence Start Date: "</string>
+    <string name="recurrence_settings">Recurrence Settings</string>
+    <string name="recurrence_end_date_">Recurrence End Date:</string>
+    <string name="event_creation">Event Creation</string>
 
 </resources>

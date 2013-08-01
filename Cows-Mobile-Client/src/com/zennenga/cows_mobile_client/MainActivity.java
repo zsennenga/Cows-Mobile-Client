@@ -18,9 +18,7 @@ import android.webkit.CookieManager;
  * @author its-zach
  *
  */
-//TODO abstract http requests to class take in url, return body of response
-//TODO use setError on all text fields in EventCreation
-//TODO use setMinDate on calendar
+
 public class MainActivity extends Activity {
 	/**
 	 * Main activity serves as the main menu for the app as a whole.
@@ -32,7 +30,7 @@ public class MainActivity extends Activity {
 		//TODO: remove the need for this policy
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
-		Utility.initToast(getApplicationContext());
+		Utility.updateContext(this);
 	}
 
 	/**

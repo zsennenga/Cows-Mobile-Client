@@ -16,9 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Event Creation"
+            android:text="@string/event_creation"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="50dp" />
+            android:textSize="50sp" />
 
         <LinearLayout
             android:id="@+id/a"
@@ -150,7 +150,7 @@
         <LinearLayout
             android:id="@+id/azzzz"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/i"
@@ -250,7 +250,8 @@
                         android:layout_width="500dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:tag="Categories" />
+                        android:tag="Categories"
+                        tools:ignore="InefficientWeight" />
 
                 </LinearLayout>
             </LinearLayout>

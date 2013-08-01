@@ -30,11 +30,11 @@ public class DateField extends BaseField {
 			throw new IllegalArgumentException("Day must be equal to or greater than the today's day");
 		if (this.comparator != null)	{
 			if (dateInfo[2] < this.comparator[2]) 
-				throw new IllegalArgumentException("Year must be equal to or greater than the year of the comparator");
+				throw new IllegalArgumentException("Start Year must be equal to or greater than End Year");
 			if (dateInfo[0] < this.comparator[0]) 
-				throw new IllegalArgumentException("Month must be equal to or greater than the month of the comparator");
+				throw new IllegalArgumentException("Start Month must be equal to or greater than End Month");
 			if (dateInfo[1] < this.comparator[1] && dateInfo[0] == this.comparator[0]) 
-				throw new IllegalArgumentException("Day must be equal to or greater than the day of the comparator");
+				throw new IllegalArgumentException("Start Day must be equal to or greater than End Day");
 		}
 		this.data = newData;
 		this.beenValidated = true;

@@ -55,6 +55,8 @@ public class EventCreation extends Activity {
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
 		
+		Utility.updateContext(this);
+		
 		EventCreation.getValidator = new Validator((Button) findViewById(R.id.button1));
 		
 		//Popualte MultiSpinners
@@ -159,8 +161,7 @@ public class EventCreation extends Activity {
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 				TimePicker t = ((TimePicker)findViewById(R.id.StartTime));
-				if (t.getCurrentMinute() % 15 == 0) return;
-				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				if (t.getCurrentMinute() % 15 != 0) t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 					getValidator.setField("StartTime", time);
 					getValidator.setField("DisplayStartTime", time);
@@ -173,8 +174,8 @@ public class EventCreation extends Activity {
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 				TimePicker t = ((TimePicker)findViewById(R.id.EndTime));
-				if (t.getCurrentMinute() % 15 == 0) return;
-				t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				if (t.getCurrentMinute() % 15 != 0) t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
+				
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 					getValidator.setField("EndTime", time);
 					getValidator.setField("DisplayEndTime", time);
@@ -265,9 +266,6 @@ public class EventCreation extends Activity {
 		if (requestCode == 1)	{
 			this.tgc = d.getStringExtra("tgc");
 			submitHandler(this.view);
-		}
-		else if (requestCode == 2)	{
-			//TODO handle recurrence
 		}
 		return;
 	}

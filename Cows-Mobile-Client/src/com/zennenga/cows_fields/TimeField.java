@@ -18,9 +18,9 @@ public class TimeField extends BaseField {
 		if (comparator != null)	{
 			int[] newTimeData = parseTimeStringToArray(newData);
 			int[] newTimeDataComparator = parseTimeStringToArray(this.comparator);
-			if (newTimeData[0] > newTimeDataComparator[0])
+			if (newTimeData[0] >= newTimeDataComparator[0])
 				throw new IllegalArgumentException("End time must come after Start time");
-			else if (newTimeData[0] == newTimeDataComparator[0] && newTimeData[1]> newTimeDataComparator[1])
+			else if (newTimeData[0] == newTimeDataComparator[0] && newTimeData[1] >= newTimeDataComparator[1])
 				throw new IllegalArgumentException("End time must come after Start time");
 		}
 		this.data = parseTimeStringToString(newData);

@@ -14,7 +14,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +38,10 @@ public class Recurrence extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recurrence);
 		this.fields = new HashMap<String,String>();
+		Utility.updateContext(this);
+		
 		updateFields();
+		
 		
 		//Text Fields
 		
@@ -165,8 +168,12 @@ public class Recurrence extends Activity {
 		
 		int index = 0;
 		
-		if (fields.get("RecurrenceType").equals("Week")) index = 1;
-		else if (fields.get("RecurrenceType").equals("Month")) index = 2;
+		if (fields.get("RecurrenceType").equals("W")) index = 1;
+		else if (fields.get("RecurrenceType").equals("M")) {
+			Spinner x = (Spinner) findViewById(R.id.dom);
+			x.setVisibility(View.VISIBLE);
+			index = 2;
+		}
 		s.setSelection(index);
 		
 		//Multi Spinners
@@ -177,50 +184,7 @@ public class Recurrence extends Activity {
 		
 		setupMultiSpinner();
 		
-		m.setVisibility(View.GONE);
-		
-		m.setOnItemSelectedListener(new OnItemSelectedListener(){
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				List<Integer> indices = m.getSelectedIndicies();
-				EventCreation.getValidator.setField("RecurrenceMonday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceTuesday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceWednesday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceThursday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceFriday", "false", true);
-				for (int index : indices)	{
-					switch(index)	{
-						case 0:
-							EventCreation.getValidator.setField("RecurrenceMonday", "true", true);
-							break;
-						case 1:
-							EventCreation.getValidator.setField("RecurrenceTuesday", "true", true);
-							break;
-						case 2:
-							EventCreation.getValidator.setField("RecurrenceWednesday", "true", true);
-							break;
-						case 3:
-							EventCreation.getValidator.setField("RecurrenceThursday", "true", true);
-							break;
-						case 4:
-							EventCreation.getValidator.setField("RecurrenceFriday", "true", true);
-							break;
-					}
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				EventCreation.getValidator.setField("RecurrenceMonday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceTuesday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceWednesday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceThursday", "false", true);
-				EventCreation.getValidator.setField("RecurrenceFriday", "false", true);
-			}
-			
-		});
+		if (index != 1) m.setVisibility(View.GONE);
 		
 		//Date Pickers
 		
@@ -278,18 +242,17 @@ public class Recurrence extends Activity {
 		MultiSelectSpinner m = (MultiSelectSpinner) findViewById(R.id.days);
 		
 		List<Integer> indices = new ArrayList<Integer>();
-		if (fields.get("RecurrenceMonday").equals("true")) indices.add(1);
-		if (fields.get("RecurrenceTuesday").equals("true")) indices.add(2);
-		if (fields.get("RecurrenceWednesday").equals("true")) indices.add(3);
-		if (fields.get("RecurrenceThursday").equals("true")) indices.add(4);
-		if (fields.get("RecurrenceFriday").equals("true")) indices.add(5);
+		if (fields.get("RecurrenceMonday").equals("true")) indices.add(0);
+		if (fields.get("RecurrenceTuesday").equals("true")) indices.add(1);
+		if (fields.get("RecurrenceWednesday").equals("true")) indices.add(2);
+		if (fields.get("RecurrenceThursday").equals("true")) indices.add(3);
+		if (fields.get("RecurrenceFriday").equals("true")) indices.add(4);
 		int index[] = new int[indices.size()];
 		for (int i = 0; i < indices.size(); i++)	{
 			index[i] = indices.get(i);
 		}
 		
 		m.setSelection(index);
-		
 	}
 
 	private void updateFields()	{
