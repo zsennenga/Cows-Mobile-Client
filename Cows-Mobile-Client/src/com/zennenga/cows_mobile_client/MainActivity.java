@@ -1,13 +1,13 @@
 package com.zennenga.cows_mobile_client;
 
-import com.zennenga.utility.Utility;
-
-import android.os.Bundle;
-import android.os.StrictMode;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.webkit.CookieManager;
+
+import com.zennenga.utility.Utility;
 
 /**
  * 
@@ -16,7 +16,7 @@ import android.webkit.CookieManager;
  * Program Entry Point, leads to CasAuth and RoomSelect.
  * 
  * @author its-zach
- *
+ * 
  */
 
 public class MainActivity extends Activity {
@@ -27,8 +27,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//TODO: remove the need for this policy
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		// TODO: remove the need for this policy
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 		Utility.updateContext(this);
 	}
@@ -37,18 +38,18 @@ public class MainActivity extends Activity {
 	 * If the app closes, destroy all cookies as a failsafe
 	 */
 	@Override
-	public void onDestroy()	{
+	public void onDestroy() {
 		CookieManager cm = CookieManager.getInstance();
 		cm.removeAllCookie();
 		cm.removeSessionCookie();
 	}
-	
-	public void viewEvents(View v)	{
+
+	public void viewEvents(View v) {
 		Intent i = new Intent(v.getContext(), RoomSelect.class);
 		startActivity(i);
 	}
-	
-	public void doEvent(View v)	{
+
+	public void doEvent(View v) {
 		Intent i = new Intent(v.getContext(), CasAuth.class);
 		startActivity(i);
 	}

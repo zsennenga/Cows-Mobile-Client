@@ -1,12 +1,13 @@
 package com.zennenga.cows_fields;
 
 public class StaticField extends BaseField {
-	
-	public StaticField(String field, String data)	{
+
+	public StaticField(String field, String data) {
 		this.data = data;
 		this.fieldName = field;
 		this.beenValidated = true;
 	}
+
 	/**
 	 * Performs no validation
 	 */
