@@ -132,7 +132,7 @@ public class Validator {
 	 * @param data
 	 * @throws IllegalArgumentException
 	 */
-	public void setField(String fieldName, String data, boolean recurrence) {
+	public boolean setField(String fieldName, String data, boolean recurrence) {
 		try {
 			Log.i("Field", "Setting " + fieldName);
 			fieldMap.get(fieldName).setData(data);
@@ -142,12 +142,13 @@ public class Validator {
 		} catch (IllegalArgumentException e) {
 			Log.i("Toast", "Got error");
 			Utility.showMessage(e.getMessage());
-			return;
+			return false;
 		}
+		return true;
 	}
 
-	public void setField(String fieldName, String data) {
-		setField(fieldName, data, false);
+	public boolean setField(String fieldName, String data) {
+		return setField(fieldName, data, false);
 	}
 
 	/**

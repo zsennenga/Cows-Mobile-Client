@@ -3,6 +3,7 @@ package com.zennenga.cows_fields;
 public class TimeField extends BaseField {
 	private String comparator;
 	private String baseTime;
+	private boolean beenSet = false;
 
 	public TimeField(String fieldName, String data) {
 		this.fieldName = fieldName;
@@ -16,6 +17,7 @@ public class TimeField extends BaseField {
 	 */
 	@Override
 	public void setData(String newData) throws IllegalArgumentException {
+		this.beenSet = true;
 		this.beenValidated = false;
 		if (comparator != null) {
 			int[] newTimeData = parseTimeStringToArray(newData);
@@ -95,5 +97,9 @@ public class TimeField extends BaseField {
 	 */
 	public void setComparator(String c) {
 		this.comparator = c;
+	}
+	
+	public boolean checkSet()	{
+		return this.beenSet;
 	}
 }

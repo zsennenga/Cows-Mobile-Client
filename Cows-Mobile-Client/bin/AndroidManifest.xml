@@ -15,11 +15,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
-        android:debuggable="true" android:hardwareAccelerated="true">
+        android:debuggable="true">
         <activity
             android:name="com.zennenga.cows_mobile_client.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,28 +27,23 @@
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.CasAuth"
-            android:label="@string/title_activity_cas_auth"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_cas_auth" >
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.EventCreation"
-            android:label="@string/title_activity_event_creation"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_event_creation" >
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.RoomSelect"
-            android:label="@string/title_activity_room_select"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_room_select" >
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.RoomEventView"
-            android:label="@string/title_activity_room_event_view"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_room_event_view" >
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.Recurrence"
-            android:label="@string/title_activity_recurrence"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_recurrence" >
         </activity>
     </application>
 

@@ -180,12 +180,13 @@ public class EventCreation extends Activity {
 					t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-				getValidator.setField("EndTime", time);
-				getValidator.setField("DisplayEndTime", time);
-				((TimeField) getValidator.getField("StartTime"))
-						.setComparator(time);
-				if (((TimeField) getValidator.getField("StartTime"))
-						.checkValidation()) {
+				boolean success;
+				success = getValidator.setField("EndTime", time);
+				if (success) getValidator.setField("DisplayEndTime", time);
+				if (success) ((TimeField) getValidator.getField("StartTime")).setComparator(time);
+				if (((TimeField) getValidator.getField("StartTime")).checkSet() && success) 
+				{
+					
 					getValidator.setField("StartTime",
 							((TimeField) getValidator.getField("StartTime"))
 									.getTime());
@@ -204,8 +205,9 @@ public class EventCreation extends Activity {
 				if (t.getCurrentMinute() % 15 != 0)
 					t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-				getValidator.setField("StartTime", time);
-				getValidator.setField("DisplayStartTime", time);
+				boolean success;
+				success = getValidator.setField("StartTime", time);
+				if (success) getValidator.setField("DisplayStartTime", time);
 			}
 
 		});
@@ -214,13 +216,14 @@ public class EventCreation extends Activity {
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 		t.setCurrentHour((t.getCurrentHour() + 1) % 24);
 		int mins = t.getCurrentMinute();
+		boolean success;
 		if (mins == 0) {
-			getValidator.setField("EndTime", t.getCurrentHour() + ":00");
-			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
+			success = getValidator.setField("EndTime", t.getCurrentHour() + ":00");
+			if (success) getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
 		} else {
-			getValidator.setField("EndTime",
+			success = getValidator.setField("EndTime",
 					t.getCurrentHour() + ":" + t.getCurrentMinute());
-			getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":"
+			if (success) getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":"
 					+ t.getCurrentMinute());
 		}
 
@@ -228,13 +231,13 @@ public class EventCreation extends Activity {
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 		mins = t.getCurrentMinute();
 		if (mins == 0) {
-			getValidator.setField("StartTime", t.getCurrentHour() + ":00");
-			getValidator.setField("DisplayStartTime", t.getCurrentHour()
+			success = getValidator.setField("StartTime", t.getCurrentHour() + ":00");
+			if (success) getValidator.setField("DisplayStartTime", t.getCurrentHour()
 					+ ":00");
 		} else {
-			getValidator.setField("StartTime",
+			success = getValidator.setField("StartTime",
 					t.getCurrentHour() + ":" + t.getCurrentMinute());
-			getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":"
+			if (success) getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":"
 					+ t.getCurrentMinute());
 		}
 

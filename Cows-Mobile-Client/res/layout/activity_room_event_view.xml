@@ -37,7 +37,7 @@
             android:layout_weight=".33"
             android:gravity="center_horizontal"
             android:padding="3dip"
-            android:text="Room"
+            android:text="@string/room"
             android:textSize="32sp"
             android:textStyle="bold" />
 

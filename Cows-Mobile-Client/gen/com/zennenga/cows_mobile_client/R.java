@@ -153,6 +153,7 @@ public final class R {
         public static final int categories_=0x7f050013;
         public static final int clear=0x7f05001a;
         public static final int configure_recurrence=0x7f050016;
+        public static final int cows_mobile=0x7f050023;
         public static final int create_event=0x7f050009;
         public static final int description_=0x7f050011;
         public static final int display_locations_=0x7f050015;
@@ -170,6 +171,7 @@ public final class R {
         public static final int recurrence_end_date_=0x7f05001e;
         public static final int recurrence_settings=0x7f05001d;
         public static final int recurrence_start_date_=0x7f05001c;
+        public static final int room=0x7f050024;
         public static final int room_prompt=0x7f050006;
         public static final int set_date_for_event=0x7f050019;
         public static final int start_time_=0x7f050017;
