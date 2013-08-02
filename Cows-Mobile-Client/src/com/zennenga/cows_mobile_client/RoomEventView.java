@@ -82,7 +82,7 @@ public class RoomEventView extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-
+			Utility.showMessage("Loading events...");
 		}
 
 		@Override
@@ -133,9 +133,9 @@ public class RoomEventView extends Activity {
 				return;
 			}
 			JSONObject obj;
-			String title = null, time = null;
+			String title = null, time = null, loc = null;
 			int eventsDisplayed = 0;
-			TextView timeText, titleText;
+			TextView timeText, titleText, locText;
 
 			while (eventsDisplayed < MAX_EVENT_DISPLAY) {
 
@@ -147,54 +147,67 @@ public class RoomEventView extends Activity {
 				switch (eventsDisplayed) {
 				case 0:
 					timeText = (TextView) findViewById(R.id.rowTime1);
+					locText = (TextView) findViewById(R.id.rowLoc1);
 					titleText = (TextView) findViewById(R.id.rowTitle1);
 					break;
 				case 1:
+					locText = (TextView) findViewById(R.id.rowLoc2);
 					timeText = (TextView) findViewById(R.id.rowTime2);
 					titleText = (TextView) findViewById(R.id.rowTitle2);
 					break;
 				case 2:
+					locText = (TextView) findViewById(R.id.rowLoc3);
 					timeText = (TextView) findViewById(R.id.rowTime3);
 					titleText = (TextView) findViewById(R.id.rowTitle3);
 					break;
 				case 3:
+					locText = (TextView) findViewById(R.id.rowLoc4);
 					timeText = (TextView) findViewById(R.id.rowTime4);
 					titleText = (TextView) findViewById(R.id.rowTitle4);
 					break;
 				case 4:
+					locText = (TextView) findViewById(R.id.rowLoc5);
 					timeText = (TextView) findViewById(R.id.rowTime5);
 					titleText = (TextView) findViewById(R.id.rowTitle5);
 					break;
 				case 5:
+					locText = (TextView) findViewById(R.id.rowLoc6);
 					timeText = (TextView) findViewById(R.id.rowTime6);
 					titleText = (TextView) findViewById(R.id.rowTitle6);
 					break;
 				case 6:
+					locText = (TextView) findViewById(R.id.rowLoc7);
 					timeText = (TextView) findViewById(R.id.rowTime7);
 					titleText = (TextView) findViewById(R.id.rowTitle7);
 					break;
 				case 7:
+					locText = (TextView) findViewById(R.id.rowLoc8);
 					timeText = (TextView) findViewById(R.id.rowTime8);
 					titleText = (TextView) findViewById(R.id.rowTitle8);
 					break;
 				case 8:
+					locText = (TextView) findViewById(R.id.rowLoc9);
 					timeText = (TextView) findViewById(R.id.rowTime9);
 					titleText = (TextView) findViewById(R.id.rowTitle9);
 					break;
 				default:
+					locText = (TextView) findViewById(R.id.rowLoc10);
 					timeText = (TextView) findViewById(R.id.rowTime10);
 					titleText = (TextView) findViewById(R.id.rowTitle10);
 				}
 				try {
 					title = obj.getString("Title");
 					time = obj.getString("Time");
+					loc = obj.getString("Location");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				timeText.setText(time);
 				titleText.setText(title);
+				locText.setText(loc);
 				eventsDisplayed++;
 			}
+			Utility.showMessage("Event Loading Complete!");
 		}
 	}
 }

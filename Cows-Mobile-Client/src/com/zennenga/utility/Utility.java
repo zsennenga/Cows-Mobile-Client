@@ -16,6 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.widget.Toast;
@@ -72,32 +73,51 @@ public class Utility {
 	 * @return
 	 */
 	public static boolean deauth() {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		URI url = null;
-		try {
-			url = new URI("https://cas.ucdavis.edu/cas/logout");
-		} catch (URISyntaxException e1) {
-			Log.e("Deauth", "URIExeception");
-			e1.printStackTrace();
-			return false;
-		}
-		HttpGet request = new HttpGet();
-		request.setURI(url);
-		try {
-			httpclient.execute(request);
-		} catch (ClientProtocolException e) {
-			Log.e("Deauth", "ClientProtocolException");
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			Log.e("Deauth", "IOException");
-			e.printStackTrace();
-			return false;
-		}
-		CookieManager cookieManager = CookieManager.getInstance();
-		cookieManager.removeAllCookie();
-		cookieManager.removeSessionCookie();
+		
+		AsyncEvent a = new AsyncEvent();
+		
+		a.execute();
 		return true;
+	}
+	
+	private static class AsyncEvent extends AsyncTask<String, String, Boolean>	{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			DefaultHttpClient httpclient = new DefaultHttpClient();
+			URI url = null;
+			try {
+				url = new URI("https://cas.ucdavis.edu/cas/logout");
+			} catch (URISyntaxException e1) {
+				Log.e("Deauth", "URIExeception");
+				e1.printStackTrace();
+				return false;
+			}
+			HttpGet request = new HttpGet();
+			request.setURI(url);
+			try {
+				httpclient.execute(request);
+			} catch (ClientProtocolException e) {
+				Log.e("Deauth", "ClientProtocolException");
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				Log.e("Deauth", "IOException");
+				e.printStackTrace();
+				return false;
+			}
+			CookieManager cookieManager = CookieManager.getInstance();
+			cookieManager.removeAllCookie();
+			cookieManager.removeSessionCookie();
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+	         if (!result)	{
+	        	 Utility.deauth();
+	         }
+	    }
 	}
 
 	/**

@@ -312,12 +312,7 @@ public class EventCreation extends Activity {
 	 * @param v
 	 */
 	public void backHandler(View v) {
-		int i = 0;
-		while (!Utility.deauth()) {
-			if (i > 10)
-				break;
-			i++;
-		}
+		Utility.deauth();
 		finish();
 	}
 
@@ -506,12 +501,7 @@ public class EventCreation extends Activity {
 		builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				int i = 0;
-				while (!Utility.deauth()) {
-					if (i > 10)
-						break;
-					i++;
-				}
+				Utility.deauth();
 				finish();
 			}
 		});
