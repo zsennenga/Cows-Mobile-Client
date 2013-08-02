@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,7 +18,7 @@ public class CasAuth extends Activity {
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// Android Stuff
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cas_auth);

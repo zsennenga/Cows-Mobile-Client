@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class RoomEventView extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_event_view);
 
