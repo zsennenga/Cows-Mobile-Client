@@ -11,6 +11,15 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".MainActivity" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Cows Mobile"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="60sp" />
+
         <Button
             android:id="@+id/createEventButton"
             style="@style/mainActivityButtonStyle"

@@ -117,6 +117,7 @@ public class Utility {
 	         if (!result)	{
 	        	 Utility.deauth();
 	         }
+	         else Utility.showMessage("LogOut Complete!");
 	    }
 	}
 
