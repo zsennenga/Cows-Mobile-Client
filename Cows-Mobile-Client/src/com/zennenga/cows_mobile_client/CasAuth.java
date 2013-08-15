@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
@@ -25,8 +26,7 @@ public class CasAuth extends Activity {
 
 		// Setup Webview
 		WebView myWebView = (WebView) findViewById(R.id.webView);
-		myWebView.loadUrl("https://cas.ucdavis.edu/cas/login");
-		myWebView.getSettings().setJavaScriptEnabled(true);
+		myWebView.loadUrl("https://cas.ucdavis.edu/cas/login?service=https%3A%2F%2Fcas.ucdavis.edu%2Fcas%2Flogin");
 		myWebView.getSettings().setSavePassword(false);
 		myWebView.getSettings().setSaveFormData(false);
 		myWebView.setWebViewClient(new WebViewClient() {
@@ -51,8 +51,12 @@ public class CasAuth extends Activity {
 	 *            used to create the next activity
 	 */
 	public void checkCookie(View v) {
-		final String cookie = cookieManager
-				.getCookie("https://cas.ucdavis.edu/cas");
+		WebView myWebView = (WebView) findViewById(R.id.webView);
+		Log.i("CAS",myWebView.getUrl());
+		String cookie = "null";
+		if (cookieManager.getCookie("https://cas.ucdavis.edu/cas/") != null) 
+			cookie = cookieManager.getCookie("https://cas.ucdavis.edu/cas/");
+		Log.i("CAS",cookie);
 		if (cookie != null && cookie.contains("CASTGC")) {
 			String[] parts = cookie.split("; ");
 			for (String part : parts) {
