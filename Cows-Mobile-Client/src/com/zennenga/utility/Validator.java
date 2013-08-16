@@ -2,6 +2,7 @@ package com.zennenga.utility;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -22,12 +23,15 @@ import com.zennenga.cows_fields.TimeField;
 
 public class Validator {
 	private HashMap<String, BaseField> fieldMap;
+	private static Validator instance = null;
 
-	private Button b;
-
-	public Validator(Button b) {
-		this.b = b;
-		b.setEnabled(false);
+	public static Validator getInstance()	{
+		if (instance == null)	{
+			instance = new Validator();
+		}
+		return instance;
+	}
+	private Validator() {
 		this.fieldMap = new HashMap<String, BaseField>();
 		// Base Fields (Text)
 		fieldMap.put("EventTitle", new TextField("EventTitle", "", false));
@@ -109,14 +113,13 @@ public class Validator {
 		Collection<BaseField> values = fieldMap.values();
 		String retString = "";
 		for (BaseField f : values) {
-			if (f.checkValidation()) {
+			if (f.checkValidation() || Arrays.asList(Utility.recurrenceFields).contains(f.getFieldName())) {
 				try {
 					retString += f.getData();
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
 			} else {
-				b.setEnabled(false);
 				throw new IllegalArgumentException(f.getFieldName()
 						+ " was not set");
 			}
@@ -132,12 +135,10 @@ public class Validator {
 	 * @param data
 	 * @throws IllegalArgumentException
 	 */
-	public boolean setField(String fieldName, String data, boolean recurrence) {
+	public boolean setField(String fieldName, String data) {
 		try {
 			Log.i("Field", "Setting " + fieldName);
 			fieldMap.get(fieldName).setData(data);
-			if (!recurrence)
-				this.updateButton();
 			Utility.clearToast();
 		} catch (IllegalArgumentException e) {
 			Log.i("Toast", "Got error");
@@ -146,25 +147,19 @@ public class Validator {
 		}
 		return true;
 	}
-
-	public boolean setField(String fieldName, String data) {
-		return setField(fieldName, data, false);
-	}
-
-	/**
-	 * Unlock the button if all necessary fields have been set and validated
-	 * 
-	 * @param button
-	 */
-	private void updateButton() {
+	
+	public boolean checkFieldsValidation(Boolean isRecurrence)	{
 		Collection<BaseField> values = fieldMap.values();
-		b.setEnabled(false);
 		for (BaseField f : values) {
-			if (!f.checkValidation()) {
-				return;
+			Boolean b = Arrays.asList(Utility.recurrenceFields).contains(f.getFieldName());
+			if (!isRecurrence) b = !b;
+			if (!f.checkValidation() && b) {
+				Log.i("Validation","Check Validation returned false");
+				return false;
 			}
 		}
-		b.setEnabled(true);
+		Log.i("Validation","Check Validation returned true");
+		return true;
 	}
 
 	/**
@@ -184,5 +179,12 @@ public class Validator {
 	 */
 	public BaseField getField(String fieldName) {
 		return fieldMap.get(fieldName);
+	}
+	
+	/**
+	 * Destroys the current Validator instance
+	 */
+	public void clearValidator()	{
+		Validator.instance = null;
 	}
 }

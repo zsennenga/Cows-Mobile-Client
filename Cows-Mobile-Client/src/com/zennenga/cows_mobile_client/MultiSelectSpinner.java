@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.zennenga.utility.Validator;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -85,24 +87,21 @@ public class MultiSelectSpinner extends Spinner implements
 
 			switch (which) {
 			case 0:
-				EventCreation.getValidator
-						.setField("RecurrenceMonday", s, true);
+				Validator.getInstance()
+						.setField("RecurrenceMonday", s);
 				break;
 			case 1:
-				EventCreation.getValidator.setField("RecurrenceTuesday", s,
-						true);
+				Validator.getInstance().setField("RecurrenceTuesday", s);
 				break;
 			case 2:
-				EventCreation.getValidator.setField("RecurrenceWednesday", s,
-						true);
+				Validator.getInstance().setField("RecurrenceWednesday", s);
 				break;
 			case 3:
-				EventCreation.getValidator.setField("RecurrenceThursday", s,
-						true);
+				Validator.getInstance().setField("RecurrenceThursday", s);
 				break;
 			case 4:
-				EventCreation.getValidator
-						.setField("RecurrenceFriday", s, true);
+				Validator.getInstance()
+						.setField("RecurrenceFriday", s);
 				break;
 			}
 		} else {

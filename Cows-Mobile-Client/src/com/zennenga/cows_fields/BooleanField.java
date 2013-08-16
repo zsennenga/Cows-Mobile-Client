@@ -5,7 +5,6 @@ public class BooleanField extends BaseField {
 	public BooleanField(String fieldName, String data) {
 		this.fieldName = fieldName;
 		this.data = data;
-		this.optional = true;
 	}
 
 	@Override

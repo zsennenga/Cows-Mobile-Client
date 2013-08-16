@@ -26,19 +26,22 @@ import android.widget.TextView;
 
 import com.zennenga.cows_fields.DateField;
 import com.zennenga.utility.Utility;
+import com.zennenga.utility.Validator;
 
 public class Recurrence extends Activity {
 
-	boolean error;
-	HashMap<String, String> fields;
+	private HashMap<String, String> fields;
+	private Validator fieldValidator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recurrence);
-		this.fields = new HashMap<String, String>();
+		fields = new HashMap<String, String>();
 		Utility.updateContext(this);
+		
+		fieldValidator = Validator.getInstance();
 
 		updateFields();
 
@@ -52,7 +55,7 @@ public class Recurrence extends Activity {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				EventCreation.getValidator.setField("RecurrenceFrequency",
+				fieldValidator.setField("RecurrenceFrequency",
 						s.toString());
 			}
 
@@ -83,10 +86,10 @@ public class Recurrence extends Activity {
 					int arg2, long arg3) {
 
 				if (arg2 == 0) {
-					EventCreation.getValidator.setField(
+					fieldValidator.setField(
 							"RecurrenceIsDayOfMonth", "true");
 				} else
-					EventCreation.getValidator.setField(
+					fieldValidator.setField(
 							"RecurrenceIsDayOfMonth", "false");
 			}
 
@@ -116,7 +119,7 @@ public class Recurrence extends Activity {
 							"MM/dd/yyyy");
 					Date dt1;
 					try {
-						dt1 = format1.parse(EventCreation.getValidator
+						dt1 = format1.parse(fieldValidator
 								.getField("RecurrenceStartDate").getRawData());
 					} catch (ParseException e) {
 						Log.e("DateError", "Parse error");
@@ -140,7 +143,7 @@ public class Recurrence extends Activity {
 					spinner.setAdapter(adapter);
 					spinner.setVisibility(View.VISIBLE);
 					findViewById(R.id.days).setVisibility(View.GONE);
-					EventCreation.getValidator.setField("RecurrenceType", "M");
+					fieldValidator.setField("RecurrenceType", "M");
 
 					int index = 0;
 
@@ -150,13 +153,13 @@ public class Recurrence extends Activity {
 					spinner.setSelection(index);
 
 				} else if (selected.equals("Day")) {
-					EventCreation.getValidator.setField("RecurrenceType", "D");
+					fieldValidator.setField("RecurrenceType", "D");
 					findViewById(R.id.days).setVisibility(View.GONE);
 					findViewById(R.id.dom).setVisibility(View.GONE);
 				} else if (selected.equals("Week")) {
 					findViewById(R.id.days).setVisibility(View.VISIBLE);
 					findViewById(R.id.dom).setVisibility(View.GONE);
-					EventCreation.getValidator.setField("RecurrenceType", "W");
+					fieldValidator.setField("RecurrenceType", "W");
 				}
 
 			}
@@ -195,7 +198,7 @@ public class Recurrence extends Activity {
 
 		DatePicker d = (DatePicker) findViewById(R.id.startDate);
 		d.setMinDate(System.currentTimeMillis() - 1000);
-		String dateVal[] = EventCreation.getValidator
+		String dateVal[] = fieldValidator
 				.getField("RecurrenceStartDate").getRawData().split("/");
 		d.init(Integer.parseInt(dateVal[2]), Integer.parseInt(dateVal[0]) - 1,
 				Integer.parseInt(dateVal[1]), new OnDateChangedListener() {
@@ -206,14 +209,14 @@ public class Recurrence extends Activity {
 						String date = (monthOfYear + 1) + "/" + dayOfMonth
 								+ "/" + year;
 						try {
-							EventCreation.getValidator.setField(
+							fieldValidator.setField(
 									"RecurrenceStartDate", date);
-							((DateField) EventCreation.getValidator
+							((DateField) fieldValidator
 									.getField("RecurrenceEndDate"))
 									.setComparator(date);
-							date = EventCreation.getValidator.getField(
+							date = fieldValidator.getField(
 									"RecurrenceEndDate").getRawData();
-							EventCreation.getValidator.setField(
+							fieldValidator.setField(
 									"RecurrenceEndDate", date);
 						} catch (IllegalArgumentException e) {
 							Utility.showMessage(e.getMessage());
@@ -223,7 +226,7 @@ public class Recurrence extends Activity {
 				});
 
 		d = (DatePicker) findViewById(R.id.endDate);
-		dateVal = EventCreation.getValidator.getField("RecurrenceEndDate")
+		dateVal = fieldValidator.getField("RecurrenceEndDate")
 				.getRawData().split("/");
 		d.init(Integer.parseInt(dateVal[2]), Integer.parseInt(dateVal[0]) - 1,
 				Integer.parseInt(dateVal[1]), new OnDateChangedListener() {
@@ -234,7 +237,7 @@ public class Recurrence extends Activity {
 						String date = (monthOfYear + 1) + "/" + dayOfMonth
 								+ "/" + year;
 						try {
-							EventCreation.getValidator.setField(
+							fieldValidator.setField(
 									"RecurrenceEndDate", date);
 						} catch (IllegalArgumentException e) {
 							Utility.showMessage(e.getMessage());
@@ -269,13 +272,13 @@ public class Recurrence extends Activity {
 
 	private void updateFields() {
 		for (String field : Utility.recurrenceFields) {
-			String s = EventCreation.getValidator.getField(field).getRawData();
-			this.fields.put(field, s);
+			String s = fieldValidator.getField(field).getRawData();
+			fields.put(field, s);
 		}
 	}
 
 	public void submitHandler(View v) {
-		EventCreation.getValidator.setField("IsRepeating", "true");
+		fieldValidator.setField("IsRepeating", "true");
 		finish();
 	}
 
@@ -286,8 +289,8 @@ public class Recurrence extends Activity {
 				String date = (c.get(Calendar.MONTH) + 1) + "/"
 						+ c.get(Calendar.DAY_OF_MONTH) + "/"
 						+ c.get(Calendar.YEAR);
-				EventCreation.getValidator.setField("RecurrenceStartDate",
-						date, true);
+				fieldValidator.setField("RecurrenceStartDate",
+						date);
 			}
 
 			else if (Utility.recurrenceFields.equals("RecurrenceEndDate")) {
@@ -295,20 +298,18 @@ public class Recurrence extends Activity {
 				String date = (c.get(Calendar.MONTH) + 1) + "/"
 						+ (1 + c.get(Calendar.DAY_OF_MONTH)) + "/"
 						+ c.get(Calendar.YEAR);
-				EventCreation.getValidator.setField("RecurrenceEndDate", date,
-						true);
+				fieldValidator.setField("RecurrenceEndDate", date);
 			} else
-				EventCreation.getValidator.setField(
+				fieldValidator.setField(
 						Utility.recurrenceFields[i],
-						Utility.recurrenceValues[i], true);
+						Utility.recurrenceValues[i]);
 		}
 		finish();
 	}
 
 	public void backHandler(View v) {
 		for (String field : Utility.recurrenceFields) {
-			EventCreation.getValidator.setField(field, this.fields.get(field),
-					true);
+			fieldValidator.setField(field, fields.get(field));
 		}
 		finish();
 	}

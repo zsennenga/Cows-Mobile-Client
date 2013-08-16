@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.zennenga.utility.Validator;
@@ -12,8 +13,8 @@ public class BuildingListener implements OnItemSelectedListener {
 
 	Validator v;
 
-	BuildingListener(Validator getValidator) {
-		this.v = getValidator;
+	public BuildingListener() {
+		this.v = Validator.getInstance();
 	}
 
 	@Override
@@ -22,27 +23,34 @@ public class BuildingListener implements OnItemSelectedListener {
 		String building = parent.getSelectedItem().toString();
 		v.setField("BuildingAndRoom", building + ":");
 		if (building.contains("215")) {
-			populateSpinner(R.id.roomSelectSpinner2, R.array.roomOptions215,
-					(View) parent.getParent());
+			populateSpinner(R.array.roomOptions215, (View) parent.getParent());
 		} else if (building.contains("1590")) {
-			populateSpinner(R.id.roomSelectSpinner2, R.array.roomOptions1590,
-					(View) parent.getParent());
+			populateSpinner(R.array.roomOptions1590, (View) parent.getParent());
 		} else if (building.contains("1605")) {
-			populateSpinner(R.id.roomSelectSpinner2, R.array.roomOptions1605,
-					(View) parent.getParent());
+			populateSpinner(R.array.roomOptions1605, (View) parent.getParent());
 		} else if (building.contains("1715")) {
-			populateSpinner(R.id.roomSelectSpinner2, R.array.roomOptions1715,
-					(View) parent.getParent());
+			populateSpinner(R.array.roomOptions1715, (View) parent.getParent());
+		} else if (building.contains("All"))	{
+			Spinner spinner = (Spinner) ((View)parent.getParent()).findViewById(R.id.roomSelectSpinner2);
+			spinner.setAdapter(new ArrayAdapter<String>(((View)parent.getParent()).getContext(), 0));
 		}
+		updateButton((View) parent.getParent().getParent());
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		return;
 	}
+	
+	private void updateButton(View p) {
+		Button b = (Button) p.findViewById(R.id.button1);
+		b.setEnabled(false);
+		if (v.checkFieldsValidation(false))
+			b.setEnabled(true);
+	}
 
-	private void populateSpinner(int fieldID, int arrayID, View v) {
-		Spinner spinner = (Spinner) v.findViewById(fieldID);
+	private void populateSpinner(int arrayID, View v) {
+		Spinner spinner = (Spinner) v.findViewById(R.id.roomSelectSpinner2);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				v.getContext(), arrayID, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

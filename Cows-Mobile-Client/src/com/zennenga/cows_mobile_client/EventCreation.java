@@ -44,12 +44,11 @@ import com.zennenga.cows_fields.TimeField;
 import com.zennenga.utility.Utility;
 import com.zennenga.utility.Validator;
 
-//TODO fix layout being too close to screen edge on left
 public class EventCreation extends Activity {
-	String tgc = "";
-	View view = null;
-	int tries = 0;
-	public static Validator getValidator;
+	private String tgc = "";
+	private View view = null;
+	private int tries = 0;
+	private Validator fieldValidator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +56,25 @@ public class EventCreation extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_creation);
 		tgc = getIntent().getStringExtra("TGC");
+		
+		if (tgc == null || tgc == "") finish();
 
 		Utility.updateContext(this);
 
-		EventCreation.getValidator = new Validator(
-				(Button) findViewById(R.id.button1));
+		fieldValidator = Validator.getInstance();
+		
+		updateButton();
 
 		// Popualte MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
 		multiSpinner.setItems(getResources().getStringArray(R.array.Locations));
-		((MultiSpinnerField) EventCreation.getValidator.getField(multiSpinner
+		((MultiSpinnerField) fieldValidator.getField(multiSpinner
 				.getTag().toString())).setSpinner(multiSpinner);
 
 		multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Categories));
 		multiSpinner
 				.setItems(getResources().getStringArray(R.array.Categories));
-		((MultiSpinnerField) EventCreation.getValidator.getField(multiSpinner
+		((MultiSpinnerField) fieldValidator.getField(multiSpinner
 				.getTag().toString())).setSpinner(multiSpinner);
 
 		// Populate Single Spinners
@@ -80,12 +82,10 @@ public class EventCreation extends Activity {
 		populateSpinner(R.id.buildingSelectSpinner2, R.array.buildingOptions);
 
 		Spinner spin = (Spinner) findViewById(R.id.buildingSelectSpinner2);
-		spin.setOnItemSelectedListener(new BuildingListener(
-				EventCreation.getValidator));
+		spin.setOnItemSelectedListener(new BuildingListener());
 
 		spin = (Spinner) findViewById(R.id.roomSelectSpinner2);
-		spin.setOnItemSelectedListener(new RoomListener(
-				EventCreation.getValidator));
+		spin.setOnItemSelectedListener(new RoomListener());
 
 		// Text Setting/validation
 		setTextListener(R.id.Title, "EventTitle");
@@ -108,8 +108,9 @@ public class EventCreation extends Activity {
 							int monthOfYear, int dayOfMonth) {
 						String date = (monthOfYear + 1) + "/" + dayOfMonth
 								+ "/" + year;
-						EventCreation.getValidator.setField("StartDate", date);
-						EventCreation.getValidator.setField("EndDate", date);
+						fieldValidator.setField("StartDate", date);
+						fieldValidator.setField("EndDate", date);
+						updateButton();
 					}
 
 				});
@@ -121,7 +122,7 @@ public class EventCreation extends Activity {
 
 		// Spinner setting and validation
 		spin = (Spinner) findViewById(R.id.eventType);
-		((SpinnerField) EventCreation.getValidator.getField("EventTypeName"))
+		((SpinnerField) fieldValidator.getField("EventTypeName"))
 				.setSpinner(spin);
 		spin.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -129,12 +130,14 @@ public class EventCreation extends Activity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 
-				EventCreation.getValidator.setField("EventTypeName", "");
+				fieldValidator.setField("EventTypeName", "");
+				updateButton();
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				EventCreation.getValidator.setField("EventTypeName", "");
+				fieldValidator.setField("EventTypeName", "");
+				updateButton();
 			}
 		});
 	}
@@ -147,19 +150,21 @@ public class EventCreation extends Activity {
 	 */
 	private void setMultiSpinnerListener(int fieldId, final String fieldName) {
 		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(fieldId);
-		((MultiSpinnerField) EventCreation.getValidator.getField(fieldName))
+		((MultiSpinnerField) fieldValidator.getField(fieldName))
 				.setSpinner(ms);
 		ms.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				EventCreation.getValidator.setField(fieldName, "");
+				fieldValidator.setField(fieldName, "");
+				updateButton();
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				EventCreation.getValidator.setField(fieldName, "");
+				fieldValidator.setField(fieldName, "");
+				updateButton();
 			}
 
 		});
@@ -181,17 +186,17 @@ public class EventCreation extends Activity {
 
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 				boolean success;
-				success = getValidator.setField("EndTime", time);
-				if (success) getValidator.setField("DisplayEndTime", time);
-				if (success) ((TimeField) getValidator.getField("StartTime")).setComparator(time);
-				if (((TimeField) getValidator.getField("StartTime")).checkSet() && success) 
+				success = fieldValidator.setField("EndTime", time);
+				if (success) fieldValidator.setField("DisplayEndTime", time);
+				if (success) ((TimeField) fieldValidator.getField("StartTime")).setComparator(time);
+				if (((TimeField) fieldValidator.getField("StartTime")).checkSet() && success) 
 				{
 					
-					getValidator.setField("StartTime",
-							((TimeField) getValidator.getField("StartTime"))
+					fieldValidator.setField("StartTime",
+							((TimeField) fieldValidator.getField("StartTime"))
 									.getTime());
 				}
-
+				updateButton();
 			}
 
 		});
@@ -206,8 +211,9 @@ public class EventCreation extends Activity {
 					t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
 				boolean success;
-				success = getValidator.setField("StartTime", time);
-				if (success) getValidator.setField("DisplayStartTime", time);
+				success = fieldValidator.setField("StartTime", time);
+				if (success) fieldValidator.setField("DisplayStartTime", time);
+				updateButton();
 			}
 
 		});
@@ -218,29 +224,30 @@ public class EventCreation extends Activity {
 		int mins = t.getCurrentMinute();
 		boolean success;
 		if (mins == 0) {
-			success = getValidator.setField("EndTime", t.getCurrentHour() + ":00");
-			if (success) getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
+			success = fieldValidator.setField("EndTime", t.getCurrentHour() + ":00");
+			if (success) fieldValidator.setField("DisplayEndTime", t.getCurrentHour() + ":00");
 		} else {
-			success = getValidator.setField("EndTime",
+			success = fieldValidator.setField("EndTime",
 					t.getCurrentHour() + ":" + t.getCurrentMinute());
-			if (success) getValidator.setField("DisplayEndTime", t.getCurrentHour() + ":"
+			if (success) fieldValidator.setField("DisplayEndTime", t.getCurrentHour() + ":"
 					+ t.getCurrentMinute());
 		}
+		updateButton();
 
 		t = ((TimePicker) findViewById(R.id.StartTime));
 		t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
 		mins = t.getCurrentMinute();
 		if (mins == 0) {
-			success = getValidator.setField("StartTime", t.getCurrentHour() + ":00");
-			if (success) getValidator.setField("DisplayStartTime", t.getCurrentHour()
+			success = fieldValidator.setField("StartTime", t.getCurrentHour() + ":00");
+			if (success) fieldValidator.setField("DisplayStartTime", t.getCurrentHour()
 					+ ":00");
 		} else {
-			success = getValidator.setField("StartTime",
+			success = fieldValidator.setField("StartTime",
 					t.getCurrentHour() + ":" + t.getCurrentMinute());
-			if (success) getValidator.setField("DisplayStartTime", t.getCurrentHour() + ":"
+			if (success) fieldValidator.setField("DisplayStartTime", t.getCurrentHour() + ":"
 					+ t.getCurrentMinute());
 		}
-
+		updateButton();
 	}
 
 	/**
@@ -268,7 +275,8 @@ public class EventCreation extends Activity {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				getValidator.setField(fieldName, s.toString());
+				fieldValidator.setField(fieldName, s.toString());
+				updateButton();
 			}
 
 			@Override
@@ -303,8 +311,8 @@ public class EventCreation extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent d) {
 		if (requestCode == 1) {
-			this.tgc = d.getStringExtra("tgc");
-			submitHandler(this.view);
+			tgc = d.getStringExtra("tgc");
+			submitHandler(view);
 		}
 		return;
 	}
@@ -325,21 +333,21 @@ public class EventCreation extends Activity {
 	 * @param v
 	 */
 	public void submitHandler(View v) {
-		this.view = v;
+		view = v;
 		String getString = "";
 		try {
-			getString = EventCreation.getValidator.getString();
+			getString = fieldValidator.getString();
 		} catch (IllegalArgumentException e) {
 			Utility.showMessage(e.getMessage());
 			return;
 		}
 		String url = Utility.BASE_URL;
-		getString += "&tgc=" + this.tgc + "&siteId=" + Utility.SITE_ID;
+		getString += "&tgc=" + tgc + "&siteId=" + Utility.SITE_ID;
 
 		Log.i("Start",
-				EventCreation.getValidator.getField("RecurrenceStartDate")
+				fieldValidator.getField("RecurrenceStartDate")
 						.getRawData());
-		Log.i("End", EventCreation.getValidator.getField("RecurrenceEndDate")
+		Log.i("End", fieldValidator.getField("RecurrenceEndDate")
 				.getRawData());
 
 		AsyncEvent event = new AsyncEvent();
@@ -353,9 +361,7 @@ public class EventCreation extends Activity {
 	 */
 	public void doRecurrence(View v) {
 		Intent i = new Intent(v.getContext(), Recurrence.class);
-		// TODO Handle recurrence
-		startActivityForResult(i, 2);
-		// Utility.showMessage("Sorry, Recurrences not implemented yet",getApplicationContext());
+		startActivity(i);
 	}
 
 	/**
@@ -464,10 +470,10 @@ public class EventCreation extends Activity {
 			return;
 		case -2:
 			// Failed Auth
-			Intent i = new Intent(this.view.getContext(), CasAuth.class);
+			Intent i = new Intent(view.getContext(), CasAuth.class);
 			i.putExtra("retryingAuth", true);
 			i.putExtra("error", error);
-			startActivityForResult(i, 1);
+			startActivity(i);
 			return;
 		case -3:
 			// Event Error
@@ -476,12 +482,12 @@ public class EventCreation extends Activity {
 			return;
 		case -4:
 			// cURL error
-			this.tries++;
-			if (this.tries >= 5) {
+			tries++;
+			if (tries >= 5) {
 				Utility.showMessage("Network Error: " + error);
 				return;
 			} else
-				submitHandler((this.view));
+				submitHandler((view));
 			return;
 		default:
 			// Generic Error
@@ -496,8 +502,8 @@ public class EventCreation extends Activity {
 	 */
 	public void finishDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
-				this.view.getContext());
-		final Intent i = new Intent(this.view.getContext(), EventCreation.class);
+				view.getContext());
+		final Intent i = new Intent(view.getContext(), EventCreation.class);
 		builder.setMessage(
 				"Event Creation complete! Would you like to create another?")
 				.setTitle("Success!");
@@ -511,11 +517,24 @@ public class EventCreation extends Activity {
 		builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
+				Validator.getInstance().clearValidator();
 				i.putExtra("TGC", tgc);
 				startActivity(i);
 				finish();
 			}
 		});
 		builder.show();
+	}
+	
+	/**
+	 * Unlock the button if all necessary fields have been set and validated
+	 * 
+	 * @param button
+	 */
+	private void updateButton() {
+		Button b = (Button) findViewById(R.id.button1);
+		b.setEnabled(false);
+		if (fieldValidator.checkFieldsValidation(false))
+			b.setEnabled(true);
 	}
 }

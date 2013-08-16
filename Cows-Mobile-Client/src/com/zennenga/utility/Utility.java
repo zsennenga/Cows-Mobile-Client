@@ -117,7 +117,10 @@ public class Utility {
 	         if (!result)	{
 	        	 Utility.deauth();
 	         }
-	         else Utility.showMessage("LogOut Complete!");
+	         else {
+	        	 Validator.getInstance().clearValidator();
+	        	 Utility.showMessage("LogOut Complete!");
+	         }
 	    }
 	}
 
