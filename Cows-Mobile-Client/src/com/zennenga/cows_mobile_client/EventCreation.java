@@ -65,7 +65,7 @@ public class EventCreation extends Activity {
 		
 		updateButton();
 
-		// Popualte MultiSpinners
+		// Populate MultiSpinners
 		MultiSelectSpinner multiSpinner = ((MultiSelectSpinner) findViewById(R.id.Locations));
 		multiSpinner.setItems(getResources().getStringArray(R.array.Locations));
 		((MultiSpinnerField) fieldValidator.getField(multiSpinner

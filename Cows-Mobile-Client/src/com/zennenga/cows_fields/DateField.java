@@ -2,8 +2,6 @@ package com.zennenga.cows_fields;
 
 import java.util.Calendar;
 
-import android.util.Log;
-
 public class DateField extends BaseField {
 	private int[] comparator;
 
@@ -23,7 +21,6 @@ public class DateField extends BaseField {
 		this.beenValidated = false;
 		Calendar cal = Calendar.getInstance();
 		int[] dateInfo = this.parseDateString(newData);
-		Log.i("Date", newData);
 		if (dateInfo[2] < cal.get(Calendar.YEAR))
 			throw new IllegalArgumentException(
 					"Year must be equal to or greater than today's year");

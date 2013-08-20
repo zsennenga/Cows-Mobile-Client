@@ -3,6 +3,7 @@ package com.zennenga.cows_mobile_client;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Utility.updateContext(this);
+		Log.i("Main", "App start");
 	}
 
 	/**
@@ -44,11 +46,13 @@ public class MainActivity extends Activity {
 
 	public void viewEvents(View v) {
 		Intent i = new Intent(v.getContext(), RoomSelect.class);
+		Log.i("Main", "Starting View Events");
 		startActivity(i);
 	}
 
 	public void doEvent(View v) {
 		Intent i = new Intent(v.getContext(), CasAuth.class);
+		Log.i("Main", "Starting Cas Auth");
 		startActivity(i);
 	}
 

@@ -115,6 +115,7 @@ public class Validator {
 		for (BaseField f : values) {
 			if (f.checkValidation() || Arrays.asList(Utility.recurrenceFields).contains(f.getFieldName())) {
 				try {
+					
 					retString += f.getData();
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -137,7 +138,7 @@ public class Validator {
 	 */
 	public boolean setField(String fieldName, String data) {
 		try {
-			Log.i("Field", "Setting " + fieldName);
+			Log.i("Field", "Setting " + fieldName + " from " + fieldMap.get(fieldName).getRawData() + " to " + data);
 			fieldMap.get(fieldName).setData(data);
 			Utility.clearToast();
 		} catch (IllegalArgumentException e) {
