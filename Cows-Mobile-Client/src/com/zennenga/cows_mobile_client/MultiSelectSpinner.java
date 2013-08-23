@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.zennenga.utility.Utility;
 import com.zennenga.utility.Validator;
 
 import android.app.AlertDialog;
@@ -78,31 +79,33 @@ public class MultiSelectSpinner extends Spinner implements
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 		if (_selection != null && which < _selection.length) {
 			_selection[which] = isChecked;
-
+			
 			_proxyAdapter.clear();
 			_proxyAdapter.add(buildSelectedItemString());
 			setSelection(0);
 
 			String s = String.valueOf(isChecked);
-
-			switch (which) {
-			case 0:
-				Validator.getInstance()
-						.setField("RecurrenceMonday", s);
-				break;
-			case 1:
-				Validator.getInstance().setField("RecurrenceTuesday", s);
-				break;
-			case 2:
-				Validator.getInstance().setField("RecurrenceWednesday", s);
-				break;
-			case 3:
-				Validator.getInstance().setField("RecurrenceThursday", s);
-				break;
-			case 4:
-				Validator.getInstance()
-						.setField("RecurrenceFriday", s);
-				break;
+			if (!Utility.isRecurrenceNow) return;
+			else	{
+				switch (which) {
+				case 0:
+					Validator.getInstance()
+							.setField("RecurrenceMonday", s);
+					break;
+				case 1:
+					Validator.getInstance().setField("RecurrenceTuesday", s);
+					break;
+				case 2:
+					Validator.getInstance().setField("RecurrenceWednesday", s);
+					break;
+				case 3:
+					Validator.getInstance().setField("RecurrenceThursday", s);
+					break;
+				case 4:
+					Validator.getInstance()
+							.setField("RecurrenceFriday", s);
+					break;
+				}
 			}
 		} else {
 			throw new IllegalArgumentException(
@@ -117,7 +120,7 @@ public class MultiSelectSpinner extends Spinner implements
 	public boolean performClick() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 		builder.setMultiChoiceItems(_items, _selection, this);
-		builder.show();
+		builder.show().setCanceledOnTouchOutside(true);
 		return true;
 	}
 
@@ -259,4 +262,5 @@ public class MultiSelectSpinner extends Spinner implements
 
 		return sb.toString();
 	}
+	
 }

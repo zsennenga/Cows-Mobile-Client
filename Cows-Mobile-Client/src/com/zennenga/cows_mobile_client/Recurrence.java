@@ -40,6 +40,7 @@ public class Recurrence extends Activity {
 		setContentView(R.layout.activity_recurrence);
 		fields = new HashMap<String, String>();
 		Utility.updateContext(this);
+		Utility.isRecurrenceNow = true;
 		
 		fieldValidator = Validator.getInstance();
 
@@ -279,6 +280,7 @@ public class Recurrence extends Activity {
 
 	public void submitHandler(View v) {
 		fieldValidator.setField("IsRepeating", "true");
+		Utility.isRecurrenceNow = false;
 		finish();
 	}
 
@@ -304,6 +306,7 @@ public class Recurrence extends Activity {
 						Utility.recurrenceFields[i],
 						Utility.recurrenceValues[i]);
 		}
+		Utility.isRecurrenceNow = false;
 		finish();
 	}
 
@@ -311,6 +314,7 @@ public class Recurrence extends Activity {
 		for (String field : Utility.recurrenceFields) {
 			fieldValidator.setField(field, fields.get(field));
 		}
+		Utility.isRecurrenceNow = false;
 		finish();
 	}
 

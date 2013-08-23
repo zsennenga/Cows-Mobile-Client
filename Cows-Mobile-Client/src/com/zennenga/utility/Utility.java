@@ -29,6 +29,7 @@ public class Utility {
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
 	private static Toast t;
+	public static boolean isRecurrenceNow = false;
 
 	public static final String[] recurrenceFields = { "IsRepeating",
 			"RecurrenceAppliesTo", "RecurrenceMonday", "RecurrenceTuesday",

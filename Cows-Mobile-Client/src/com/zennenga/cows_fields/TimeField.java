@@ -55,8 +55,10 @@ public class TimeField extends BaseField {
 			throws IllegalArgumentException {
 		int[] timeData = parseTimeStringToArray(data);
 		String meridian = " AM";
-		int finalHour = ((timeData[0] % 12) + 1);
-		if (timeData[0] >= 11 && timeData[0] != 23)
+		int finalHour;
+		if (timeData[0] == 0 || timeData[0] == 12) finalHour = 12;
+		else finalHour = ((timeData[0] % 12));
+		if (timeData[0] >= 11)
 			meridian = " PM";
 		return finalHour + ":" + timeData[1] + meridian;
 	}

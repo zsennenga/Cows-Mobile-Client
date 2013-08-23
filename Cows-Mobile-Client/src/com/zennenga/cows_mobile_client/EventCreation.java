@@ -25,7 +25,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -33,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -49,12 +54,14 @@ public class EventCreation extends Activity {
 	private View view = null;
 	private int tries = 0;
 	private Validator fieldValidator;
+	private boolean settingTime = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_creation);
+		setupUI(findViewById(R.id.s));
 		tgc = getIntent().getStringExtra("TGC");
 		
 		if (tgc == null || tgc == "") finish();
@@ -169,6 +176,38 @@ public class EventCreation extends Activity {
 
 		});
 	}
+	
+	public void setupUI(View view) {
+
+	    //Set up touch listener for non-text box views to hide keyboard.
+	    if(!(view instanceof EditText)) {
+
+	        view.setOnTouchListener(new OnTouchListener() {
+
+	            public boolean onTouch(View v, MotionEvent event) {
+	               hideSoftKeyboard();
+	               return false;
+	            }
+
+	        });
+	    }
+
+	    //If a layout container, iterate over children and seed recursion.
+	    if (view instanceof ViewGroup) {
+
+	        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+	            View innerView = ((ViewGroup) view).getChildAt(i);
+
+	            setupUI(innerView);
+	        }
+	    }
+	}
+	
+	private void hideSoftKeyboard() {
+	    InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+	}
 
 	/**
 	 * Sets the Listeners for StartTime and EndTime
@@ -180,13 +219,15 @@ public class EventCreation extends Activity {
 
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				if (settingTime) return;
+				settingTime = true;
 				TimePicker t = ((TimePicker) findViewById(R.id.EndTime));
+				Integer h = t.getCurrentHour();
 				if (t.getCurrentMinute() % 15 != 0)
 					t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
-
-				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
-				boolean success;
-				success = fieldValidator.setField("EndTime", time);
+				t.setCurrentHour(h);
+				String time = t.getCurrentHour() + ":" + parseMinute(t.getCurrentMinute());
+				boolean success = fieldValidator.setField("EndTime", time);
 				if (success) fieldValidator.setField("DisplayEndTime", time);
 				if (success) ((TimeField) fieldValidator.getField("StartTime")).setComparator(time);
 				if (((TimeField) fieldValidator.getField("StartTime")).checkSet() && success) 
@@ -197,7 +238,9 @@ public class EventCreation extends Activity {
 									.getTime());
 				}
 				updateButton();
+				settingTime = false;
 			}
+			
 
 		});
 
@@ -206,14 +249,19 @@ public class EventCreation extends Activity {
 
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				if (settingTime) return;
+				settingTime = true;
 				TimePicker t = ((TimePicker) findViewById(R.id.StartTime));
+				Integer h = t.getCurrentHour();
 				if (t.getCurrentMinute() % 15 != 0)
 					t.setCurrentMinute(getNewMins(t.getCurrentMinute()));
-				String time = t.getCurrentHour() + ":" + t.getCurrentMinute();
+				t.setCurrentHour(h);
+				String time = t.getCurrentHour() + ":" + parseMinute(t.getCurrentMinute());
 				boolean success;
 				success = fieldValidator.setField("StartTime", time);
 				if (success) fieldValidator.setField("DisplayStartTime", time);
 				updateButton();
+				settingTime = false;
 			}
 
 		});
@@ -248,6 +296,11 @@ public class EventCreation extends Activity {
 					+ t.getCurrentMinute());
 		}
 		updateButton();
+	}
+	
+	private String parseMinute(Integer currentMinute) {
+		if (currentMinute == 0) return "00";
+		else return String.valueOf(currentMinute);
 	}
 
 	/**
