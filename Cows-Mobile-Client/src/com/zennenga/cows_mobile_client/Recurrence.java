@@ -14,12 +14,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +43,7 @@ public class Recurrence extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recurrence);
+		setupUI(findViewById(R.id.lel));
 		fields = new HashMap<String, String>();
 		Utility.updateContext(this);
 		Utility.isRecurrenceNow = true;
@@ -269,6 +275,38 @@ public class Recurrence extends Activity {
 		}
 
 		m.setSelection(index);
+	}
+	
+	public void setupUI(View view) {
+
+	    //Set up touch listener for non-text box views to hide keyboard.
+	    if(!(view instanceof EditText)) {
+
+	        view.setOnTouchListener(new OnTouchListener() {
+
+	            public boolean onTouch(View v, MotionEvent event) {
+	               hideSoftKeyboard();
+	               return false;
+	            }
+
+	        });
+	    }
+
+	    //If a layout container, iterate over children and seed recursion.
+	    if (view instanceof ViewGroup) {
+
+	        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+	            View innerView = ((ViewGroup) view).getChildAt(i);
+
+	            setupUI(innerView);
+	        }
+	    }
+	}
+	
+	private void hideSoftKeyboard() {
+	    InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 	}
 
 	private void updateFields() {

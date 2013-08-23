@@ -20,6 +20,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="50sp" />
 
+        <Button
+            android:id="@+id/Button01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical|center_horizontal"
+            android:onClick="backHandler"
+            android:text="@string/back" />
+
         <LinearLayout
             android:id="@+id/a"
             android:layout_width="wrap_content"
@@ -92,65 +102,38 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/azzz"
+                android:id="@+id/c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:padding="7dp" >
 
-                <LinearLayout
-                    android:id="@+id/b"
+                <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="7dp" >
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/description_"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/phone_number_"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/Phone"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="phone"
-                        android:tag="ContactPhone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/c"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/Description	"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="7dp" >
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:tag="Description" >
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/description_"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/Description	"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textMultiLine"
-                        android:tag="Description" />
-                </LinearLayout>
+                    <requestFocus />
+                </EditText>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/azzzz"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:baselineAligned="false">
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >
 
             <LinearLayout
                 android:id="@+id/i"
@@ -252,7 +235,6 @@
                         android:layout_weight="1"
                         android:tag="Categories"
                         tools:ignore="InefficientWeight" />
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -281,23 +263,39 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/azx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="7dp" >
+            android:orientation="vertical" >
 
-            <Spinner
-                android:id="@+id/buildingSelectSpinner2"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:prompt="@string/building_prompt" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/select_a_room"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/roomSelectSpinner2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:prompt="@string/room_prompt" />
+                android:layout_height="wrap_content"
+                android:padding="7dp" >
+
+                <Spinner
+                    android:id="@+id/buildingSelectSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/building_prompt" />
+
+                <Spinner
+                    android:id="@+id/roomSelectSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/room_prompt" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -328,7 +326,6 @@
                 android:onClick="backHandler"
                 android:text="@string/back" />
         </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>

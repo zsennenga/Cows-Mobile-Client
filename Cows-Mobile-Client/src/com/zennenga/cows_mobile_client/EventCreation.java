@@ -97,7 +97,6 @@ public class EventCreation extends Activity {
 		// Text Setting/validation
 		setTextListener(R.id.Title, "EventTitle");
 		setTextListener(R.id.Description, "Description");
-		setTextListener(R.id.Phone, "ContactPhone");
 		setTextListener(R.id.Notes, "Notes");
 
 		// Time setting and validation

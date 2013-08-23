@@ -156,5 +156,6 @@
     <string name="events">Events</string>
     <string name="cows_mobile">Cows Mobile</string>
     <string name="room">Room</string>
+    <string name="select_a_room">Select a Room</string>
 
 </resources>
