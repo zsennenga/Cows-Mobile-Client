@@ -20,7 +20,7 @@ public class RoomListener implements OnItemSelectedListener {
 		if (!parent.getSelectedItem().toString().contains("All "))
 			this.v.setField("BuildingAndRoom", ":"
 					+ parent.getSelectedItem().toString());
-		updateButton((View) parent.getParent().getParent());
+		updateButton((View) parent.getParent().getParent().getParent());
 	}
 
 	private void updateButton(View p) {

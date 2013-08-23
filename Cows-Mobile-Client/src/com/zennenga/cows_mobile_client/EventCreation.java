@@ -432,6 +432,8 @@ public class EventCreation extends Activity {
 			b.setEnabled(false);
 			b = (Button) findViewById(R.id.Recurrence);
 			b.setEnabled(false);
+			b = (Button) findViewById(R.id.BackButton2);
+			b.setEnabled(false);
 			Utility.showMessage("Please Wait. Submitting event to COWS...");
 		}
 
@@ -484,6 +486,8 @@ public class EventCreation extends Activity {
 				b.setEnabled(true);
 				b = (Button) findViewById(R.id.button2);
 				b.setEnabled(true);
+				b = (Button) findViewById(R.id.BackButton2);
+				b.setEnabled(true);
 				b = (Button) findViewById(R.id.Recurrence);
 				b.setEnabled(true);
 				return;
@@ -496,6 +500,8 @@ public class EventCreation extends Activity {
 				Button b = (Button) findViewById(R.id.button1);
 				b.setEnabled(true);
 				b = (Button) findViewById(R.id.button2);
+				b.setEnabled(true);
+				b = (Button) findViewById(R.id.BackButton2);
 				b.setEnabled(true);
 				b = (Button) findViewById(R.id.Recurrence);
 				b.setEnabled(true);

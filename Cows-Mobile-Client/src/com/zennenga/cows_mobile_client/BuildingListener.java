@@ -34,7 +34,7 @@ public class BuildingListener implements OnItemSelectedListener {
 			Spinner spinner = (Spinner) ((View)parent.getParent()).findViewById(R.id.roomSelectSpinner2);
 			spinner.setAdapter(new ArrayAdapter<String>(((View)parent.getParent()).getContext(), 0));
 		}
-		updateButton((View) parent.getParent().getParent());
+		updateButton((View) parent.getParent().getParent().getParent());
 	}
 
 	@Override
