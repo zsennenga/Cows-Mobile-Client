@@ -1,6 +1,9 @@
 package com.zennenga.cows_fields;
 
+import java.util.Arrays;
 import java.util.List;
+
+import android.util.Log;
 
 import com.zennenga.cows_mobile_client.MultiSelectSpinner;
 import com.zennenga.utility.Utility;
@@ -21,15 +24,19 @@ public class MultiSpinnerField extends BaseField {
 	 */
 	@Override
 	public void setData(String newData) {
+		Log.i("MultiSelect", "In setData");
 		if (this.spinner == null)
 			throw new IllegalArgumentException(this.fieldName
 					+ " spinner was not set");
 		this.beenValidated = false;
+		this.data = "";
 		List<Integer> selected = this.spinner.getSelectedIndicies();
 		if (selected.isEmpty() && !this.optional)
 			throw new IllegalArgumentException(
 					"You must select at least one option from "
 							+ this.fieldName);
+		else if (selected.isEmpty()) return;
+		Log.i("MultiSelect", Arrays.toString(selected.toArray()));
 		for (Integer select : selected) {
 			this.data += Utility.getAttr(select, this.arrayChoice,
 					this.spinner.getContext())

@@ -23,6 +23,15 @@
         <item>1715 Tilia</item>
         <item>215 Sage</item>
     </string-array>
+    
+    <string-array name="buildingOptionsCreate">
+        <item>Tap to Select a Building</item>
+        <item>1590 Tilia</item>
+        <item>1605 Tilia</item>
+        <item>1715 Tilia</item>
+        <item>215 Sage</item>
+    </string-array>
+    
     <string-array name="roomOptions">
         <item>All Rooms</item>
         <item>1142 in 1590 Tilia</item>
@@ -56,6 +65,30 @@
     </string-array>
     <string-array name="roomOptions215">
         <item>All Rooms in 215 Sage</item>
+        <item>1104</item>
+        <item>1113</item>
+    </string-array>
+    
+    <string-array name="roomOptions1590Create">
+        <item>Tap to Select a Room</item>
+        <item>1142</item>
+    </string-array>
+    <string-array name="roomOptions1605Create">
+        <item>Tap to Select a Room</item>
+        <item>1103</item>
+        <item>1111</item>
+        <item>1162</item>
+    </string-array>
+    <string-array name="roomOptions1715Create">
+        <item>Tap to Select a Room</item>
+        <item>1106</item>
+        <item>1119</item>
+        <item>1121</item>
+        <item>1123</item>
+        <item>1161</item>
+    </string-array>
+    <string-array name="roomOptions215Create">
+        <item>Tap to Select a Room</item>
         <item>1104</item>
         <item>1113</item>
     </string-array>
@@ -157,5 +190,6 @@
     <string name="cows_mobile">Cows Mobile</string>
     <string name="room">Room</string>
     <string name="select_a_room">Select a Room</string>
+    <string name="required_fields_are_in_blue">Required fields are in blue</string>
 
 </resources>

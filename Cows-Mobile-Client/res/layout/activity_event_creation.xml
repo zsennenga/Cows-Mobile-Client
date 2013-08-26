@@ -10,25 +10,43 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:text="@string/event_creation"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="50sp" />
+        <LinearLayout
+            android:id="@+id/axc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <Button
-            android:id="@+id/BackButton2"
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="70dp"
+                android:layout_weight="1.00"
+                android:gravity="center_horizontal"
+                android:text="@string/event_creation"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50sp" />
+
+            <Button
+                android:id="@+id/BackButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="right|center_vertical|center_horizontal"
+                android:onClick="backHandler"
+                android:text="@string/back" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="right|center_vertical|center_horizontal"
-            android:onClick="backHandler"
-            android:text="@string/back" />
+            android:text="@string/required_fields_are_in_blue"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#002855" />
 
         <LinearLayout
             android:id="@+id/a"
@@ -41,7 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#002855" />
 
             <EditText
                 android:id="@+id/Title"
@@ -70,7 +89,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/start_time_"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#002855" />
 
                 <TimePicker
                     android:id="@+id/StartTime"
@@ -91,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/end_time_"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#002855" />
 
                 <TimePicker
                     android:id="@+id/EndTime"
@@ -113,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/description_"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#002855" />
 
                 <EditText
                     android:id="@+id/Description	"
@@ -148,7 +170,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/set_date_for_event"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#002855" />
 
                 <DatePicker
                     android:id="@+id/Date"
@@ -180,7 +203,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/event_types_"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#002855" />
 
                     <Spinner
                         android:id="@+id/eventType"
@@ -226,7 +250,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/categories_"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#002855" />
 
                     <com.zennenga.cows_mobile_client.MultiSelectSpinner
                         android:id="@+id/Categories"
@@ -262,21 +287,6 @@
                 android:tag="Notes" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/azx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/select_a_room"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -296,7 +306,6 @@
                     android:layout_weight="1"
                     android:prompt="@string/room_prompt" />
             </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout1"

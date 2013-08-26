@@ -47,4 +47,8 @@ public abstract class BaseField {
 	public String getRawData() {
 		return this.data;
 	}
+	
+	public void setOptional(boolean b)	{
+		this.optional = b;
+	}
 }

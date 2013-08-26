@@ -44,6 +44,8 @@ public class MultiSelectSpinner extends Spinner implements
 	boolean[] _selection = null;
 
 	ArrayAdapter<String> _proxyAdapter;
+	private String field;
+	private EventCreation e;
 
 	/**
 	 * Constructor for use when instantiating directly.
@@ -77,6 +79,7 @@ public class MultiSelectSpinner extends Spinner implements
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+		
 		if (_selection != null && which < _selection.length) {
 			_selection[which] = isChecked;
 			
@@ -85,8 +88,7 @@ public class MultiSelectSpinner extends Spinner implements
 			setSelection(0);
 
 			String s = String.valueOf(isChecked);
-			if (!Utility.isRecurrenceNow) return;
-			else	{
+			if (Utility.isRecurrenceNow)	{
 				switch (which) {
 				case 0:
 					Validator.getInstance()
@@ -106,6 +108,10 @@ public class MultiSelectSpinner extends Spinner implements
 							.setField("RecurrenceFriday", s);
 					break;
 				}
+			}
+			else	{
+				Validator.getInstance().setField(field, "");
+				e.updateButton();
 			}
 		} else {
 			throw new IllegalArgumentException(
@@ -261,6 +267,11 @@ public class MultiSelectSpinner extends Spinner implements
 		}
 
 		return sb.toString();
+	}
+	
+	public void setField(String field, EventCreation e)	{
+		this.field = field;
+		this.e = e;
 	}
 	
 }

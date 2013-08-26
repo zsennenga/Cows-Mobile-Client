@@ -3,6 +3,8 @@ package com.zennenga.cows_fields;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import android.util.Log;
+
 public class BuildingField extends BaseField {
 	private String building;
 	private String room;
@@ -22,6 +24,10 @@ public class BuildingField extends BaseField {
 	@Override
 	public void setData(String newData) {
 		this.beenValidated = false;
+		if (newData.equals(":")) {
+			Log.i("BuildingRoom", "Tap to select detected");
+			return;
+		}
 		String[] buildingData = newData.split(":");
 		if (buildingData[0].length() > 0)
 			this.building = buildingData[0];
@@ -44,7 +50,7 @@ public class BuildingField extends BaseField {
 
 	@Override
 	public Boolean checkValidation() {
-		return this.room != "" && this.building != "";
+		return this.room != "" && this.building != "" && this.beenValidated;
 	}
 
 }

@@ -86,7 +86,7 @@ public class EventCreation extends Activity {
 
 		// Populate Single Spinners
 		populateSpinner(R.id.eventType, R.array.EventTypes);
-		populateSpinner(R.id.buildingSelectSpinner2, R.array.buildingOptions);
+		populateSpinner(R.id.buildingSelectSpinner2, R.array.buildingOptionsCreate);
 
 		Spinner spin = (Spinner) findViewById(R.id.buildingSelectSpinner2);
 		spin.setOnItemSelectedListener(new BuildingListener());
@@ -158,22 +158,7 @@ public class EventCreation extends Activity {
 		MultiSelectSpinner ms = (MultiSelectSpinner) findViewById(fieldId);
 		((MultiSpinnerField) fieldValidator.getField(fieldName))
 				.setSpinner(ms);
-		ms.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				fieldValidator.setField(fieldName, "");
-				updateButton();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				fieldValidator.setField(fieldName, "");
-				updateButton();
-			}
-
-		});
+		ms.setField(fieldName,this);
 	}
 	
 	public void setupUI(View view) {
@@ -589,7 +574,7 @@ public class EventCreation extends Activity {
 	 * 
 	 * @param button
 	 */
-	private void updateButton() {
+	public void updateButton() {
 		Button b = (Button) findViewById(R.id.button1);
 		b.setEnabled(false);
 		if (fieldValidator.checkFieldsValidation(false))

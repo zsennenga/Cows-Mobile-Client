@@ -99,7 +99,11 @@ public class Validator {
 				"RecurrenceSaturday", "false"));
 		fieldMap.put("RecurrenceSunday", new StaticField("RecurrenceSunday",
 				"false"));
-
+		
+		for (String s : Utility.recurrenceFields)	{
+			fieldMap.get(s).setOptional(true);
+		}
+		
 	}
 
 	/**
@@ -151,24 +155,13 @@ public class Validator {
 	public boolean checkFieldsValidation(Boolean isRecurrence)	{
 		Collection<BaseField> values = fieldMap.values();
 		for (BaseField f : values) {
-			Boolean b = Arrays.asList(Utility.recurrenceFields).contains(f.getFieldName());
-			if (!isRecurrence) b = !b;
-			if (!f.checkValidation() && b) {
+			if (!f.checkValidation()) {
 				Log.i("Validation","Check Validation returned false");
 				return false;
 			}
 		}
 		Log.i("Validation","Check Validation returned true");
 		return true;
-	}
-
-	/**
-	 * Checks if all recurrence fields have been validated
-	 * 
-	 * @param b
-	 */
-	public void enableRecurrenceButton(Button b) {
-
 	}
 
 	/**
