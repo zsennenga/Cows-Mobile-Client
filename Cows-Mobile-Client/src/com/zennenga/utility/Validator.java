@@ -143,7 +143,6 @@ public class Validator {
 		try {
 			Log.i("Field", "Setting " + fieldName + " from " + fieldMap.get(fieldName).getRawData() + " to " + data);
 			fieldMap.get(fieldName).setData(data);
-			Utility.clearToast();
 		} catch (IllegalArgumentException e) {
 			Log.i("Toast", "Got error");
 			Utility.showMessage(e.getMessage());

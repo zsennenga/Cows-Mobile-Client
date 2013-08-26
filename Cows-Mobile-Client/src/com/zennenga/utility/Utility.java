@@ -24,11 +24,13 @@ import android.widget.Toast;
 import com.zennenga.cows_mobile_client.R;
 
 public class Utility {
-	public static final String BASE_URL = "http://dev.its.ucdavis.edu/scripts/CowsMobileServer.php";
+	public static String BASE_URL = "http://dev.its.ucdavis.edu/scripts/CowsMobileServer.php";
+	public static String SITE_ID = "its";
+	
 	public static final int LOCATION_ATTRIBUTE_ARRAY = 0;
 	public static final int CATEGORY_ATTRIBUTE_ARRAY = 1;
 	public static final int EVENT_ATTRIBUTE_ARRAY = 2;
-	private static Toast t;
+	
 	public static boolean isRecurrenceNow = false;
 
 	public static final String[] recurrenceFields = { "IsRepeating",
@@ -52,18 +54,14 @@ public class Utility {
 			(Calendar.getInstance().get(Calendar.MONTH) + 1) + "/"
 					+ (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1)
 					+ "/" + Calendar.getInstance().get(Calendar.YEAR), "1", "D" };
-	public static final String SITE_ID = "its";
+	
+	private static Toast t;
 
 	@SuppressLint("ShowToast")
 	public static void updateContext(Context c) {
 		Utility.t = Toast.makeText(c, "blah", Toast.LENGTH_LONG);
 	}
-
-	public static void clearToast() {
-		// if (Utility.t != null && Utility.t.getView().getVisibility() ==
-		// View.VISIBLE) Utility.t.setText("a");
-	}
-
+	
 	/**
 	 * Deauthenticates the client from CAS
 	 * 
