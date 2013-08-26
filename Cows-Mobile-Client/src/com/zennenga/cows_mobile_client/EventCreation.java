@@ -463,7 +463,8 @@ public class EventCreation extends Activity {
 		@Override
 		protected void onPostExecute(String response) {
 
-			Log.i("Response", response);
+			if (response == "") Log.i("Response", "Got no response");
+			else Log.i("Response", response);
 
 			if (response == null || response.equals("")) {
 				Utility.showMessage("Invalid response from server.");
