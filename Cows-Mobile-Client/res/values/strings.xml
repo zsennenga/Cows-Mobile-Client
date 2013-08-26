@@ -168,7 +168,6 @@
 	</string-array>
     <string name="title_activity_recurrence">Recurrence</string>
     <string name="title_">"Title: "</string>
-    <string name="phone_number_">"Phone Number: "</string>
     <string name="description_">"Description: "</string>
     <string name="event_types_">"Event Types: "</string>
     <string name="categories_">"Categories: "</string>
@@ -189,7 +188,6 @@
     <string name="events">Events</string>
     <string name="cows_mobile">Cows Mobile</string>
     <string name="room">Room</string>
-    <string name="select_a_room">Select a Room</string>
     <string name="required_fields_are_in_blue">Required fields are in blue</string>
 
 </resources>
