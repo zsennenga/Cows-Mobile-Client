@@ -75,6 +75,7 @@ public class RoomAvailableTime extends Activity {
 		       getEvents();
 		    }
 		 }, 0, 60*1000);
+		
 	}
 
 	/**
@@ -123,6 +124,7 @@ public class RoomAvailableTime extends Activity {
 			public void onClick(View v) {
 				timer.cancel();
 				Intent i = new Intent(v.getContext(), CasAuth.class);
+				finish();
 				startActivity(i);
 			}
 		});
@@ -212,7 +214,7 @@ public class RoomAvailableTime extends Activity {
 				e.printStackTrace();
 			}
 			return responseBody;
-		}
+		}//credits to Brandon
 		
 		@Override
 		protected void onPostExecute(String line) {
@@ -255,7 +257,7 @@ public class RoomAvailableTime extends Activity {
 				return;
 			}//check that line is a JSONarray
 			JSONObject obj;						
-			while (x < 30) {
+			while (x < 30) {//30 is a random #, represents max number of meetings in a day, most likely not going to be over 30
 				try {
 					obj = json.getJSONObject(x);						
 					info = info.concat(obj.getString("Time")+","+obj.getString("Location")+",");			
@@ -263,18 +265,19 @@ public class RoomAvailableTime extends Activity {
 					break;
 				}
 				x++;
-			}//store jsonarray time and location into a string						
+			}//store jsonarray time and location into a string
+			//string to hashmap, implemented this way so it will minimize future debugging
 			String delims = "[,]+";
-			String[] tokens = info.split(delims);//split string info into an array tokens[0] = time, token[1and2]=location, etc.
+			String[] tokens = info.split(delims);//split string info into an array tokens[0] = time, token[1and2]=location, so on
 			
 			if (tokens.length < 3) {
 				Utility.showMessage("No Events to Show");
 			} //in case: no events(weekends, past dates, etc.)
 			else {
-				for (x=0; x < tokens.length; x+=3) {
+				for (x=0; x < tokens.length; x+=3) {//increments of 3
 					int startTime = 0,
 						endTime = 0;					
-					String RoomNum = tokens[x+1].concat(","+tokens[x+2]);
+					String RoomNum = tokens[x+1].concat(","+tokens[x+2]);//location
 					
 					if (availableRooms.get(RoomNum) == null) {
 						availableRooms.put(RoomNum, 0);
@@ -295,7 +298,7 @@ public class RoomAvailableTime extends Activity {
 										startTime += 1200;
 										startMinutes += 720; 
 								}//checking if AM or PM
-							}
+							}//convert time into 24hour format and store into 2 vars for start and end of meeting
 							else {
 								endTime = Integer.valueOf((tokens[x].substring(indexOfColon-2,indexOfColon)).trim());
 								endTime *= 100;
@@ -309,7 +312,7 @@ public class RoomAvailableTime extends Activity {
 						}
 						StringBuilder sb = new StringBuilder(tokens[x]);
 						sb.deleteCharAt(indexOfColon);
-						tokens[x] = sb.toString(); 
+						tokens[x] = sb.toString();//delete the colon 
 					}			
 					if (endTime <= current24Time) {
 						continue;
@@ -328,7 +331,7 @@ public class RoomAvailableTime extends Activity {
 						}//if room in question already has a negative number, check if next meeting is back2back
 						else if (availableRooms.get(RoomNum) == 0) {
 							availableRooms.put(RoomNum, startMinutes-currentMinutes);
-						}//Room is available right now [for how long]
+						}//Room is available right now, store [for how long]
 					}				
 				}//End organizing events
 				
@@ -336,7 +339,8 @@ public class RoomAvailableTime extends Activity {
 					if (availableRooms.get(roomNums[x]) == null) {
 						availableRooms.put(roomNums[x], 0);
 					}
-				}//put other rooms into hashmap with value 0, they are all free	
+				}//put other rooms into hashmap with value 0 if they didnt have events
+				//stored with 0 since no events
 				
 				rooms = 0;
 				for (x = 0; x < roomNums.length; x++) {
@@ -406,7 +410,7 @@ public class RoomAvailableTime extends Activity {
 							if (hours > 12) hours -= 12;
 							if (minutes < 10) {
 								descripTextView.setText("Not available until "+hours+":0"+minutes+" PM");
-							}
+							}//if minutes is 1 digit
 							else {
 								descripTextView.setText("Not available until "+hours+":"+minutes+" PM");					
 							}
@@ -414,7 +418,7 @@ public class RoomAvailableTime extends Activity {
 						else {
 							if (minutes < 10) {
 								descripTextView.setText("Not available until "+hours+":0"+minutes+" AM");
-							}
+							}//if minutes is 1 digit
 							else {
 								descripTextView.setText("Not available until "+hours+":"+minutes+" AM");							
 							}
@@ -426,8 +430,13 @@ public class RoomAvailableTime extends Activity {
 						if (timeLeftOrEndOfMeeting > 0) {
 							int minutes = timeLeftOrEndOfMeeting%60,
 								hours = (timeLeftOrEndOfMeeting-minutes)/60;
-							descripTextView.setText("Available for "+hours+" hour(s) "+minutes+" minutes");
-						}
+							StringBuilder displayInfo = new StringBuilder("Available for ");
+							if (hours > 1) displayInfo.append(hours+" hours ");
+							else if (hours == 1) displayInfo.append(hours+" hour ");
+							if (minutes > 1) displayInfo.append(minutes+" minutes ");
+							else if (minutes == 1) displayInfo.append(minutes+" minute ");
+							descripTextView.setText(displayInfo);
+						}//took your suggestion Zach
 						else {
 							descripTextView.setText("Rest of the day");
 						}
@@ -436,7 +445,7 @@ public class RoomAvailableTime extends Activity {
 					}
 					rooms++;					
 				}//display events availability
-			}
+			}//credits to Brandon for layout inspiration and code design in this part
 		}
 			
 	}
