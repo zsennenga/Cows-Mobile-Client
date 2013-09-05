@@ -1,0 +1,376 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".RoomAvailableTime" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <TextView
+         	android:id="@+id/titleOfActivity"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:layout_gravity="center_horizontal"
+         	android:textSize="50sp"
+         	android:textStyle="bold" />
+ 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical" 
+                android:layout_weight="1" >
+                
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"            		
+            		android:layout_gravity="center_horizontal"
+            		android:padding="3dip"
+            		android:text="@string/room"
+            		android:textSize="34sp"
+            		android:textStyle="bold" />
+                
+                <TextView
+		            android:id="@+id/rowRoom1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom2"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom3"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom4"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom5"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom6"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom7"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom8"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom9"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom10"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowRoom11"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.9" >
+                
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"            		
+            		android:layout_gravity="center_horizontal"
+            		android:padding="3dip"
+            		android:text="@string/availTime"
+            		android:textSize="34sp"
+            		android:textStyle="bold" />
+                
+                <TextView
+		            android:id="@+id/rowAvail1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail2"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail3"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail4"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail5"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail6"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail7"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail8"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail9"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail10"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowAvail11"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+            
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1.3" >
+                
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"            		
+            		android:layout_gravity="center_horizontal"
+            		android:padding="3dip"
+            		android:text="@string/description"
+	            	android:textSize="34sp"
+	            	android:textStyle="bold" />
+                
+                <TextView
+		            android:id="@+id/rowDescrip1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowDescrip2"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                
+                <TextView
+		            android:id="@+id/rowDescrip3"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip4"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip5"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip6"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip7"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip8"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip9"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip10"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+                <TextView
+		            android:id="@+id/rowDescrip11"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center_horizontal"
+		            android:padding="3dip"
+		            android:textSize="26sp" />
+            </LinearLayout>
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+			
+            <LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_horizontal|bottom" >
+	            
+	            <Button
+	                android:id="@+id/BackButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/back" />
+
+	            <Button
+	                android:id="@+id/createEventButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"	            
+	                android:text="@string/create_event" />
+	            
+	        </LinearLayout>
+
+        </LinearLayout>
+                
+    </LinearLayout>
+
+</RelativeLayout>
