@@ -15,6 +15,10 @@
     <string name="next">Next</string>
     <string name="time">Time</string>
     <string name="event">Event</string>
+    <string name="refresh">Refresh</string>
+    <string name="availTime">Availability</string>
+    <string name="availability">Room Availability</string>
+    <string name="description">Description</string>
 
     <string-array name="buildingOptions">
         <item>All Buildings</item>
@@ -60,31 +64,28 @@
         <item>1113</item>
     </string-array>
     <string-array name="EventTypes">
-       	<item name="Board_Meeting">Board Meeting</item>
-		<item name="China_Center">China Center</item>
-		<item name="CWEE">CWEE Meetings</item>
-		<item name="EEC">EEC Meetings</item>
-		<item name="EI_Seminars">EI Seminars</item>
-		<item name="Energy_Institute">Energy Institute Meetings</item>
-		<item name="ITS_Seminar">ITS Friday Seminars</item>
-		<item name="Maintenance_Other">Maintenance/Other</item>
-		<item name="Meetings">ITS Meetings</item>
-		<item name="NextSTEPS_Seminars">NextSTEPS Seminars</item>
-		<item name="Office_Hours">Office Hours</item>
-		<item name="Other_ITS_Seminars">Other ITS Seminars</item>
-		<item name="Phev">PH&amp;EV</item>
-		<item name="Policy_Institute">Policy Institute</item>
-		<item name="STEPS">NextSTEPS</item>
-		<item name="WCEC_Meetings">WCEC Meetings</item>
-
+        <item name="Board_Meeting">Board Meeting</item>
+        <item name="China_Center">China Center</item>
+        <item name="CWEE">CWEE Meetings</item>
+        <item name="EEC">EEC Meetings</item>
+        <item name="EI_Seminars">EI Seminars</item>
+        <item name="Energy_Institute">Energy Institute Meetings</item>
+        <item name="ITS_Seminar">ITS Friday Seminars</item>
+        <item name="Maintenance_Other">Maintenance/Other</item>
+        <item name="Meetings">ITS Meetings</item>
+        <item name="NextSTEPS_Seminars">NextSTEPS Seminars</item>
+        <item name="Office_Hours">Office Hours</item>
+        <item name="Other_ITS_Seminars">Other ITS Seminars</item>
+        <item name="Phev">PH&amp;EV</item>
+        <item name="Policy_Institute">Policy Institute</item>
+        <item name="STEPS">NextSTEPS</item>
+        <item name="WCEC_Meetings">WCEC Meetings</item>
     </string-array>
-    
     <string-array name="recurrenceType">
         <item>Day</item>
         <item>Week</item>
         <item>Month</item>
     </string-array>
-    
     <string-array name="daysOfWeek">
         <item>Monday</item>
         <item>Tuesday</item>
@@ -92,28 +93,27 @@
         <item>Thursday</item>
         <item>Friday</item>
     </string-array>
-    
     <string-array name="locattr">
         <item>Front-TV</item>
         <item>ITSWebsite</item>
     </string-array>
     <string-array name="eventattr">
         <item>Board_Meeting</item>
-		<item>China_Center</item>
-		<item>CWEE</item>
-		<item>EEC</item>
-		<item>EI_Seminars</item>
-		<item>Energy_Institute</item>
-		<item>ITS_Seminar</item>
-		<item>Maintenance_Other</item>
-		<item>Meetings</item>
-		<item>NextSTEPS_Seminars</item>
-		<item>Office_Hours</item>
-		<item>Other_ITS_Seminars</item>
-		<item>Phev</item>
-		<item>Policy_Institute</item>
-		<item>STEPS</item>
-		<item>WCEC_Meetings</item>
+        <item>China_Center</item>
+        <item>CWEE</item>
+        <item>EEC</item>
+        <item>EI_Seminars</item>
+        <item>Energy_Institute</item>
+        <item>ITS_Seminar</item>
+        <item>Maintenance_Other</item>
+        <item>Meetings</item>
+        <item>NextSTEPS_Seminars</item>
+        <item>Office_Hours</item>
+        <item>Other_ITS_Seminars</item>
+        <item>Phev</item>
+        <item>Policy_Institute</item>
+        <item>STEPS</item>
+        <item>WCEC_Meetings</item>
     </string-array>
     <string-array name="catattr">
         <item>Class</item>
@@ -122,17 +122,18 @@
         <item>Other</item>
         <item>Seminars</item>
     </string-array>
-	<string-array name="Locations">
-		<item>Display on Front TV</item> 
-		<item>Homepage Event Listings</item>  
-	</string-array>
-	<string-array name="Categories">
-		<item>Classes</item>
-		<item>Conferences</item>
-		<item>Meetings</item>
-		<item>Other</item>
-		<item>Seminars</item>
-	</string-array>
+    <string-array name="Locations">
+        <item>Display on Front TV</item>
+        <item>Homepage Event Listings</item>
+    </string-array>
+    <string-array name="Categories">
+        <item>Classes</item>
+        <item>Conferences</item>
+        <item>Meetings</item>
+        <item>Other</item>
+        <item>Seminars</item>
+    </string-array>
+
     <string name="title_activity_recurrence">Recurrence</string>
     <string name="title_">"Title: "</string>
     <string name="phone_number_">"Phone Number: "</string>
@@ -156,5 +157,8 @@
     <string name="events">Events</string>
     <string name="cows_mobile">Cows Mobile</string>
     <string name="room">Room</string>
+    <string name="title_activity_room_available_time">RoomAvailableTime</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

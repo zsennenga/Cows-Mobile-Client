@@ -27,8 +27,9 @@ public class RoomSelect extends Activity {
 
 		addListenerOnNextButton();
 		addListenerOnBackButton();
+		addListenerOnAvailableRoomButton();
 		addListenerOnRoomSelectSpinner();
-		addListenerOnBuildingSelectSpinner();
+		addListenerOnBuildingSelectSpinner();	
 	}
 
 	public void getDateFromDatePicker() {
@@ -45,8 +46,7 @@ public class RoomSelect extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), RoomEventView.class);
 				getDateFromDatePicker();
-				String roomCode = getRoomCode(roomSelectListener
-						.getRoomSelected());
+				String roomCode = getRoomCode(roomSelectListener.getRoomSelected());
 				i.putExtra("day", day);
 				i.putExtra("month", month + 1); // month returned from picker
 												// starts at 0
@@ -63,6 +63,23 @@ public class RoomSelect extends Activity {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+	}
+	
+	public void addListenerOnAvailableRoomButton() {
+		final Button availableButton = (Button) findViewById(R.id.nextAvailableTime);
+		availableButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), RoomAvailableTime.class);
+				getDateFromDatePicker();
+				String roomCode = getRoomCode(roomSelectListener.getRoomSelected());
+				i.putExtra("day", day);
+				i.putExtra("month", month + 1);
+				i.putExtra("year", year);
+				i.putExtra("roomCode", roomCode);
+				startActivity(i);
+				
 			}
 		});
 	}
