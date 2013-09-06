@@ -18,27 +18,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
-
-
-
-
-
-
-
-
-
-
 import com.zennenga.utility.Utility;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -46,20 +33,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class RoomAvailableTime extends Activity {
 	
 	private int day, month, year;	
-	private Timer timer = new Timer();
 	private static final int TIMEOUT_MILLISEC = 1000;
 	private final String[] roomNums = {"1590 Tilia, Room 1142", "1605 Tilia, Room 1103", "1605 Tilia, Room 1111", "1605 Tilia, Room 1162", 
 			"1715 Tilia, Room 1106", "1715 Tilia, Room 1119", "1715 Tilia, Room 1121", "1715 Tilia, Room 1123", "1715 Tilia, Room 1161", 
 			"215 Sage, Room 1104", "215 Sage, Room 1113"};
 	public static final String PM = "P";
 	
+	private Handler mHandler = new Handler();
+	private TimerTask timerTask = new ATimerTask();
+	private Timer timer = new Timer();
+	
+	private class ATimerTask extends TimerTask {
+	    public void run() {
+	        mHandler.post(
+	        new Runnable() { 
+	        	public void run() { 
+	        		new nextAvailableRoomTime().execute();
+	                }
+	        	}
+	        );
+	    }
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +69,8 @@ public class RoomAvailableTime extends Activity {
 		getData();
 		addListenerOnBackButton();
 		addListenerOnCreateButton();
-		//addListenerOnRefreshButton();
-		timer.schedule( new TimerTask() {
-		    public void run() {
-		       getEvents();
-		    }
-		 }, 0, 60*1000);
 		
+		timer.scheduleAtFixedRate(timerTask, 0, 1000*60);
 	}
 
 	/**
@@ -122,7 +117,6 @@ public class RoomAvailableTime extends Activity {
 		backButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				timer.cancel();
 				Intent i = new Intent(v.getContext(), CasAuth.class);
 				finish();
 				startActivity(i);
@@ -135,7 +129,6 @@ public class RoomAvailableTime extends Activity {
 		backButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				timer.cancel();
 				finish();
 			}
 		});
