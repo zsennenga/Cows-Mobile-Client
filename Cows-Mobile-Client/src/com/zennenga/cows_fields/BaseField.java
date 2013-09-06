@@ -47,8 +47,11 @@ public abstract class BaseField {
 	public String getRawData() {
 		return this.data;
 	}
+<<<<<<< HEAD
 	
 	public void setOptional(boolean b)	{
 		this.optional = b;
 	}
+=======
+>>>>>>> refs/remotes/origin/pr/5
 }

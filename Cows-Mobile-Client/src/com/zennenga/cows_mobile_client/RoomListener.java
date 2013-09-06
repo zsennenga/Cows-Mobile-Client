@@ -17,6 +17,7 @@ public class RoomListener implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int arg2,
 			long arg3) {
+<<<<<<< HEAD
 		if (!parent.getSelectedItem().toString().contains("Tap"))
 			this.v.setField("BuildingAndRoom", ":"
 					+ parent.getSelectedItem().toString());
@@ -24,6 +25,12 @@ public class RoomListener implements OnItemSelectedListener {
 			this.v.setField("BuildingAndRoom", ":");
 		}
 		updateButton((View) parent.getParent().getParent().getParent());
+=======
+		if (!parent.getSelectedItem().toString().contains("All "))
+			this.v.setField("BuildingAndRoom", ":"
+					+ parent.getSelectedItem().toString());
+		updateButton((View) parent.getParent().getParent());
+>>>>>>> refs/remotes/origin/pr/5
 	}
 
 	private void updateButton(View p) {

@@ -92,7 +92,7 @@ public class RoomEventView extends Activity {
 			HttpConnectionParams.setConnectionTimeout(httpParams,
 					TIMEOUT_MILLISEC);
 			HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-			//
+			
 			HttpParams p = new BasicHttpParams();
 			p.setParameter("user", "1");
 
