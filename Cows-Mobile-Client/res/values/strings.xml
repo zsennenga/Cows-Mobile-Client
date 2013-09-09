@@ -16,7 +16,7 @@
     <string name="time">Time</string>
     <string name="event">Event</string>
     <string name="refresh">Refresh</string>
-    <string name="availTime">Availability</string>
+    <string name="availTime">Available</string>
     <string name="availability">Room Availability</string>
     <string name="description">Description</string>
 

@@ -39,10 +39,16 @@ import android.support.v4.app.NavUtils;
 public class RoomAvailableTime extends Activity {
 	
 	private int day, month, year;	
+	private String roomCode;
 	private static final int TIMEOUT_MILLISEC = 1000;
 	private final String[] roomNums = {"1590 Tilia, Room 1142", "1605 Tilia, Room 1103", "1605 Tilia, Room 1111", "1605 Tilia, Room 1162", 
 			"1715 Tilia, Room 1106", "1715 Tilia, Room 1119", "1715 Tilia, Room 1121", "1715 Tilia, Room 1123", "1715 Tilia, Room 1161", 
-			"215 Sage, Room 1104", "215 Sage, Room 1113"};
+			"215 Sage, Room 1104", "215 Sage, Room 1113"},
+	rooms1605 = {"1605 Tilia, Room 1103", "1605 Tilia, Room 1111", "1605 Tilia, Room 1162"},
+	rooms1715 = {"1715 Tilia, Room 1106", "1715 Tilia, Room 1119", "1715 Tilia, Room 1121", "1715 Tilia, Room 1123", "1715 Tilia, Room 1161"},
+	rooms215 = {"215 Sage, Room 1104", "215 Sage, Room 1113"},
+	rooms1590 = {"1590 Tilia, Room 1142"};
+	
 	public static final String PM = "P";
 	
 	private Handler mHandler = new Handler();
@@ -68,8 +74,7 @@ public class RoomAvailableTime extends Activity {
 		setContentView(R.layout.activity_room_available_time);
 		getData();
 		addListenerOnBackButton();
-		addListenerOnCreateButton();
-		
+		addListenerOnCreateButton();		
 		timer.scheduleAtFixedRate(timerTask, 0, 1000*60);
 	}
 
@@ -77,15 +82,16 @@ public class RoomAvailableTime extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	
-	public void getEvents() {
-		nextAvailableRoomTime a = new nextAvailableRoomTime();
-		a.execute();
-	}
+	//public void getEvents() {
+	//	nextAvailableRoomTime a = new nextAvailableRoomTime();
+	//	a.execute();
+	//}
 	
 	private void getData() {
 		day = getIntent().getExtras().getInt("day");
 		month = getIntent().getExtras().getInt("month");
-		year = getIntent().getExtras().getInt("year");		
+		year = getIntent().getExtras().getInt("year");
+		roomCode = getIntent().getExtras().getString("roomCode");
 	}
 	
 	@Override
@@ -116,8 +122,9 @@ public class RoomAvailableTime extends Activity {
 		final Button backButton = (Button) findViewById(R.id.createEventButton);
 		backButton.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
 				Intent i = new Intent(v.getContext(), CasAuth.class);
+				timer.cancel();
 				finish();
 				startActivity(i);
 			}
@@ -129,6 +136,7 @@ public class RoomAvailableTime extends Activity {
 		backButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				timer.cancel();
 				finish();
 			}
 		});
@@ -190,7 +198,7 @@ public class RoomAvailableTime extends Activity {
 					+ "?date="
 					+ date
 					+ "&bldgRoom="
-					+ ""
+					+ roomCode
 					+ "&siteId=" + Utility.SITE_ID;
 			Log.i("Ted", url);
 			HttpGet httpGet = new HttpGet(url);
@@ -263,10 +271,85 @@ public class RoomAvailableTime extends Activity {
 			String delims = "[,]+";
 			String[] tokens = info.split(delims);//split string info into an array tokens[0] = time, token[1and2]=location, so on
 			
-			if (tokens.length < 3) {
-				Utility.showMessage("No Events to Show");
-			} //in case: no events(weekends, past dates, etc.)
-			else {
+			delims = "[_!]+";
+			String[] roomsToCheck = roomCode.split(delims);
+			String[] selectedRooms;
+			int selectedBuilding = 0, selectedRoom = 0;
+			if (roomsToCheck.length > 1) {
+				try {
+					selectedBuilding = Integer.valueOf(roomsToCheck[0]);					
+				}
+				catch (NumberFormatException e) {
+					Utility.showMessage("Error: Building selected not identified");
+					return;
+				}
+			}
+			if (roomsToCheck.length > 2) {
+				try {
+					selectedRoom = Integer.valueOf(roomsToCheck[2]);
+				}
+				catch (NumberFormatException e) {
+					Utility.showMessage("Error: Room selected not identified");
+					return;
+				}
+			}
+			
+			switch (selectedBuilding) {
+			case 215:
+				if (selectedRoom != 0) {
+					selectedRooms = new String[1];
+					String s = "215 Sage, Room "+String.valueOf(selectedRoom);
+					selectedRooms[0] = s;
+				}
+				else {
+					selectedRooms = new String[rooms215.length];
+					System.arraycopy(rooms215,0,selectedRooms,0,rooms215.length);
+				}
+				break;
+			case 1590:
+				if (selectedRoom != 0) {
+					selectedRooms = new String[1];
+					String s = "1590 Tilia, Room "+String.valueOf(selectedRoom);
+					selectedRooms[0] = s;
+				}
+				else {
+					selectedRooms = new String[rooms1590.length];
+					System.arraycopy(rooms1590,0,selectedRooms,0,rooms1590.length);
+				}
+				break;
+			case 1605:
+				if (selectedRoom != 0) {
+					selectedRooms = new String[1];
+					String s = "1605 Tilia, Room "+String.valueOf(selectedRoom);
+					selectedRooms[0] = s;
+				}
+				else {
+					selectedRooms = new String[rooms1605.length];
+					System.arraycopy(rooms1605,0,selectedRooms,0,rooms1605.length);
+				}
+				break;
+			case 1715:
+				if (selectedRoom != 0) {
+					selectedRooms = new String[1];
+					String s = "1715 Tilia, Room "+String.valueOf(selectedRoom);
+					selectedRooms[0] = s;
+				}
+				else {
+					selectedRooms = new String[rooms1715.length];
+					System.arraycopy(rooms1715,0,selectedRooms,0,rooms1715.length);
+				}
+				break;
+			default:
+				selectedRooms = new String[roomNums.length];
+				System.arraycopy(roomNums,0,selectedRooms,0,roomNums.length);
+				break;
+			}
+			
+			if (year<currentTime.year || (year==currentTime.year && month<(currentTime.month+1)) 
+					|| (year==currentTime.year && month==(currentTime.month+1) && day<currentTime.monthDay)) {
+				Utility.showMessage("Date picked is in the past");
+			}
+			else if (tokens.length > 2) {
 				for (x=0; x < tokens.length; x+=3) {//increments of 3
 					int startTime = 0,
 						endTime = 0;					
@@ -327,118 +410,118 @@ public class RoomAvailableTime extends Activity {
 						}//Room is available right now, store [for how long]
 					}				
 				}//End organizing events
-				
-				for (x = 0; x < roomNums.length; x++) {
-					if (availableRooms.get(roomNums[x]) == null) {
-						availableRooms.put(roomNums[x], 0);
-					}
-				}//put other rooms into hashmap with value 0 if they didnt have events
-				//stored with 0 since no events
-				
-				rooms = 0;
-				for (x = 0; x < roomNums.length; x++) {
-					int timeLeftOrEndOfMeeting = availableRooms.get(roomNums[x]);
-					switch (rooms) {
-					case 0:				
-						roomTextView = (TextView) findViewById(R.id.rowRoom1);
-						availTextView = (TextView) findViewById(R.id.rowAvail1);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip1);
-						break;
-					case 1:
-						roomTextView = (TextView) findViewById(R.id.rowRoom2);
-						availTextView = (TextView) findViewById(R.id.rowAvail2);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip2);
-						break;
-					case 2:
-						roomTextView = (TextView) findViewById(R.id.rowRoom3);
-						availTextView = (TextView) findViewById(R.id.rowAvail3);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip3);
-						break;
-					case 3:
-						roomTextView = (TextView) findViewById(R.id.rowRoom4);
-						availTextView = (TextView) findViewById(R.id.rowAvail4);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip4);
-						break;
-					case 4:
-						roomTextView = (TextView) findViewById(R.id.rowRoom5);
-						availTextView = (TextView) findViewById(R.id.rowAvail5);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip5);
-						break;
-					case 5:
-						roomTextView = (TextView) findViewById(R.id.rowRoom6);
-						availTextView = (TextView) findViewById(R.id.rowAvail6);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip6);
-						break;
-					case 6:
-						roomTextView = (TextView) findViewById(R.id.rowRoom7);
-						availTextView = (TextView) findViewById(R.id.rowAvail7);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip7);
-						break;
-					case 7:
-						roomTextView = (TextView) findViewById(R.id.rowRoom8);
-						availTextView = (TextView) findViewById(R.id.rowAvail8);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip8);
-						break;
-					case 8:
-						roomTextView = (TextView) findViewById(R.id.rowRoom9);
-						availTextView = (TextView) findViewById(R.id.rowAvail9);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip9);
-						break;
-					case 9:
-						roomTextView = (TextView) findViewById(R.id.rowRoom10);
-						availTextView = (TextView) findViewById(R.id.rowAvail10);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip10);
-						break;
-					case 10:
-						roomTextView = (TextView) findViewById(R.id.rowRoom11);
-						availTextView = (TextView) findViewById(R.id.rowAvail11);
-						descripTextView = (TextView) findViewById(R.id.rowDescrip11);
-						break;
-					}
-					roomTextView.setText(roomNums[x]);
-					if (timeLeftOrEndOfMeeting < 0) {
-						int minutes = (-timeLeftOrEndOfMeeting) % 100,
-							hours = ((-timeLeftOrEndOfMeeting)-minutes)/100;
-						if (-timeLeftOrEndOfMeeting >= 1200) {	
-							if (hours > 12) hours -= 12;
-							if (minutes < 10) {
-								descripTextView.setText("Not available until "+hours+":0"+minutes+" PM");
-							}//if minutes is 1 digit
-							else {
-								descripTextView.setText("Not available until "+hours+":"+minutes+" PM");					
-							}
-						}
+			}	
+			for (x = 0; x < selectedRooms.length; x++) {
+				if (availableRooms.get(selectedRooms[x]) == null) {
+					availableRooms.put(selectedRooms[x], 0);
+				}
+			}//put other rooms into hashmap with value 0 if they didnt have events
+			//stored with 0 since no events
+			
+			rooms = 0;
+			for (x = 0; x < selectedRooms.length; x++) {
+				int timeLeftOrEndOfMeeting = availableRooms.get(selectedRooms[x]);
+				switch (rooms) {
+				case 0:				
+					roomTextView = (TextView) findViewById(R.id.rowRoom1);
+					availTextView = (TextView) findViewById(R.id.rowAvail1);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip1);
+					break;
+				case 1:
+					roomTextView = (TextView) findViewById(R.id.rowRoom2);
+					availTextView = (TextView) findViewById(R.id.rowAvail2);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip2);
+					break;
+				case 2:
+					roomTextView = (TextView) findViewById(R.id.rowRoom3);
+					availTextView = (TextView) findViewById(R.id.rowAvail3);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip3);
+					break;
+				case 3:
+					roomTextView = (TextView) findViewById(R.id.rowRoom4);
+					availTextView = (TextView) findViewById(R.id.rowAvail4);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip4);
+					break;
+				case 4:
+					roomTextView = (TextView) findViewById(R.id.rowRoom5);
+					availTextView = (TextView) findViewById(R.id.rowAvail5);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip5);
+					break;
+				case 5:
+					roomTextView = (TextView) findViewById(R.id.rowRoom6);
+					availTextView = (TextView) findViewById(R.id.rowAvail6);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip6);
+					break;
+				case 6:
+					roomTextView = (TextView) findViewById(R.id.rowRoom7);
+					availTextView = (TextView) findViewById(R.id.rowAvail7);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip7);
+					break;
+				case 7:
+					roomTextView = (TextView) findViewById(R.id.rowRoom8);
+					availTextView = (TextView) findViewById(R.id.rowAvail8);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip8);
+					break;
+				case 8:
+					roomTextView = (TextView) findViewById(R.id.rowRoom9);
+					availTextView = (TextView) findViewById(R.id.rowAvail9);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip9);
+					break;
+				case 9:
+					roomTextView = (TextView) findViewById(R.id.rowRoom10);
+					availTextView = (TextView) findViewById(R.id.rowAvail10);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip10);
+					break;
+				case 10:
+					roomTextView = (TextView) findViewById(R.id.rowRoom11);
+					availTextView = (TextView) findViewById(R.id.rowAvail11);
+					descripTextView = (TextView) findViewById(R.id.rowDescrip11);
+					break;
+				}
+				roomTextView.setText(selectedRooms[x]);
+				if (timeLeftOrEndOfMeeting < 0) {
+					int minutes = (-timeLeftOrEndOfMeeting) % 100,
+						hours = ((-timeLeftOrEndOfMeeting)-minutes)/100;
+					if (-timeLeftOrEndOfMeeting >= 1200) {	
+						if (hours > 12) hours -= 12;
+						if (minutes < 10) {
+							descripTextView.setText("Not available until "+hours+":0"+minutes+" PM");
+						}//if minutes is 1 digit
 						else {
-							if (minutes < 10) {
-								descripTextView.setText("Not available until "+hours+":0"+minutes+" AM");
-							}//if minutes is 1 digit
-							else {
-								descripTextView.setText("Not available until "+hours+":"+minutes+" AM");							
-							}
+							descripTextView.setText("Not available until "+hours+":"+minutes+" PM");					
 						}
-						availTextView.setTextColor(Color.RED);
-						availTextView.setText("No");	
 					}
-					else {						
-						if (timeLeftOrEndOfMeeting > 0) {
-							int minutes = timeLeftOrEndOfMeeting%60,
-								hours = (timeLeftOrEndOfMeeting-minutes)/60;
-							StringBuilder displayInfo = new StringBuilder("Available for ");
-							if (hours > 1) displayInfo.append(hours+" hours ");
-							else if (hours == 1) displayInfo.append(hours+" hour ");
-							if (minutes > 1) displayInfo.append(minutes+" minutes ");
-							else if (minutes == 1) displayInfo.append(minutes+" minute ");
-							descripTextView.setText(displayInfo);
-						}//took your suggestion Zach
+					else {
+						if (minutes < 10) {
+							descripTextView.setText("Not available until "+hours+":0"+minutes+" AM");
+						}//if minutes is 1 digit
 						else {
-							descripTextView.setText("Rest of the day");
+							descripTextView.setText("Not available until "+hours+":"+minutes+" AM");							
 						}
-						availTextView.setTextColor(Color.GREEN);
-						availTextView.setText("Yes");
 					}
-					rooms++;					
-				}//display events availability
-			}//credits to Brandon for layout inspiration and code design in this part
+					availTextView.setTextColor(Color.RED);
+					availTextView.setText("No");	
+				}
+				else {						
+					if (timeLeftOrEndOfMeeting > 0) {
+						int minutes = timeLeftOrEndOfMeeting%60,
+							hours = (timeLeftOrEndOfMeeting-minutes)/60;
+						StringBuilder displayInfo = new StringBuilder("Available for ");
+						if (hours > 1) displayInfo.append(hours+" hours ");
+						else if (hours == 1) displayInfo.append(hours+" hour ");
+						if (minutes > 1) displayInfo.append(minutes+" minutes ");
+						else if (minutes == 1) displayInfo.append(minutes+" minute ");
+						descripTextView.setText(displayInfo);
+					}//took your suggestion Zach
+					else {
+						descripTextView.setText("Rest of the day");
+					}
+					availTextView.setTextColor(Color.GREEN);
+					availTextView.setText("Yes");
+				}
+				rooms++;					
+			}//display events availability
+		//credits to Brandon for layout inspiration and code design in this part
 		}
 			
 	}
