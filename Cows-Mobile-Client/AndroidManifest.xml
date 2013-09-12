@@ -47,6 +47,7 @@
         </activity>
         <activity
             android:name="com.zennenga.cows_mobile_client.RoomAvailableTime"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_cas_auth" >
         </activity>
     </application>

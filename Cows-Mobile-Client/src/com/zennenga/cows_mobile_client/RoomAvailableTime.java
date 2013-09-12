@@ -38,7 +38,7 @@ import android.support.v4.app.NavUtils;
 
 public class RoomAvailableTime extends Activity {
 	
-	private int day, month, year;	
+	private int day, month, year, timeChosen;	
 	private String roomCode;
 	private static final int TIMEOUT_MILLISEC = 1000;
 	private final String[] roomNums = {"1590 Tilia, Room 1142", "1605 Tilia, Room 1103", "1605 Tilia, Room 1111", "1605 Tilia, Room 1162", 
@@ -74,7 +74,7 @@ public class RoomAvailableTime extends Activity {
 		setContentView(R.layout.activity_room_available_time);
 		getData();
 		addListenerOnBackButton();
-		addListenerOnCreateButton();		
+		addListenerOnCreateButton();
 		timer.scheduleAtFixedRate(timerTask, 0, 1000*60);
 	}
 
@@ -91,6 +91,7 @@ public class RoomAvailableTime extends Activity {
 		day = getIntent().getExtras().getInt("day");
 		month = getIntent().getExtras().getInt("month");
 		year = getIntent().getExtras().getInt("year");
+		timeChosen = getIntent().getExtras().getInt("timeChosen");
 		roomCode = getIntent().getExtras().getString("roomCode");
 	}
 	
@@ -141,17 +142,7 @@ public class RoomAvailableTime extends Activity {
 			}
 		});
 	}
-	/*
-	public void addListenerOnRefreshButton() {
-		final Button refreshButton = (Button) findViewById(R.id.refreshButton);
-		refreshButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getEvents();
-			}
-		});
-	}
-	*/
+	
 	public boolean isNumeric(String s) {
 		return s.matches("\\d");
 	}
@@ -236,16 +227,19 @@ public class RoomAvailableTime extends Activity {
 						
 			//line = "[{\"Title\":\"Test\",\"Time\":\" 1:00 PM - 2:00 PM\",\"Location\":\"1605 Tilia, Room 1162\"},"
 			//		+ "{\"Title\":\"Test3\",\"Time\":\" 12:00 PM - 1:07 PM\",\"Location\":\"1605 Tilia, Room 1111\"},"
-			//		+ "{\"Title\":\"Test5\",\"Time\":\" 8:21 AM - 11:00 AM\",\"Location\":\"1605 Tilia, Room 1103\"},"
 			//		+ "{\"Title\":\"Test5\",\"Time\":\" 11:00 AM - 1:00 PM\",\"Location\":\"1605 Tilia, Room 1103\"},"
 			//		+ "{\"Title\":\"Test5\",\"Time\":\" 1:00 PM - 2:30 PM\",\"Location\":\"1605 Tilia, Room 1103\"},"
 			//		+ "{\"Title\":\"Test5\",\"Time\":\" 2:30 PM - 4:00 PM\",\"Location\":\"1605 Tilia, Room 1103\"}]";
 			//for testing
-			
 			Time currentTime = new Time();
 			currentTime.setToNow();
 			current24Time += (currentTime.hour*100)+currentTime.minute;	//8:47PM = 2047 and 12:30PM = 1230
 			currentMinutes = toMinutes(current24Time);
+			
+			if (timeChosen != current24Time && timeChosen != 0) {
+				current24Time = timeChosen;
+				currentMinutes = toMinutes(timeChosen);
+			}
 			//current24Time = 1320;//for testing
 			//currentMinutes = 800;			
 			titleTextView.setText("Availability ("+month+"-"+day+"-"+year+") "+toTwelveHourTime(current24Time));
@@ -275,6 +269,7 @@ public class RoomAvailableTime extends Activity {
 			String[] roomsToCheck = roomCode.split(delims);
 			String[] selectedRooms;
 			int selectedBuilding = 0, selectedRoom = 0;
+			
 			if (roomsToCheck.length > 1) {
 				try {
 					selectedBuilding = Integer.valueOf(roomsToCheck[0]);					
@@ -343,7 +338,7 @@ public class RoomAvailableTime extends Activity {
 				selectedRooms = new String[roomNums.length];
 				System.arraycopy(roomNums,0,selectedRooms,0,roomNums.length);
 				break;
-			}
+			}//determines which room(s) you want shown
 			
 			if (year<currentTime.year || (year==currentTime.year && month<(currentTime.month+1)) 
 					|| (year==currentTime.year && month==(currentTime.month+1) && day<currentTime.monthDay)) {
@@ -410,7 +405,7 @@ public class RoomAvailableTime extends Activity {
 						}//Room is available right now, store [for how long]
 					}				
 				}//End organizing events
-			}	
+			}//if tokens length is < 3, then there were no scheduled events, meaning room(s) are free	
 			for (x = 0; x < selectedRooms.length; x++) {
 				if (availableRooms.get(selectedRooms[x]) == null) {
 					availableRooms.put(selectedRooms[x], 0);
@@ -522,8 +517,6 @@ public class RoomAvailableTime extends Activity {
 				rooms++;					
 			}//display events availability
 		//credits to Brandon for layout inspiration and code design in this part
-		}
-			
+		}	
 	}
-
 }

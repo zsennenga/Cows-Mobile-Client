@@ -1,23 +1,37 @@
 package com.zennenga.cows_mobile_client;
 
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
-public class RoomSelect extends Activity {
+public class RoomSelect extends FragmentActivity {
 
 	private Spinner buildingSelectSpinner;
 	private Spinner roomSelectSpinner;
 	private DatePicker datePicker;
 	public int day, year, month;
+	public String timeSelected;
 	BuildingSelectOnItemSelectedListener buildingSelectListener;
 	RoomSelectOnItemSelectedListener roomSelectListener;
+	final static int TIME_DIALOG_ID = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,20 +84,63 @@ public class RoomSelect extends Activity {
 	public void addListenerOnAvailableRoomButton() {
 		final Button availableButton = (Button) findViewById(R.id.nextAvailableTime);
 		availableButton.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), RoomAvailableTime.class);
-				getDateFromDatePicker();
-				String roomCode = getRoomCode(roomSelectListener.getRoomSelected());
-				i.putExtra("day", day);
-				i.putExtra("month", month + 1);
-				i.putExtra("year", year);
-				i.putExtra("roomCode", roomCode);
-				startActivity(i);
-				
+				presentDialog();
 			}
 		});
 	}
-
+	
+	public void presentDialog() {
+		final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+		    public void onClick(DialogInterface dialog, int yesNo) {
+		        switch (yesNo){
+		        case DialogInterface.BUTTON_POSITIVE:
+		        	dialogReceiver(1);
+		            break;
+		        case DialogInterface.BUTTON_NEGATIVE:
+					dialogReceiver(0);
+		            break;
+		        }
+		    }
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Is there a specific time you would like to check for availability?").setPositiveButton("Yes", dialogClickListener)
+		    .setNegativeButton("No", dialogClickListener).show();
+	}
+	
+	public void dialogReceiver(int yesNo) {
+		Intent i = new Intent(getApplicationContext(), RoomAvailableTime.class);
+		Handler h = new Handler(){
+	        @Override
+	        public void handleMessage(Message msg){
+	            timeSelected = msg.getData().getString("timeChosen");
+	            dialogReceiver(2);
+	        }
+	    };
+		getDateFromDatePicker();
+		String roomCode = getRoomCode(roomSelectListener.getRoomSelected());
+		i.putExtra("day", day);
+		i.putExtra("month", month + 1);
+		i.putExtra("year", year);
+		i.putExtra("roomCode", roomCode);
+		
+		switch (yesNo) {
+		case 2:
+			i.putExtra("timeChosen", Integer.valueOf(timeSelected));
+			startActivity(i);
+			break;
+		case 1:
+			DialogFragment timePickerDialogListener = new TimePickerDialogOnAvailableListener(h);
+			timePickerDialogListener.show(getFragmentManager(), "timePicker");
+			break;
+		case 0:
+			startActivity(i);
+			break;
+		}
+	}
+	
 	public void addListenerOnBuildingSelectSpinner() {
 		buildingSelectListener = new BuildingSelectOnItemSelectedListener();
 		buildingSelectListener.setRoomSelectListener(roomSelectListener);
@@ -142,5 +199,4 @@ public class RoomSelect extends Activity {
 		// No Code then select all events in all buildings
 		return "";
 	}
-
 }
